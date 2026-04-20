@@ -174,3 +174,41 @@ pre {
     padding: 0.75rem 1rem;
   }
 }
+
+// ─── Dark mode overrides ─────────────────────────────────────────────────────
+[data-theme="dark"] {
+  .navbar {
+    background-color: hsl(220, 15%, 12%);
+    border-bottom-color: hsl(220, 13%, 22%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+
+    .navbar-item,
+    .navbar-link {
+      color: hsl(220, 13%, 75%);
+      &:hover, &:focus { background-color: hsla(220, 13%, 75%, 0.08); color: hsl(220, 13%, 92%); }
+    }
+
+    .navbar-item.is-active { color: hsl(244, 80%, 75%); background-color: transparent; }
+    .navbar-brand .navbar-item { color: hsl(220, 13%, 92%); font-weight: 700; }
+
+    .button.is-primary {
+      background-color: hsl(244, 57%, 65%);
+      border-color: transparent;
+      color: #fff;
+      &:hover { background-color: hsl(244, 57%, 72%); }
+    }
+
+    .button.is-ghost {
+      color: hsl(220, 13%, 75%);
+      &:hover { background-color: hsla(220, 13%, 75%, 0.08); color: hsl(220, 13%, 92%); }
+    }
+
+    .select select {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: hsl(220, 13%, 80%);
+      option { background-color: hsl(220, 15%, 12%); }
+    }
+    .select::after { border-color: hsl(220, 13%, 65%); }
+  }
+}

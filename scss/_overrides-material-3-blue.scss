@@ -270,14 +270,14 @@ body {
 // ─── Hero — M3 "Featured" banner with primary container fill ──────────────────
 .hero.is-primary {
   // Primary container = primary hue at high lightness (~90%)
-  background-color: hsl(231, 49%, 91%);
+  background-color: hsl(217, 60%, 91%);
   background-image: none;
-  color: hsl(231, 49%, 20%);  // on-primary-container
+  color: hsl(217, 89%, 20%);  // on-primary-container
 
-  .title, .subtitle { color: hsl(231, 49%, 20%); }
+  .title, .subtitle { color: hsl(217, 89%, 20%); }
 
   .button {
-    background-color: hsl(231, 49%, 44%);
+    background-color: hsl(217, 89%, 52%);
     color: #fff;
     border: none;
   }

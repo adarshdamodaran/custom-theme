@@ -273,3 +273,41 @@ body {
 [data-theme="dark"] .section.is-sand {
   background-color: hsl(35, 8%, 14%);
 }
+
+[data-theme="dark"] {
+  .navbar {
+    background-color: hsl(180, 15%, 10%);
+    border-top-color: var(--bulma-primary);
+    border-bottom-color: hsl(180, 12%, 20%);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+
+    .navbar-item,
+    .navbar-link {
+      color: hsl(178, 20%, 72%);
+      &:hover, &:focus { background-color: hsla(178, 58%, 34%, 0.12); color: hsl(178, 40%, 88%); }
+    }
+
+    .navbar-item.is-active { color: hsl(178, 58%, 55%); background-color: transparent; }
+    .navbar-brand .navbar-item { color: hsl(178, 40%, 88%); font-weight: 700; }
+
+    .button.is-primary {
+      background-color: hsl(178, 58%, 38%);
+      border-color: transparent;
+      color: #fff;
+      &:hover { background-color: hsl(178, 58%, 44%); }
+    }
+
+    .button.is-ghost {
+      color: hsl(178, 20%, 72%);
+      &:hover { background-color: hsla(178, 58%, 34%, 0.12); color: hsl(178, 40%, 88%); }
+    }
+
+    .select select {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: hsl(178, 20%, 78%);
+      option { background-color: hsl(180, 15%, 10%); }
+    }
+    .select::after { border-color: hsl(178, 20%, 65%); }
+  }
+}
