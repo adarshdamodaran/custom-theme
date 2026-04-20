@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enterprise Theme — Bulma Component Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Compiled theme CSS — swap href via the theme switcher dropdown -->
+  <link id="theme-css" rel="stylesheet" href="css/windows11-winui.css" />
+  <!-- Material Symbols for icons (free, no JS required) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    /* ── Showcase-only styles ─────────────────────────────────────── */
+    body { font-family: var(--bulma-family-primary); }
+
+    .section-anchor { scroll-margin-top: 4rem; }
+
+    /* Sidebar navigation */
+    #sidebar {
+      position: sticky;
+      top: 3.5rem;
+      max-height: calc(100vh - 4rem);
+      overflow-y: auto;
+    }
+
+    /* Nav header height guard */
+    .navbar { position: sticky; top: 0; z-index: 100; }
+
+    /* Material icon sizing */
+    .material-symbols-outlined {
+      font-size: 1.25em;
+      vertical-align: middle;
+      line-height: 1;
+    }
+
+    /* Theme toggle button in nav */
+    #theme-toggle { cursor: pointer; }
+
+    /* Code preview blocks */
+    .preview-block {
+      border: 1px solid var(--bulma-border-weak);
+      border-radius: var(--bulma-radius);
+      overflow: hidden;
+    }
+    .preview-block__canvas {
+      padding: 1.5rem;
+      background: var(--bulma-scheme-main);
+    }
+    .preview-block__label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      background: var(--bulma-scheme-main-bis);
+      border-top: 1px solid var(--bulma-border-weak);
+      color: var(--bulma-text-weak);
+    }
+
+    /* Colour swatch */
+    .swatch {
+      width: 100%;
+      height: 48px;
+      border-radius: var(--bulma-radius);
+      border: 1px solid var(--bulma-border-weak);
+    }
+
+    /* Grid auto demo */
+    .grid-demo-cell {
+      background: var(--bulma-primary);
+      color: var(--bulma-primary-invert);
+      border-radius: var(--bulma-radius);
+      padding: 0.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Hero section overlap */
+    .hero-body .title, .hero-body .subtitle { color: inherit; }
+
+    /* Spacing between showcase sections */
+    .showcase-section { padding: 3rem 0; border-bottom: 1px solid var(--bulma-border-weak); }
+    .showcase-section:last-child { border-bottom: none; }
+
+    .component-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--bulma-text-strong);
+    }
+    .component-subtitle {
+      font-size: 0.875rem;
+      color: var(--bulma-text-weak);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Modal demo trigger */
+    .modal { z-index: 9999; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════════════════════════════════════ -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="#">
+      <strong class="has-text-primary" style="font-size:1.1rem;letter-spacing:-0.02em;">⬡ Enterprise</strong>
+    </a>
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMain">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarMain" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item is-active" href="#">Dashboard</a>
+      <a class="navbar-item" href="#">Reports</a>
+      <a class="navbar-item" href="#">Users</a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">Settings</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item">Profile</a>
+          <a class="navbar-item">Security</a>
+          <a class="navbar-item">Billing</a>
+          <hr class="navbar-divider" />
+          <a class="navbar-item has-text-danger">Sign Out</a>
+        </div>
+      </div>
+    </div>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="select is-small" title="Switch theme">
+          <select id="theme-switcher" onchange="switchTheme(this.value)">
+            <option value="indigo-slate">Indigo Slate</option>
+            <option value="ocean-teal-sand">Ocean Teal + Sand</option>
+            <option value="microsoft-fluent">Microsoft Fluent</option>
+            <option value="github-primer">GitHub Primer</option>
+            <option value="material-3">Material 3</option>
+            <option value="notion-minimal">Notion Minimal</option>
+            <option value="salesforce-lightning">Salesforce Lightning</option>
+            <option value="windows11-winui" selected>Windows 11 WinUI</option>
+          </select>
+        </div>
+      </div>
+      <div class="navbar-item">
+        <div class="buttons">
+          <button id="theme-toggle" class="button is-small is-ghost" onclick="toggleTheme()" title="Toggle dark mode">
+            <span id="theme-icon" class="material-symbols-outlined">dark_mode</span>
+          </button>
+          <a class="button is-primary is-small">
+            <span class="icon"><span class="material-symbols-outlined">add</span></span>
+            <span>New Report</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     PAGE LAYOUT — sidebar + main content
+════════════════════════════════════════════════════════════════════════════ -->
+<div class="container is-fluid">
+  <div class="columns" style="margin-top:0">
+
+    <!-- SIDEBAR -->
+    <aside class="column is-2 is-hidden-touch" style="padding:0 0 2rem 0;">
+      <nav id="sidebar" class="menu" style="padding:1rem 0.75rem;">
+        <p class="menu-label">Layout</p>
+        <ul class="menu-list">
+          <li><a href="#hero">Hero</a></li>
+          <li><a href="#columns">Columns</a></li>
+          <li><a href="#grid">Grid (CSS)</a></li>
+          <li><a href="#level">Level</a></li>
+          <li><a href="#media">Media Object</a></li>
+          <li><a href="#section-layout">Section / Container</a></li>
+        </ul>
+        <p class="menu-label">Elements</p>
+        <ul class="menu-list">
+          <li><a href="#buttons">Buttons</a></li>
+          <li><a href="#tags">Tags</a></li>
+          <li><a href="#titles">Titles</a></li>
+          <li><a href="#images">Images / Figures</a></li>
+          <li><a href="#box">Box</a></li>
+          <li><a href="#notification">Notification</a></li>
+          <li><a href="#progress">Progress</a></li>
+          <li><a href="#table">Table</a></li>
+          <li><a href="#content">Content (Typography)</a></li>
+          <li><a href="#icons">Icons</a></li>
+          <li><a href="#loader">Loader</a></li>
+          <li><a href="#delete">Delete</a></li>
+        </ul>
+        <p class="menu-label">Components</p>
+        <ul class="menu-list">
+          <li><a href="#breadcrumb">Breadcrumb</a></li>
+          <li><a href="#card">Card</a></li>
+          <li><a href="#dropdown">Dropdown</a></li>
+          <li><a href="#menu-component">Menu</a></li>
+          <li><a href="#message">Message</a></li>
+          <li><a href="#modal">Modal</a></li>
+          <li><a href="#navbar-demo">Navbar</a></li>
+          <li><a href="#pagination">Pagination</a></li>
+          <li><a href="#panel">Panel</a></li>
+          <li><a href="#tabs">Tabs</a></li>
+        </ul>
+        <p class="menu-label">Form</p>
+        <ul class="menu-list">
+          <li><a href="#form-inputs">Inputs &amp; Textarea</a></li>
+          <li><a href="#form-select">Select</a></li>
+          <li><a href="#form-checkbox">Checkbox &amp; Radio</a></li>
+          <li><a href="#form-file">File Upload</a></li>
+        </ul>
+        <p class="menu-label">Helpers</p>
+        <ul class="menu-list">
+          <li><a href="#colors">Colours</a></li>
+          <li><a href="#typography-helpers">Typography</a></li>
+          <li><a href="#spacing-helpers">Spacing</a></li>
+          <li><a href="#display-helpers">Display / Visibility</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="column">
+      <div style="padding: 1.5rem 1rem;">
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     HERO
+────────────────────────────────────────────────────────────────────────── -->
+<section id="hero" class="showcase-section section-anchor">
+  <p class="component-title">Hero</p>
+  <p class="component-subtitle">Full-width banner sections. Sizes: default, small, medium, large, halfheight, fullheight.</p>
+
+  <div class="preview-block mb-4">
+    <div class="preview-block__canvas p-0">
+      <section class="hero is-primary">
+        <div class="hero-body">
+          <p class="title">Primary Hero</p>
+          <p class="subtitle">Subtitle text lives here</p>
+        </div>
+      </section>
+    </div>
+    <p class="preview-block__label">is-primary</p>
+  </div>
+
+  <div class="columns">
+    <div class="column">
+      <div class="preview-block">
+        <div class="preview-block__canvas p-0">
+          <section class="hero is-info is-small"><div class="hero-body"><p class="title">Info</p><p class="subtitle">is-small</p></div></section>
+        </div>
+        <p class="preview-block__label">is-info · is-small</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="preview-block">
+        <div class="preview-block__canvas p-0">
+          <section class="hero is-success is-small"><div class="hero-body"><p class="title">Success</p><p class="subtitle">is-small</p></div></section>
+        </div>
+        <p class="preview-block__label">is-success · is-small</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="preview-block">
+        <div class="preview-block__canvas p-0">
+          <section class="hero is-warning is-small"><div class="hero-body"><p class="title">Warning</p><p class="subtitle">is-small</p></div></section>
+        </div>
+        <p class="preview-block__label">is-warning · is-small</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="preview-block">
+        <div class="preview-block__canvas p-0">
+          <section class="hero is-danger is-small"><div class="hero-body"><p class="title">Danger</p><p class="subtitle">is-small</p></div></section>
+        </div>
+        <p class="preview-block__label">is-danger · is-small</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="preview-block">
+        <div class="preview-block__canvas p-0">
+          <section class="hero is-dark is-small"><div class="hero-body"><p class="title">Dark</p><p class="subtitle">is-small</p></div></section>
+        </div>
+        <p class="preview-block__label">is-dark · is-small</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="preview-block">
+        <div class="preview-block__canvas p-0">
+          <section class="hero is-light is-small"><div class="hero-body"><p class="title">Light</p><p class="subtitle">is-small</p></div></section>
+        </div>
+        <p class="preview-block__label">is-light · is-small</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     COLUMNS
+────────────────────────────────────────────────────────────────────────── -->
+<section id="columns" class="showcase-section section-anchor">
+  <p class="component-title">Columns</p>
+  <p class="component-subtitle">Flexbox-based responsive column grid. Supports auto, fixed, offset, nesting, multiline.</p>
+
+  <p class="has-text-weight-semibold mb-2">Auto columns (equal width)</p>
+  <div class="columns mb-4">
+    <div class="column"><div class="notification is-primary has-text-centered">1</div></div>
+    <div class="column"><div class="notification is-primary has-text-centered">2</div></div>
+    <div class="column"><div class="notification is-primary has-text-centered">3</div></div>
+    <div class="column"><div class="notification is-primary has-text-centered">4</div></div>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Fixed width classes</p>
+  <div class="columns mb-4">
+    <div class="column is-one-quarter"><div class="notification is-info">is-one-quarter</div></div>
+    <div class="column is-half"><div class="notification is-info">is-half</div></div>
+    <div class="column"><div class="notification is-info">auto</div></div>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Offset</p>
+  <div class="columns mb-4">
+    <div class="column is-4 is-offset-4"><div class="notification is-success has-text-centered">is-4 is-offset-4</div></div>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Multiline</p>
+  <div class="columns is-multiline mb-4">
+    <div class="column is-4"><div class="notification is-warning has-text-centered">col 1</div></div>
+    <div class="column is-4"><div class="notification is-warning has-text-centered">col 2</div></div>
+    <div class="column is-4"><div class="notification is-warning has-text-centered">col 3</div></div>
+    <div class="column is-4"><div class="notification is-warning has-text-centered">col 4 (wraps)</div></div>
+    <div class="column is-8"><div class="notification is-warning has-text-centered">col 5 · is-8</div></div>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Gapless</p>
+  <div class="columns is-gapless">
+    <div class="column"><div class="notification is-dark m-0 has-text-centered" style="border-radius:0">1</div></div>
+    <div class="column"><div class="notification is-dark m-0 has-text-centered" style="border-radius:0">2</div></div>
+    <div class="column"><div class="notification is-dark m-0 has-text-centered" style="border-radius:0">3</div></div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     GRID (CSS Grid)
+────────────────────────────────────────────────────────────────────────── -->
+<section id="grid" class="showcase-section section-anchor">
+  <p class="component-title">Grid (CSS Grid)</p>
+  <p class="component-subtitle">Bulma 1.x CSS Grid — smart auto-fit columns with <code>is-col-min-*</code> and explicit <code>is-col-span-*</code>.</p>
+
+  <p class="has-text-weight-semibold mb-2">Auto-fit (min 160px cells)</p>
+  <div class="grid is-col-min-160 mb-4">
+    <div class="cell grid-demo-cell">Cell 1</div>
+    <div class="cell grid-demo-cell">Cell 2</div>
+    <div class="cell grid-demo-cell">Cell 3</div>
+    <div class="cell grid-demo-cell">Cell 4</div>
+    <div class="cell grid-demo-cell">Cell 5</div>
+    <div class="cell grid-demo-cell">Cell 6</div>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Column span</p>
+  <div class="fixed-grid has-4-cols">
+    <div class="grid">
+      <div class="cell is-col-span-2 grid-demo-cell" style="background:var(--bulma-info)">is-col-span-2</div>
+      <div class="cell grid-demo-cell" style="background:var(--bulma-success)">1</div>
+      <div class="cell grid-demo-cell" style="background:var(--bulma-success)">1</div>
+      <div class="cell grid-demo-cell" style="background:var(--bulma-warning);color:#000">1</div>
+      <div class="cell is-col-span-3 grid-demo-cell" style="background:var(--bulma-danger)">is-col-span-3</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     LEVEL
+────────────────────────────────────────────────────────────────────────── -->
+<section id="level" class="showcase-section section-anchor">
+  <p class="component-title">Level</p>
+  <p class="component-subtitle">Horizontal bar for stats, actions, or mixed content alignment.</p>
+
+  <nav class="level">
+    <div class="level-left">
+      <div class="level-item">
+        <p class="subtitle is-5"><strong>1,842</strong> records</p>
+      </div>
+      <div class="level-item">
+        <div class="field has-addons">
+          <p class="control"><input class="input" type="text" placeholder="Search…" /></p>
+          <p class="control"><button class="button is-primary">Search</button></p>
+        </div>
+      </div>
+    </div>
+    <div class="level-right">
+      <p class="level-item"><strong>All</strong></p>
+      <p class="level-item"><a>Published</a></p>
+      <p class="level-item"><a>Drafts</a></p>
+      <p class="level-item"><a class="button is-success is-small">New</a></p>
+    </div>
+  </nav>
+
+  <p class="has-text-weight-semibold mb-2 mt-4">Level as KPI bar</p>
+  <nav class="level">
+    <div class="level-item has-text-centered">
+      <div><p class="heading">Revenue</p><p class="title">$4.2M</p></div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div><p class="heading">Tickets</p><p class="title">3,218</p></div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div><p class="heading">Uptime</p><p class="title">99.98%</p></div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div><p class="heading">Avg. Response</p><p class="title">142ms</p></div>
+    </div>
+  </nav>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     MEDIA OBJECT
+────────────────────────────────────────────────────────────────────────── -->
+<section id="media" class="showcase-section section-anchor">
+  <p class="component-title">Media Object</p>
+  <p class="component-subtitle">The classic media object pattern — avatar / icon left, content right. Supports nesting.</p>
+
+  <article class="media">
+    <figure class="media-left">
+      <p class="image is-64x64"><img src="https://bulma.io/assets/images/placeholders/128x128.png" alt="avatar" /></p>
+    </figure>
+    <div class="media-content">
+      <div class="content">
+        <p><strong>Jane Appleseed</strong> <small class="has-text-grey">@jane · 12m ago</small><br />
+        Deployed release <code>v2.14.3</code> to production. All health checks passing. Rollback window open for 30 min.</p>
+      </div>
+      <nav class="level is-mobile">
+        <div class="level-left">
+          <a class="level-item"><span class="icon is-small"><span class="material-symbols-outlined" style="font-size:1rem">thumb_up</span></span><span>14</span></a>
+          <a class="level-item"><span class="icon is-small"><span class="material-symbols-outlined" style="font-size:1rem">chat_bubble</span></span><span>3</span></a>
+          <a class="level-item"><span class="icon is-small"><span class="material-symbols-outlined" style="font-size:1rem">share</span></span></a>
+        </div>
+      </nav>
+      <!-- Nested media -->
+      <article class="media">
+        <figure class="media-left">
+          <p class="image is-48x48"><img src="https://bulma.io/assets/images/placeholders/96x96.png" alt="" /></p>
+        </figure>
+        <div class="media-content">
+          <div class="content"><p><strong>Tom Reviewer</strong> <small class="has-text-grey">3m ago</small><br />LGTM 👍 Good call on the canary rollout.</p></div>
+        </div>
+      </article>
+    </div>
+  </article>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     SECTION / CONTAINER
+────────────────────────────────────────────────────────────────────────── -->
+<section id="section-layout" class="showcase-section section-anchor">
+  <p class="component-title">Section &amp; Container</p>
+  <p class="component-subtitle">Vertical rhythm containers. <code>.section</code> adds padding; <code>.container</code> caps width at breakpoints.</p>
+
+  <div class="preview-block">
+    <div class="preview-block__canvas p-0">
+      <section class="section is-small" style="background:var(--bulma-scheme-main-bis);">
+        <div class="container">
+          <p class="has-text-centered has-text-weight-semibold">section · is-small · inside a container</p>
+        </div>
+      </section>
+    </div>
+    <p class="preview-block__label">section + container</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     BUTTONS
+────────────────────────────────────────────────────────────────────────── -->
+<section id="buttons" class="showcase-section section-anchor">
+  <p class="component-title">Buttons</p>
+  <p class="component-subtitle">Colours, sizes, states, styles, groups, and addons.</p>
+
+  <p class="has-text-weight-semibold mb-2">Colours</p>
+  <div class="buttons mb-4">
+    <button class="button">Default</button>
+    <button class="button is-primary">Primary</button>
+    <button class="button is-link">Link</button>
+    <button class="button is-info">Info</button>
+    <button class="button is-success">Success</button>
+    <button class="button is-warning">Warning</button>
+    <button class="button is-danger">Danger</button>
+    <button class="button is-light">Light</button>
+    <button class="button is-dark">Dark</button>
+    <button class="button is-black">Black</button>
+    <button class="button is-white">White</button>
+    <button class="button is-ghost">Ghost</button>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Outlined</p>
+  <div class="buttons mb-4">
+    <button class="button is-primary is-outlined">Primary</button>
+    <button class="button is-info is-outlined">Info</button>
+    <button class="button is-success is-outlined">Success</button>
+    <button class="button is-warning is-outlined">Warning</button>
+    <button class="button is-danger is-outlined">Danger</button>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Light variant</p>
+  <div class="buttons mb-4">
+    <button class="button is-primary is-light">Primary</button>
+    <button class="button is-info is-light">Info</button>
+    <button class="button is-success is-light">Success</button>
+    <button class="button is-warning is-light">Warning</button>
+    <button class="button is-danger is-light">Danger</button>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Sizes</p>
+  <div class="buttons is-vcentered mb-4">
+    <button class="button is-primary is-small">Small</button>
+    <button class="button is-primary">Normal</button>
+    <button class="button is-primary is-medium">Medium</button>
+    <button class="button is-primary is-large">Large</button>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">States</p>
+  <div class="buttons mb-4">
+    <button class="button is-primary is-hovered">Hovered</button>
+    <button class="button is-primary is-focused">Focused</button>
+    <button class="button is-primary is-active">Active</button>
+    <button class="button is-primary is-loading">Loading</button>
+    <button class="button is-primary" disabled>Disabled</button>
+    <button class="button is-primary is-static">Static</button>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">With icons</p>
+  <div class="buttons mb-4">
+    <button class="button is-primary">
+      <span class="icon"><span class="material-symbols-outlined">save</span></span>
+      <span>Save</span>
+    </button>
+    <button class="button is-danger is-outlined">
+      <span class="icon"><span class="material-symbols-outlined">delete</span></span>
+      <span>Delete</span>
+    </button>
+    <button class="button is-info">
+      <span class="icon"><span class="material-symbols-outlined">download</span></span>
+    </button>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Rounded</p>
+  <div class="buttons mb-4">
+    <button class="button is-primary is-rounded">Primary</button>
+    <button class="button is-info is-rounded is-outlined">Info</button>
+    <button class="button is-success is-rounded is-small">Success</button>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Fullwidth</p>
+  <div class="mb-4" style="max-width:320px">
+    <button class="button is-primary is-fullwidth mb-2">Full Width Primary</button>
+    <button class="button is-outlined is-fullwidth">Full Width Outlined</button>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Group &amp; Addons</p>
+  <div class="field has-addons mb-3">
+    <p class="control"><button class="button"><span class="icon"><span class="material-symbols-outlined">arrow_back</span></span></button></p>
+    <p class="control"><button class="button is-primary">Sync</button></p>
+    <p class="control"><button class="button"><span class="icon"><span class="material-symbols-outlined">arrow_forward</span></span></button></p>
+  </div>
+  <div class="field is-grouped">
+    <p class="control"><button class="button is-primary">Submit</button></p>
+    <p class="control"><button class="button is-light">Cancel</button></p>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     TAGS
+────────────────────────────────────────────────────────────────────────── -->
+<section id="tags" class="showcase-section section-anchor">
+  <p class="component-title">Tags</p>
+  <p class="component-subtitle">Inline labels / badges. Colours, sizes, rounded, combined, and delete variant.</p>
+
+  <p class="has-text-weight-semibold mb-2">Colours</p>
+  <div class="tags mb-4">
+    <span class="tag">Default</span>
+    <span class="tag is-primary">Primary</span>
+    <span class="tag is-link">Link</span>
+    <span class="tag is-info">Info</span>
+    <span class="tag is-success">Success</span>
+    <span class="tag is-warning">Warning</span>
+    <span class="tag is-danger">Danger</span>
+    <span class="tag is-light">Light</span>
+    <span class="tag is-dark">Dark</span>
+    <span class="tag is-black">Black</span>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Light variant</p>
+  <div class="tags mb-4">
+    <span class="tag is-primary is-light">Primary</span>
+    <span class="tag is-info is-light">Info</span>
+    <span class="tag is-success is-light">Success</span>
+    <span class="tag is-warning is-light">Warning</span>
+    <span class="tag is-danger is-light">Danger</span>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Sizes &amp; Rounded</p>
+  <div class="tags is-vcentered mb-4">
+    <span class="tag is-primary is-small">Small</span>
+    <span class="tag is-primary">Normal</span>
+    <span class="tag is-primary is-medium">Medium</span>
+    <span class="tag is-primary is-large">Large</span>
+    <span class="tag is-success is-rounded">Rounded</span>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Combined (addon)</p>
+  <div class="tags mb-4">
+    <div class="tags has-addons">
+      <span class="tag is-dark">v1.0.4</span>
+      <span class="tag is-success">stable</span>
+    </div>
+    <div class="tags has-addons">
+      <span class="tag is-dark">build</span>
+      <span class="tag is-danger">failing</span>
+    </div>
+    <div class="tags has-addons">
+      <span class="tag">ENV</span>
+      <span class="tag is-info is-light">production</span>
+    </div>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">With delete</p>
+  <div class="tags">
+    <span class="tag is-primary">React<button class="delete is-small"></button></span>
+    <span class="tag is-info">TypeScript<button class="delete is-small"></button></span>
+    <span class="tag is-success">Bulma<button class="delete is-small"></button></span>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     TITLES
+────────────────────────────────────────────────────────────────────────── -->
+<section id="titles" class="showcase-section section-anchor">
+  <p class="component-title">Titles &amp; Subtitles</p>
+  <p class="component-subtitle">Six heading sizes, optional paired subtitles, and spaced variant.</p>
+
+  <div class="columns mb-2">
+    <div class="column">
+      <p class="title is-1">Title 1</p>
+      <p class="title is-2">Title 2</p>
+      <p class="title is-3">Title 3</p>
+      <p class="title is-4">Title 4</p>
+      <p class="title is-5">Title 5</p>
+      <p class="title is-6">Title 6</p>
+    </div>
+    <div class="column">
+      <p class="subtitle is-1">Subtitle 1</p>
+      <p class="subtitle is-2">Subtitle 2</p>
+      <p class="subtitle is-3">Subtitle 3</p>
+      <p class="subtitle is-4">Subtitle 4</p>
+      <p class="subtitle is-5">Subtitle 5</p>
+      <p class="subtitle is-6">Subtitle 6</p>
+    </div>
+    <div class="column">
+      <p class="title">Paired</p>
+      <p class="subtitle">With a subtitle</p>
+      <hr />
+      <p class="title is-spaced">Spaced title</p>
+      <p class="subtitle">More gap below</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     IMAGES / FIGURES
+────────────────────────────────────────────────────────────────────────── -->
+<section id="images" class="showcase-section section-anchor">
+  <p class="component-title">Images &amp; Figures</p>
+  <p class="component-subtitle">Fixed sizes and ratio-locked responsive images.</p>
+
+  <p class="has-text-weight-semibold mb-2">Fixed sizes</p>
+  <div class="is-flex is-gap-3 is-flex-wrap-wrap mb-4" style="gap:0.75rem;align-items:flex-end">
+    <figure class="image is-16x16"><img src="https://bulma.io/assets/images/placeholders/16x16.png" alt="" /></figure>
+    <figure class="image is-24x24"><img src="https://bulma.io/assets/images/placeholders/24x24.png" alt="" /></figure>
+    <figure class="image is-32x32"><img src="https://bulma.io/assets/images/placeholders/32x32.png" alt="" /></figure>
+    <figure class="image is-48x48"><img src="https://bulma.io/assets/images/placeholders/48x48.png" alt="" /></figure>
+    <figure class="image is-64x64"><img src="https://bulma.io/assets/images/placeholders/64x64.png" alt="" /></figure>
+    <figure class="image is-96x96"><img src="https://bulma.io/assets/images/placeholders/96x96.png" alt="" /></figure>
+    <figure class="image is-128x128"><img src="https://bulma.io/assets/images/placeholders/128x128.png" alt="" /></figure>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Aspect ratios (responsive)</p>
+  <div class="columns">
+    <div class="column is-2"><figure class="image is-square"><img src="https://bulma.io/assets/images/placeholders/480x480.png" alt="" /></figure><p class="has-text-centered is-size-7 mt-1">is-square</p></div>
+    <div class="column is-2"><figure class="image is-4by3"><img src="https://bulma.io/assets/images/placeholders/640x480.png" alt="" /></figure><p class="has-text-centered is-size-7 mt-1">is-4by3</p></div>
+    <div class="column is-2"><figure class="image is-16by9"><img src="https://bulma.io/assets/images/placeholders/640x360.png" alt="" /></figure><p class="has-text-centered is-size-7 mt-1">is-16by9</p></div>
+    <div class="column is-2"><figure class="image is-2by1"><img src="https://bulma.io/assets/images/placeholders/640x320.png" alt="" /></figure><p class="has-text-centered is-size-7 mt-1">is-2by1</p></div>
+    <div class="column is-2"><figure class="image is-5by3"><img src="https://bulma.io/assets/images/placeholders/640x384.png" alt="" /></figure><p class="has-text-centered is-size-7 mt-1">is-5by3</p></div>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Rounded avatar</p>
+  <figure class="image is-96x96"><img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" alt="rounded avatar" /></figure>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     BOX
+────────────────────────────────────────────────────────────────────────── -->
+<section id="box" class="showcase-section section-anchor">
+  <p class="component-title">Box</p>
+  <p class="component-subtitle">A white box with a subtle shadow — the generic container for grouped content.</p>
+
+  <div class="columns">
+    <div class="column is-4">
+      <div class="box">
+        <p class="has-text-weight-semibold mb-1">Default box</p>
+        <p class="is-size-7 has-text-grey">Shadow and white background adapts to theme.</p>
+      </div>
+    </div>
+    <div class="column is-4">
+      <div class="box" style="background: var(--bulma-primary-light);">
+        <p class="has-text-weight-semibold mb-1 has-text-primary-dark">Coloured box</p>
+        <p class="is-size-7 has-text-primary">Custom background via inline style or utility class.</p>
+      </div>
+    </div>
+    <div class="column is-4">
+      <div class="box">
+        <article class="media">
+          <div class="media-left"><figure class="image is-48x48"><img src="https://bulma.io/assets/images/placeholders/96x96.png" alt="" /></figure></div>
+          <div class="media-content">
+            <p class="has-text-weight-semibold">Box + Media</p>
+            <p class="is-size-7 has-text-grey">Combining patterns inside a box.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     NOTIFICATION
+────────────────────────────────────────────────────────────────────────── -->
+<section id="notification" class="showcase-section section-anchor">
+  <p class="component-title">Notification</p>
+  <p class="component-subtitle">Coloured banner for alerts and messages. Supports delete button and light variant.</p>
+
+  <div class="notification is-primary mb-3"><button class="delete"></button><strong>Primary:</strong> This is a primary notification with a dismiss button.</div>
+  <div class="notification is-info mb-3"><button class="delete"></button><strong>Info:</strong> Something informational happened.</div>
+  <div class="notification is-success mb-3"><button class="delete"></button><strong>Success:</strong> Your changes were saved successfully.</div>
+  <div class="notification is-warning mb-3"><button class="delete"></button><strong>Warning:</strong> This action cannot be easily undone.</div>
+  <div class="notification is-danger mb-3"><button class="delete"></button><strong>Danger:</strong> A critical error occurred.</div>
+
+  <p class="has-text-weight-semibold mb-2">Light variant</p>
+  <div class="notification is-primary is-light mb-2">Primary Light</div>
+  <div class="notification is-success is-light mb-2">Success Light</div>
+  <div class="notification is-warning is-light mb-2">Warning Light</div>
+  <div class="notification is-danger is-light">Danger Light</div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     PROGRESS
+────────────────────────────────────────────────────────────────────────── -->
+<section id="progress" class="showcase-section section-anchor">
+  <p class="component-title">Progress Bar</p>
+  <p class="component-subtitle">Thin progress bars. Colours, sizes, and indeterminate (loading) state.</p>
+
+  <p class="has-text-weight-semibold mb-2">Colours</p>
+  <progress class="progress is-primary mb-2" value="65" max="100">65%</progress>
+  <progress class="progress is-info mb-2" value="40" max="100">40%</progress>
+  <progress class="progress is-success mb-2" value="85" max="100">85%</progress>
+  <progress class="progress is-warning mb-2" value="30" max="100">30%</progress>
+  <progress class="progress is-danger mb-4" value="10" max="100">10%</progress>
+
+  <p class="has-text-weight-semibold mb-2">Sizes</p>
+  <progress class="progress is-primary is-small mb-2" value="50" max="100">50%</progress>
+  <progress class="progress is-primary mb-2" value="50" max="100">50%</progress>
+  <progress class="progress is-primary is-medium mb-2" value="50" max="100">50%</progress>
+  <progress class="progress is-primary is-large mb-4" value="50" max="100">50%</progress>
+
+  <p class="has-text-weight-semibold mb-2">Indeterminate (loading)</p>
+  <progress class="progress is-primary" max="100">Indeterminate</progress>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     TABLE
+────────────────────────────────────────────────────────────────────────── -->
+<section id="table" class="showcase-section section-anchor">
+  <p class="component-title">Table</p>
+  <p class="component-subtitle">Bordered, striped, hoverable, narrow, scrollable. Ideal for data-heavy UIs.</p>
+
+  <div class="mb-3">
+    <div class="table-container">
+      <table class="table is-fullwidth is-striped is-hoverable is-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Last Login</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="has-text-mono">U-1001</td>
+            <td><strong>Alice Martin</strong></td>
+            <td><span class="tag is-primary is-light">Admin</span></td>
+            <td><span class="tag is-success is-light">Active</span></td>
+            <td class="has-text-tabular">2026-04-19 09:14</td>
+            <td>
+              <div class="buttons are-small">
+                <button class="button is-info is-outlined">Edit</button>
+                <button class="button is-danger is-outlined">Disable</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="has-text-mono">U-1002</td>
+            <td><strong>Bob Chen</strong></td>
+            <td><span class="tag is-info is-light">Editor</span></td>
+            <td><span class="tag is-success is-light">Active</span></td>
+            <td class="has-text-tabular">2026-04-18 17:55</td>
+            <td>
+              <div class="buttons are-small">
+                <button class="button is-info is-outlined">Edit</button>
+                <button class="button is-danger is-outlined">Disable</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="has-text-mono">U-1003</td>
+            <td><strong>Carol López</strong></td>
+            <td><span class="tag is-light">Viewer</span></td>
+            <td><span class="tag is-warning is-light">Suspended</span></td>
+            <td class="has-text-tabular">2026-03-30 11:02</td>
+            <td>
+              <div class="buttons are-small">
+                <button class="button is-info is-outlined">Edit</button>
+                <button class="button is-success is-outlined">Enable</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="has-text-mono">U-1004</td>
+            <td><strong>Dave Park</strong></td>
+            <td><span class="tag is-info is-light">Editor</span></td>
+            <td><span class="tag is-danger is-light">Deleted</span></td>
+            <td class="has-text-tabular">—</td>
+            <td>
+              <div class="buttons are-small">
+                <button class="button is-light" disabled>Edit</button>
+                <button class="button is-light" disabled>Restore</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="6" class="has-text-right has-text-grey is-size-7">4 users · page 1 of 1</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Narrow table</p>
+  <table class="table is-narrow is-bordered">
+    <thead><tr><th>Key</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Region</td><td>us-east-1</td></tr>
+      <tr><td>Instance</td><td>t4g.medium</td></tr>
+      <tr><td>vCPUs</td><td>2</td></tr>
+      <tr><td>RAM</td><td>4 GiB</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     CONTENT (TYPOGRAPHY)
+────────────────────────────────────────────────────────────────────────── -->
+<section id="content" class="showcase-section section-anchor">
+  <p class="component-title">Content (Rich Typography)</p>
+  <p class="component-subtitle">The <code>.content</code> class styles raw HTML tags — headings, lists, blockquote, code, tables.</p>
+
+  <div class="content" style="max-width:680px">
+    <h1>Heading 1</h1>
+    <h2>Heading 2</h2>
+    <h3>Heading 3</h3>
+    <h4>Heading 4</h4>
+    <p>Regular paragraph text with <strong>bold</strong>, <em>italic</em>, <u>underlined</u>, <s>strikethrough</s>, <code>inline code</code>, and a <a href="#">hyperlink</a>.</p>
+    <blockquote>This is a blockquote. Useful for highlighting key information, quotations, or pull-quotes in documentation.</blockquote>
+    <ul>
+      <li>Unordered list item one</li>
+      <li>Item two
+        <ul>
+          <li>Nested item A</li>
+          <li>Nested item B</li>
+        </ul>
+      </li>
+      <li>Item three</li>
+    </ul>
+    <ol>
+      <li>Ordered step one</li>
+      <li>Ordered step two</li>
+      <li>Ordered step three</li>
+    </ol>
+    <pre><code>// Preformatted code block
+const theme = buildEnterpriseTheme({
+  primary: 'hsl(244, 57%, 52%)',
+  darkMode: true,
+});</code></pre>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     ICONS
+────────────────────────────────────────────────────────────────────────── -->
+<section id="icons" class="showcase-section section-anchor">
+  <p class="component-title">Icons</p>
+  <p class="component-subtitle">Bulma's <code>.icon</code> wrapper sizes icons consistently. Works with any icon font.</p>
+
+  <p class="has-text-weight-semibold mb-2">Sizes</p>
+  <div class="is-flex" style="gap:1rem;align-items:center;flex-wrap:wrap" class="mb-4">
+    <span class="icon is-small has-text-primary"><span class="material-symbols-outlined" style="font-size:1rem">star</span></span>
+    <span class="icon has-text-info"><span class="material-symbols-outlined">star</span></span>
+    <span class="icon is-medium has-text-success"><span class="material-symbols-outlined" style="font-size:1.5rem">star</span></span>
+    <span class="icon is-large has-text-warning"><span class="material-symbols-outlined" style="font-size:2rem">star</span></span>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2 mt-3">Icon + text</p>
+  <div class="is-flex" style="gap:1.5rem;flex-wrap:wrap">
+    <span class="icon-text has-text-danger"><span class="icon"><span class="material-symbols-outlined">error</span></span><span>Critical error</span></span>
+    <span class="icon-text has-text-success"><span class="icon"><span class="material-symbols-outlined">check_circle</span></span><span>All systems go</span></span>
+    <span class="icon-text has-text-info"><span class="icon"><span class="material-symbols-outlined">info</span></span><span>Informational</span></span>
+    <span class="icon-text has-text-warning"><span class="icon"><span class="material-symbols-outlined">warning</span></span><span>Needs attention</span></span>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     LOADER
+────────────────────────────────────────────────────────────────────────── -->
+<section id="loader" class="showcase-section section-anchor">
+  <p class="component-title">Loader</p>
+  <p class="component-subtitle">CSS-only spinner via <code>.loader</code>. Combine with size helpers.</p>
+
+  <div class="is-flex" style="gap:2rem;align-items:center;flex-wrap:wrap">
+    <span class="loader" style="width:1rem;height:1rem"></span>
+    <span class="loader" style="width:1.5rem;height:1.5rem"></span>
+    <span class="loader" style="width:2.5rem;height:2.5rem"></span>
+    <span class="loader" style="width:4rem;height:4rem"></span>
+    <div style="position:relative;width:120px;height:80px;border:1px solid var(--bulma-border-weak);border-radius:var(--bulma-radius)">
+      <span class="loader is-skeleton-pulsing" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2rem;height:2rem"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     DELETE
+────────────────────────────────────────────────────────────────────────── -->
+<section id="delete" class="showcase-section section-anchor">
+  <p class="component-title">Delete</p>
+  <p class="component-subtitle">Close / dismiss button. Used inside tags, notifications, messages, modals.</p>
+
+  <div class="is-flex" style="gap:1rem;align-items:center">
+    <button class="delete is-small"></button>
+    <button class="delete"></button>
+    <button class="delete is-medium"></button>
+    <button class="delete is-large"></button>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     BREADCRUMB
+────────────────────────────────────────────────────────────────────────── -->
+<section id="breadcrumb" class="showcase-section section-anchor">
+  <p class="component-title">Breadcrumb</p>
+  <p class="component-subtitle">Navigation trail. Separator variants: default, arrow, bullet, dot, succeeds.</p>
+
+  <nav class="breadcrumb mb-3" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Reports</a></li>
+      <li><a href="#">Q1 2026</a></li>
+      <li class="is-active"><a href="#" aria-current="page">Summary</a></li>
+    </ul>
+  </nav>
+
+  <nav class="breadcrumb has-arrow-separator mb-3" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Users</a></li>
+      <li class="is-active"><a href="#" aria-current="page">Alice Martin</a></li>
+    </ul>
+  </nav>
+
+  <nav class="breadcrumb has-bullet-separator mb-3" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="#">Org</a></li>
+      <li><a href="#">Team</a></li>
+      <li class="is-active"><a href="#" aria-current="page">Project</a></li>
+    </ul>
+  </nav>
+
+  <nav class="breadcrumb has-dot-separator mb-3" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="#">Org</a></li>
+      <li><a href="#">Team</a></li>
+      <li class="is-active"><a href="#" aria-current="page">Project</a></li>
+    </ul>
+  </nav>
+
+  <nav class="breadcrumb has-succeeds-separator" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="#">Org</a></li>
+      <li><a href="#">Team</a></li>
+      <li class="is-active"><a href="#" aria-current="page">Project</a></li>
+    </ul>
+  </nav>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     CARD
+────────────────────────────────────────────────────────────────────────── -->
+<section id="card" class="showcase-section section-anchor">
+  <p class="component-title">Card</p>
+  <p class="component-subtitle">Versatile content container with header, image, content, and footer sections.</p>
+
+  <div class="columns">
+    <!-- Standard card -->
+    <div class="column is-4">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-16by9">
+            <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder image" />
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left"><figure class="image is-48x48"><img src="https://bulma.io/assets/images/placeholders/96x96.png" alt="" /></figure></div>
+            <div class="media-content">
+              <p class="title is-5">Full Card</p>
+              <p class="subtitle is-6 has-text-grey">With image + footer</p>
+            </div>
+          </div>
+          <div class="content is-size-7">Card body text goes here. Can contain any markup within the content area including tags and other elements.</div>
+        </div>
+        <footer class="card-footer">
+          <a href="#" class="card-footer-item">View</a>
+          <a href="#" class="card-footer-item">Edit</a>
+          <a href="#" class="card-footer-item has-text-danger">Delete</a>
+        </footer>
+      </div>
+    </div>
+    <!-- Header-only card -->
+    <div class="column is-4">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">Card with Header</p>
+          <button class="card-header-icon" aria-label="more options">
+            <span class="icon"><span class="material-symbols-outlined">more_vert</span></span>
+          </button>
+        </header>
+        <div class="card-content">
+          <p class="is-size-7">This card has a header bar with a title and an icon button. Use for dashboards and data panels.</p>
+          <div class="tags mt-3">
+            <span class="tag is-primary is-light">API</span>
+            <span class="tag is-info is-light">v2</span>
+            <span class="tag is-success is-light">Online</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Stat card -->
+    <div class="column is-4">
+      <div class="card">
+        <div class="card-content">
+          <div class="level">
+            <div class="level-left">
+              <div>
+                <p class="heading">Monthly Revenue</p>
+                <p class="title">$128,400</p>
+                <p class="is-size-7"><span class="has-text-success">↑ 12.4%</span> vs last month</p>
+              </div>
+            </div>
+            <div class="level-right">
+              <span class="icon is-large has-text-primary" style="opacity:0.25"><span class="material-symbols-outlined" style="font-size:3rem">trending_up</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     DROPDOWN
+────────────────────────────────────────────────────────────────────────── -->
+<section id="dropdown" class="showcase-section section-anchor">
+  <p class="component-title">Dropdown</p>
+  <p class="component-subtitle">Click-toggled dropdown menus. Supports dividers, icons, and right-aligned.</p>
+
+  <div class="is-flex" style="gap:2rem;flex-wrap:wrap">
+    <!-- Basic dropdown (toggle via JS) -->
+    <div class="dropdown is-active">
+      <div class="dropdown-trigger">
+        <button class="button" aria-haspopup="true" aria-controls="dd-1">
+          <span>Actions</span>
+          <span class="icon is-small"><span class="material-symbols-outlined">expand_more</span></span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dd-1" role="menu">
+        <div class="dropdown-content">
+          <a href="#" class="dropdown-item">
+            <span class="icon-text"><span class="icon"><span class="material-symbols-outlined">edit</span></span><span>Edit</span></span>
+          </a>
+          <a href="#" class="dropdown-item">
+            <span class="icon-text"><span class="icon"><span class="material-symbols-outlined">content_copy</span></span><span>Duplicate</span></span>
+          </a>
+          <hr class="dropdown-divider" />
+          <a href="#" class="dropdown-item has-text-danger">
+            <span class="icon-text"><span class="icon"><span class="material-symbols-outlined">delete</span></span><span>Delete</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right-aligned dropdown -->
+    <div class="dropdown is-active is-right">
+      <div class="dropdown-trigger">
+        <button class="button is-primary" aria-haspopup="true" aria-controls="dd-2">
+          <span>Sort by</span>
+          <span class="icon is-small"><span class="material-symbols-outlined">expand_more</span></span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dd-2" role="menu">
+        <div class="dropdown-content">
+          <a class="dropdown-item is-active">Date (newest)</a>
+          <a class="dropdown-item">Date (oldest)</a>
+          <a class="dropdown-item">Name A–Z</a>
+          <a class="dropdown-item">Name Z–A</a>
+          <a class="dropdown-item">Status</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="is-size-7 has-text-grey mt-4">These dropdowns are shown open for demo purposes. Add <code>is-active</code> class via JS click to toggle.</p>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     MENU (COMPONENT)
+────────────────────────────────────────────────────────────────────────── -->
+<section id="menu-component" class="showcase-section section-anchor">
+  <p class="component-title">Menu</p>
+  <p class="component-subtitle">Vertical nav menu for sidebars and panel navigation.</p>
+
+  <div style="max-width:280px">
+    <aside class="menu">
+      <p class="menu-label">General</p>
+      <ul class="menu-list">
+        <li><a class="is-active">Dashboard</a></li>
+        <li><a>Users</a></li>
+      </ul>
+      <p class="menu-label">Reports</p>
+      <ul class="menu-list">
+        <li>
+          <a>Analytics</a>
+          <ul>
+            <li><a>Overview</a></li>
+            <li><a class="is-active">Revenue</a></li>
+            <li><a>Traffic</a></li>
+          </ul>
+        </li>
+        <li><a>Export</a></li>
+      </ul>
+      <p class="menu-label">Account</p>
+      <ul class="menu-list">
+        <li><a>Profile</a></li>
+        <li><a>Security</a></li>
+        <li><a class="has-text-danger">Sign out</a></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     MESSAGE
+────────────────────────────────────────────────────────────────────────── -->
+<section id="message" class="showcase-section section-anchor">
+  <p class="component-title">Message</p>
+  <p class="component-subtitle">Structured alert box with header + body. Ideal for inline documentation or system notices.</p>
+
+  <div class="message is-primary mb-3">
+    <div class="message-header"><p>Primary</p><button class="delete" aria-label="delete"></button></div>
+    <div class="message-body">A primary message with a <strong>bold</strong> word and a <a href="#">link</a>. Use for feature announcements.</div>
+  </div>
+  <div class="message is-info mb-3">
+    <div class="message-header"><p>Info — Deployment Notice</p><button class="delete"></button></div>
+    <div class="message-body">Scheduled maintenance window: <strong>Sunday 02:00–04:00 UTC</strong>. Services may be intermittently unavailable.</div>
+  </div>
+  <div class="message is-success mb-3">
+    <div class="message-header"><p>Success</p><button class="delete"></button></div>
+    <div class="message-body">Your configuration changes have been saved and deployed to all edge nodes.</div>
+  </div>
+  <div class="message is-warning mb-3">
+    <div class="message-header"><p>Warning</p><button class="delete"></button></div>
+    <div class="message-body">You are approaching your API rate limit (8,200 / 10,000 requests).</div>
+  </div>
+  <div class="message is-danger mb-4">
+    <div class="message-header"><p>Danger</p><button class="delete"></button></div>
+    <div class="message-body">Database connection failed. Check your credentials and network configuration.</div>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Body-only (no header)</p>
+  <div class="message is-info mb-2"><div class="message-body">Body-only <code>is-info</code> message — clean inline callout.</div></div>
+  <div class="message is-warning"><div class="message-body">Body-only <code>is-warning</code> — ideal for inline warnings in forms.</div></div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     MODAL
+────────────────────────────────────────────────────────────────────────── -->
+<section id="modal" class="showcase-section section-anchor">
+  <p class="component-title">Modal</p>
+  <p class="component-subtitle">Full-screen overlay dialogs. Card style and image/content style.</p>
+
+  <div class="buttons">
+    <button class="button is-primary" onclick="openModal('modal-card')">Open Card Modal</button>
+    <button class="button is-info is-outlined" onclick="openModal('modal-image')">Open Image Modal</button>
+  </div>
+
+  <!-- Card Modal -->
+  <div id="modal-card" class="modal">
+    <div class="modal-background" onclick="closeModal('modal-card')"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Confirm Action</p>
+        <button class="delete" aria-label="close" onclick="closeModal('modal-card')"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="content">
+          <p>Are you sure you want to <strong>permanently delete</strong> this record? This cannot be undone.</p>
+          <div class="notification is-warning is-light">
+            <span class="icon-text"><span class="icon"><span class="material-symbols-outlined">warning</span></span><span>This will also remove all linked audit logs.</span></span>
+          </div>
+          <div class="field">
+            <label class="label">Type DELETE to confirm</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="DELETE" />
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot" style="justify-content:flex-end;gap:0.5rem">
+        <button class="button" onclick="closeModal('modal-card')">Cancel</button>
+        <button class="button is-danger">Delete Record</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div id="modal-image" class="modal">
+    <div class="modal-background" onclick="closeModal('modal-image')"></div>
+    <div class="modal-content">
+      <p class="image"><img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="modal image" /></p>
+    </div>
+    <button class="modal-close is-large" aria-label="close" onclick="closeModal('modal-image')"></button>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     NAVBAR (FULL DEMO)
+────────────────────────────────────────────────────────────────────────── -->
+<section id="navbar-demo" class="showcase-section section-anchor">
+  <p class="component-title">Navbar Variants</p>
+  <p class="component-subtitle">Transparent, coloured, and with brand logo.</p>
+
+  <div class="preview-block mb-3">
+    <div class="preview-block__canvas p-0">
+      <nav class="navbar is-primary" role="navigation">
+        <div class="navbar-brand"><a class="navbar-item"><strong>⬡ Corp</strong></a></div>
+        <div class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item is-active">Dashboard</a>
+            <a class="navbar-item">Reports</a>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item"><button class="button is-light is-small">Sign In</button></div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <p class="preview-block__label">is-primary navbar</p>
+  </div>
+
+  <div class="preview-block mb-3">
+    <div class="preview-block__canvas p-0">
+      <nav class="navbar is-dark" role="navigation">
+        <div class="navbar-brand"><a class="navbar-item"><strong>⬡ Corp</strong></a></div>
+        <div class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item">Home</a>
+            <a class="navbar-item">Docs</a>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">More</a>
+              <div class="navbar-dropdown is-boxed">
+                <a class="navbar-item">About</a>
+                <a class="navbar-item">Jobs</a>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item"><button class="button is-primary is-small">Get Started</button></div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <p class="preview-block__label">is-dark navbar with boxed dropdown</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     PAGINATION
+────────────────────────────────────────────────────────────────────────── -->
+<section id="pagination" class="showcase-section section-anchor">
+  <p class="component-title">Pagination</p>
+  <p class="component-subtitle">Page navigation controls. Rounded, centered, and right-aligned variants.</p>
+
+  <nav class="pagination mb-4" role="navigation" aria-label="pagination">
+    <a class="pagination-previous">Previous</a>
+    <a class="pagination-next">Next page</a>
+    <ul class="pagination-list">
+      <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
+      <li><span class="pagination-ellipsis">&hellip;</span></li>
+      <li><a class="pagination-link" aria-label="Goto page 46">46</a></li>
+      <li><a class="pagination-link is-current" aria-label="Page 47">47</a></li>
+      <li><a class="pagination-link" aria-label="Goto page 48">48</a></li>
+      <li><span class="pagination-ellipsis">&hellip;</span></li>
+      <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
+    </ul>
+  </nav>
+
+  <nav class="pagination is-rounded is-centered mb-4" role="navigation" aria-label="pagination">
+    <a class="pagination-previous">Previous</a>
+    <a class="pagination-next">Next</a>
+    <ul class="pagination-list">
+      <li><a class="pagination-link">1</a></li>
+      <li><a class="pagination-link">2</a></li>
+      <li><a class="pagination-link is-current">3</a></li>
+      <li><a class="pagination-link">4</a></li>
+      <li><a class="pagination-link">5</a></li>
+    </ul>
+  </nav>
+
+  <nav class="pagination is-small" role="navigation" aria-label="pagination">
+    <a class="pagination-previous">‹</a>
+    <a class="pagination-next">›</a>
+    <ul class="pagination-list">
+      <li><a class="pagination-link is-current">1</a></li>
+      <li><a class="pagination-link">2</a></li>
+      <li><a class="pagination-link">3</a></li>
+    </ul>
+  </nav>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     PANEL
+────────────────────────────────────────────────────────────────────────── -->
+<section id="panel" class="showcase-section section-anchor">
+  <p class="component-title">Panel</p>
+  <p class="component-subtitle">A compact list panel — perfect for entity lists, search results, file browsers.</p>
+
+  <div class="columns">
+    <div class="column is-5">
+      <article class="panel is-primary">
+        <p class="panel-heading">Users</p>
+        <div class="panel-block">
+          <p class="control has-icons-left">
+            <input class="input is-small" type="text" placeholder="Search users…" />
+            <span class="icon is-small is-left"><span class="material-symbols-outlined" style="font-size:0.9rem">search</span></span>
+          </p>
+        </div>
+        <p class="panel-tabs">
+          <a class="is-active">All</a>
+          <a>Active</a>
+          <a>Admin</a>
+          <a>Suspended</a>
+        </p>
+        <a class="panel-block is-active">
+          <span class="panel-icon"><span class="material-symbols-outlined" style="font-size:1rem">person</span></span>
+          Alice Martin
+        </a>
+        <a class="panel-block">
+          <span class="panel-icon"><span class="material-symbols-outlined" style="font-size:1rem">person</span></span>
+          Bob Chen
+        </a>
+        <a class="panel-block">
+          <span class="panel-icon has-text-warning"><span class="material-symbols-outlined" style="font-size:1rem">person</span></span>
+          Carol López
+          <span class="tag is-warning is-light is-small ml-auto">Suspended</span>
+        </a>
+        <div class="panel-block">
+          <button class="button is-primary is-outlined is-small is-fullwidth">Load more</button>
+        </div>
+      </article>
+    </div>
+
+    <div class="column is-4">
+      <article class="panel is-info">
+        <p class="panel-heading">Repositories</p>
+        <a class="panel-block">
+          <span class="panel-icon"><span class="material-symbols-outlined" style="font-size:1rem">folder</span></span>
+          enterprise-api
+        </a>
+        <a class="panel-block is-active">
+          <span class="panel-icon"><span class="material-symbols-outlined" style="font-size:1rem">folder</span></span>
+          enterprise-ui
+        </a>
+        <a class="panel-block">
+          <span class="panel-icon"><span class="material-symbols-outlined" style="font-size:1rem">folder</span></span>
+          data-pipeline
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     TABS
+────────────────────────────────────────────────────────────────────────── -->
+<section id="tabs" class="showcase-section section-anchor">
+  <p class="component-title">Tabs</p>
+  <p class="component-subtitle">Horizontal tab navigation. Sizes, alignment, boxed, rounded, and toggle variants.</p>
+
+  <p class="has-text-weight-semibold mb-2">Default</p>
+  <div class="tabs mb-4">
+    <ul>
+      <li class="is-active"><a>Overview</a></li>
+      <li><a>Analytics</a></li>
+      <li><a>Users</a></li>
+      <li><a>Settings</a></li>
+    </ul>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Boxed</p>
+  <div class="tabs is-boxed mb-4">
+    <ul>
+      <li class="is-active"><a><span class="icon is-small"><span class="material-symbols-outlined" style="font-size:1rem">home</span></span><span>Home</span></a></li>
+      <li><a><span class="icon is-small"><span class="material-symbols-outlined" style="font-size:1rem">bar_chart</span></span><span>Reports</span></a></li>
+      <li><a><span class="icon is-small"><span class="material-symbols-outlined" style="font-size:1rem">settings</span></span><span>Settings</span></a></li>
+    </ul>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Toggle (pills)</p>
+  <div class="tabs is-toggle mb-4">
+    <ul>
+      <li class="is-active"><a>Daily</a></li>
+      <li><a>Weekly</a></li>
+      <li><a>Monthly</a></li>
+      <li><a>Yearly</a></li>
+    </ul>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Toggle Rounded + Centered + Sizes</p>
+  <div class="tabs is-toggle is-toggle-rounded is-centered is-small mb-3">
+    <ul>
+      <li class="is-active"><a>Small</a></li>
+      <li><a>Tabs</a></li>
+      <li><a>Rounded</a></li>
+    </ul>
+  </div>
+  <div class="tabs is-toggle is-centered is-medium mb-3">
+    <ul>
+      <li class="is-active"><a>Medium</a></li>
+      <li><a>Toggle</a></li>
+    </ul>
+  </div>
+  <div class="tabs is-boxed is-fullwidth">
+    <ul>
+      <li class="is-active"><a>Tab A</a></li>
+      <li><a>Tab B</a></li>
+      <li><a>Tab C</a></li>
+      <li><a>Tab D</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     FORM — INPUTS & TEXTAREA
+────────────────────────────────────────────────────────────────────────── -->
+<section id="form-inputs" class="showcase-section section-anchor">
+  <p class="component-title">Form — Inputs &amp; Textarea</p>
+  <p class="component-subtitle">Text inputs, states, sizes, addons, icons, grouped fields.</p>
+
+  <div class="columns">
+    <div class="column">
+      <p class="has-text-weight-semibold mb-2">States</p>
+      <div class="field mb-2">
+        <label class="label">Default</label>
+        <div class="control"><input class="input" type="text" placeholder="e.g. alice@corp.com" /></div>
+      </div>
+      <div class="field mb-2">
+        <label class="label">Hover</label>
+        <div class="control"><input class="input is-hovered" type="text" placeholder="Hover state" /></div>
+      </div>
+      <div class="field mb-2">
+        <label class="label">Focus</label>
+        <div class="control"><input class="input is-focused" type="text" placeholder="Focus state" /></div>
+      </div>
+      <div class="field mb-2">
+        <label class="label">Loading</label>
+        <div class="control is-loading"><input class="input" type="text" placeholder="Loading…" /></div>
+      </div>
+      <div class="field mb-2">
+        <label class="label">Disabled</label>
+        <div class="control"><input class="input" type="text" placeholder="Disabled" disabled /></div>
+      </div>
+      <div class="field mb-2">
+        <label class="label">Readonly</label>
+        <div class="control"><input class="input" type="text" value="read-only value" readonly /></div>
+      </div>
+      <div class="field mb-2">
+        <label class="label is-success">Success</label>
+        <div class="control has-icons-right"><input class="input is-success" type="text" value="valid@corp.com" /><span class="icon is-small is-right"><span class="material-symbols-outlined" style="font-size:1rem">check</span></span></div>
+        <p class="help is-success">Email looks good!</p>
+      </div>
+      <div class="field">
+        <label class="label is-danger">Danger</label>
+        <div class="control has-icons-right"><input class="input is-danger" type="email" value="notvalid" /><span class="icon is-small is-right"><span class="material-symbols-outlined" style="font-size:1rem">error</span></span></div>
+        <p class="help is-danger">Please enter a valid email address.</p>
+      </div>
+    </div>
+
+    <div class="column">
+      <p class="has-text-weight-semibold mb-2">Sizes</p>
+      <div class="field mb-2"><div class="control"><input class="input is-small" type="text" placeholder="is-small" /></div></div>
+      <div class="field mb-2"><div class="control"><input class="input" type="text" placeholder="Normal" /></div></div>
+      <div class="field mb-2"><div class="control"><input class="input is-medium" type="text" placeholder="is-medium" /></div></div>
+      <div class="field mb-2"><div class="control"><input class="input is-large" type="text" placeholder="is-large" /></div></div>
+      <div class="field mb-2"><div class="control"><input class="input is-rounded" type="text" placeholder="is-rounded" /></div></div>
+
+      <p class="has-text-weight-semibold mb-2 mt-4">With icons</p>
+      <div class="field mb-2">
+        <div class="control has-icons-left has-icons-right">
+          <input class="input" type="email" placeholder="Email" value="alice@corp.com" />
+          <span class="icon is-small is-left"><span class="material-symbols-outlined" style="font-size:1rem">mail</span></span>
+          <span class="icon is-small is-right"><span class="material-symbols-outlined" style="font-size:1rem">check</span></span>
+        </div>
+      </div>
+      <div class="field mb-2">
+        <div class="control has-icons-left">
+          <input class="input" type="text" placeholder="Search…" />
+          <span class="icon is-small is-left"><span class="material-symbols-outlined" style="font-size:1rem">search</span></span>
+        </div>
+      </div>
+
+      <p class="has-text-weight-semibold mb-2 mt-4">Textarea</p>
+      <div class="field mb-2">
+        <div class="control"><textarea class="textarea" placeholder="Your message…" rows="4"></textarea></div>
+      </div>
+      <div class="field mb-2">
+        <div class="control"><textarea class="textarea is-success" rows="2">Valid content.</textarea></div>
+        <p class="help is-success">Looks great.</p>
+      </div>
+      <div class="field">
+        <div class="control"><textarea class="textarea is-danger" rows="2">Bad input!</textarea></div>
+        <p class="help is-danger">Content contains disallowed characters.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2 mt-3">Addons &amp; Grouped</p>
+  <div class="field has-addons mb-3">
+    <p class="control"><span class="button is-static">https://</span></p>
+    <p class="control is-expanded"><input class="input" type="text" placeholder="your-domain.com" /></p>
+    <p class="control"><button class="button is-primary">Go</button></p>
+  </div>
+  <div class="field is-grouped">
+    <p class="control is-expanded"><input class="input" type="text" placeholder="First name" /></p>
+    <p class="control is-expanded"><input class="input" type="text" placeholder="Last name" /></p>
+    <p class="control"><button class="button is-primary">Save</button></p>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2 mt-3">Horizontal form</p>
+  <form style="max-width:520px">
+    <div class="field is-horizontal">
+      <div class="field-label is-normal"><label class="label">Full Name</label></div>
+      <div class="field-body">
+        <div class="field"><div class="control is-expanded has-icons-left"><input class="input" type="text" placeholder="First" /><span class="icon is-small is-left"><span class="material-symbols-outlined" style="font-size:1rem">person</span></span></div></div>
+        <div class="field"><div class="control is-expanded"><input class="input" type="text" placeholder="Last" /></div></div>
+      </div>
+    </div>
+    <div class="field is-horizontal">
+      <div class="field-label is-normal"><label class="label">Email</label></div>
+      <div class="field-body">
+        <div class="field"><div class="control has-icons-left is-expanded"><input class="input" type="email" placeholder="alice@corp.com" /><span class="icon is-small is-left"><span class="material-symbols-outlined" style="font-size:1rem">mail</span></span></div></div>
+      </div>
+    </div>
+    <div class="field is-horizontal">
+      <div class="field-label"><label class="label">Message</label></div>
+      <div class="field-body">
+        <div class="field"><div class="control"><textarea class="textarea" rows="3" placeholder="Your message…"></textarea></div></div>
+      </div>
+    </div>
+    <div class="field is-horizontal">
+      <div class="field-label"></div>
+      <div class="field-body">
+        <div class="field"><div class="control"><button class="button is-primary" type="submit">Send Message</button></div></div>
+      </div>
+    </div>
+  </form>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     FORM — SELECT
+────────────────────────────────────────────────────────────────────────── -->
+<section id="form-select" class="showcase-section section-anchor">
+  <p class="component-title">Form — Select</p>
+  <p class="component-subtitle">Native styled select. Single, multiple, sizes, states, icons.</p>
+
+  <div class="columns">
+    <div class="column">
+      <div class="field mb-3">
+        <label class="label">Single select</label>
+        <div class="control">
+          <div class="select">
+            <select>
+              <option>Choose a region…</option>
+              <option>us-east-1</option>
+              <option selected>eu-west-1</option>
+              <option>ap-southeast-1</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="field mb-3">
+        <label class="label">With icon</label>
+        <div class="control has-icons-left">
+          <div class="select"><select><option>Timezone</option><option>UTC</option><option>America/New_York</option><option>Europe/London</option></select></div>
+          <span class="icon is-small is-left"><span class="material-symbols-outlined" style="font-size:1rem">language</span></span>
+        </div>
+      </div>
+      <div class="field mb-3">
+        <label class="label">Colours</label>
+        <div class="is-flex" style="gap:0.5rem;flex-wrap:wrap">
+          <div class="select is-primary"><select><option>Primary</option></select></div>
+          <div class="select is-info"><select><option>Info</option></select></div>
+          <div class="select is-success"><select><option>Success</option></select></div>
+          <div class="select is-warning"><select><option>Warning</option></select></div>
+          <div class="select is-danger"><select><option>Danger</option></select></div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="field mb-3">
+        <label class="label">Sizes</label>
+        <div class="is-flex" style="gap:0.5rem;align-items:center;flex-wrap:wrap">
+          <div class="select is-small"><select><option>Small</option></select></div>
+          <div class="select"><select><option>Normal</option></select></div>
+          <div class="select is-medium"><select><option>Medium</option></select></div>
+          <div class="select is-large"><select><option>Large</option></select></div>
+        </div>
+      </div>
+      <div class="field mb-3">
+        <label class="label">Multiple</label>
+        <div class="control">
+          <div class="select is-multiple">
+            <select multiple size="4">
+              <option selected>Engineering</option>
+              <option>Product</option>
+              <option>Design</option>
+              <option selected>Operations</option>
+              <option>Finance</option>
+            </select>
+          </div>
+        </div>
+        <p class="help">Hold Ctrl / ⌘ to select multiple.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     FORM — CHECKBOX & RADIO
+────────────────────────────────────────────────────────────────────────── -->
+<section id="form-checkbox" class="showcase-section section-anchor">
+  <p class="component-title">Form — Checkbox &amp; Radio</p>
+  <p class="component-subtitle">Labelled checkboxes and radio groups. Inline and stacked layouts.</p>
+
+  <div class="columns">
+    <div class="column">
+      <div class="field">
+        <label class="label">Permissions</label>
+        <div class="control">
+          <label class="checkbox"><input type="checkbox" checked /> View records</label>
+        </div>
+        <div class="control">
+          <label class="checkbox"><input type="checkbox" checked /> Edit records</label>
+        </div>
+        <div class="control">
+          <label class="checkbox"><input type="checkbox" /> Delete records</label>
+        </div>
+        <div class="control">
+          <label class="checkbox" disabled><input type="checkbox" disabled /> Manage billing (disabled)</label>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="field">
+        <label class="label">Notification preference</label>
+        <div class="control">
+          <label class="radio"><input type="radio" name="notify" checked /> Email only</label>
+        </div>
+        <div class="control">
+          <label class="radio"><input type="radio" name="notify" /> SMS only</label>
+        </div>
+        <div class="control">
+          <label class="radio"><input type="radio" name="notify" /> Email + SMS</label>
+        </div>
+        <div class="control">
+          <label class="radio"><input type="radio" name="notify" disabled /> None (disabled)</label>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <label class="label">Inline layout</label>
+      <div class="field">
+        <label class="checkbox mr-4"><input type="checkbox" checked /> React</label>
+        <label class="checkbox mr-4"><input type="checkbox" /> Vue</label>
+        <label class="checkbox"><input type="checkbox" checked /> Svelte</label>
+      </div>
+      <div class="field mt-3">
+        <label class="radio mr-4"><input type="radio" name="env" checked /> Production</label>
+        <label class="radio mr-4"><input type="radio" name="env" /> Staging</label>
+        <label class="radio"><input type="radio" name="env" /> Dev</label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     FORM — FILE UPLOAD
+────────────────────────────────────────────────────────────────────────── -->
+<section id="form-file" class="showcase-section section-anchor">
+  <p class="component-title">Form — File Upload</p>
+  <p class="component-subtitle">Styled native file input. With/without label, colours, sizes, boxed, right-aligned.</p>
+
+  <div class="columns">
+    <div class="column">
+      <p class="has-text-weight-semibold mb-2">Default</p>
+      <div class="file mb-3">
+        <label class="file-label">
+          <input class="file-input" type="file" name="resume" />
+          <span class="file-cta"><span class="file-icon"><span class="material-symbols-outlined" style="font-size:1rem">upload</span></span><span class="file-label">Choose file…</span></span>
+        </label>
+      </div>
+
+      <p class="has-text-weight-semibold mb-2">With filename</p>
+      <div class="file has-name mb-3">
+        <label class="file-label">
+          <input class="file-input" type="file" name="csv" />
+          <span class="file-cta"><span class="file-icon"><span class="material-symbols-outlined" style="font-size:1rem">upload</span></span><span class="file-label">Upload CSV</span></span>
+          <span class="file-name">report-q1-2026.csv</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="column">
+      <p class="has-text-weight-semibold mb-2">Colours</p>
+      <div class="is-flex" style="gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem">
+        <div class="file is-primary"><label class="file-label"><input class="file-input" type="file" /><span class="file-cta"><span class="file-label">Primary</span></span></label></div>
+        <div class="file is-info"><label class="file-label"><input class="file-input" type="file" /><span class="file-cta"><span class="file-label">Info</span></span></label></div>
+        <div class="file is-success"><label class="file-label"><input class="file-input" type="file" /><span class="file-cta"><span class="file-label">Success</span></span></label></div>
+        <div class="file is-warning"><label class="file-label"><input class="file-input" type="file" /><span class="file-cta"><span class="file-label">Warning</span></span></label></div>
+        <div class="file is-danger"><label class="file-label"><input class="file-input" type="file" /><span class="file-cta"><span class="file-label">Danger</span></span></label></div>
+      </div>
+
+      <p class="has-text-weight-semibold mb-2">Boxed</p>
+      <div class="file is-boxed is-primary mb-3">
+        <label class="file-label">
+          <input class="file-input" type="file" />
+          <span class="file-cta">
+            <span class="file-icon"><span class="material-symbols-outlined">cloud_upload</span></span>
+            <span class="file-label">Click to upload or drag files here</span>
+          </span>
+        </label>
+      </div>
+
+      <p class="has-text-weight-semibold mb-2">Sizes</p>
+      <div class="is-flex" style="gap:0.5rem;align-items:center;flex-wrap:wrap">
+        <div class="file is-small"><label class="file-label"><input class="file-input" type="file" /><span class="file-cta"><span class="file-label">Small</span></span></label></div>
+        <div class="file"><label class="file-label"><input class="file-input" type="file" /><span class="file-cta"><span class="file-label">Normal</span></span></label></div>
+        <div class="file is-medium"><label class="file-label"><input class="file-input" type="file" /><span class="file-cta"><span class="file-label">Medium</span></span></label></div>
+        <div class="file is-large"><label class="file-label"><input class="file-input" type="file" /><span class="file-cta"><span class="file-label">Large</span></span></label></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     HELPERS — COLOURS
+────────────────────────────────────────────────────────────────────────── -->
+<section id="colors" class="showcase-section section-anchor">
+  <p class="component-title">Colour Helpers</p>
+  <p class="component-subtitle">Text, background, and link colour utilities generated from the theme palette.</p>
+
+  <p class="has-text-weight-semibold mb-2">Text colours</p>
+  <div class="is-flex" style="gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem">
+    <span class="has-text-primary has-text-weight-semibold">Primary</span>
+    <span class="has-text-link has-text-weight-semibold">Link</span>
+    <span class="has-text-info has-text-weight-semibold">Info</span>
+    <span class="has-text-success has-text-weight-semibold">Success</span>
+    <span class="has-text-warning has-text-weight-semibold">Warning</span>
+    <span class="has-text-danger has-text-weight-semibold">Danger</span>
+    <span class="has-text-dark has-text-weight-semibold">Dark</span>
+    <span class="has-text-light has-background-dark px-2">Light</span>
+    <span class="has-text-grey">Grey</span>
+    <span class="has-text-grey-light">Grey light</span>
+    <span class="has-text-grey-dark">Grey dark</span>
+    <span class="has-text-black has-text-weight-semibold">Black</span>
+    <span class="has-text-white has-background-black px-2">White</span>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Background colours (swatches)</p>
+  <div class="columns">
+    <div class="column is-2"><div class="swatch has-background-primary"></div><p class="is-size-7 has-text-centered mt-1">primary</p></div>
+    <div class="column is-2"><div class="swatch has-background-link"></div><p class="is-size-7 has-text-centered mt-1">link</p></div>
+    <div class="column is-2"><div class="swatch has-background-info"></div><p class="is-size-7 has-text-centered mt-1">info</p></div>
+    <div class="column is-2"><div class="swatch has-background-success"></div><p class="is-size-7 has-text-centered mt-1">success</p></div>
+    <div class="column is-2"><div class="swatch has-background-warning"></div><p class="is-size-7 has-text-centered mt-1">warning</p></div>
+    <div class="column is-2"><div class="swatch has-background-danger"></div><p class="is-size-7 has-text-centered mt-1">danger</p></div>
+  </div>
+  <div class="columns">
+    <div class="column is-2"><div class="swatch has-background-dark"></div><p class="is-size-7 has-text-centered mt-1">dark</p></div>
+    <div class="column is-2"><div class="swatch has-background-light" style="border:1px solid var(--bulma-border)"></div><p class="is-size-7 has-text-centered mt-1">light</p></div>
+    <div class="column is-2"><div class="swatch has-background-black"></div><p class="is-size-7 has-text-centered mt-1">black</p></div>
+    <div class="column is-2"><div class="swatch has-background-white" style="border:1px solid var(--bulma-border)"></div><p class="is-size-7 has-text-centered mt-1">white</p></div>
+    <div class="column is-2"><div class="swatch has-background-primary-light"></div><p class="is-size-7 has-text-centered mt-1">primary-light</p></div>
+    <div class="column is-2"><div class="swatch has-background-danger-light"></div><p class="is-size-7 has-text-centered mt-1">danger-light</p></div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     HELPERS — TYPOGRAPHY
+────────────────────────────────────────────────────────────────────────── -->
+<section id="typography-helpers" class="showcase-section section-anchor">
+  <p class="component-title">Typography Helpers</p>
+  <p class="component-subtitle">Size, weight, alignment, transformation, and font family utilities.</p>
+
+  <p class="has-text-weight-semibold mb-2">Sizes</p>
+  <div class="mb-4">
+    <p class="is-size-1">is-size-1 (3rem)</p>
+    <p class="is-size-2">is-size-2 (2.5rem)</p>
+    <p class="is-size-3">is-size-3 (2rem)</p>
+    <p class="is-size-4">is-size-4 (1.5rem)</p>
+    <p class="is-size-5">is-size-5 (1.25rem)</p>
+    <p class="is-size-6">is-size-6 (1rem)</p>
+    <p class="is-size-7">is-size-7 (0.75rem)</p>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Weights</p>
+  <div class="mb-4" style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:baseline">
+    <span class="has-text-weight-light">Light 300</span>
+    <span class="has-text-weight-normal">Normal 400</span>
+    <span class="has-text-weight-medium">Medium 500</span>
+    <span class="has-text-weight-semibold">Semibold 600</span>
+    <span class="has-text-weight-bold">Bold 700</span>
+    <span class="has-text-weight-extrabold">ExtraBold 800</span>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Alignment</p>
+  <div class="mb-4">
+    <p class="has-text-left">has-text-left</p>
+    <p class="has-text-centered">has-text-centered</p>
+    <p class="has-text-right">has-text-right</p>
+    <p class="has-text-justified" style="max-width:520px">has-text-justified — this text is stretched to fill the full width of its container by adjusting the spacing between words automatically.</p>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Transformation</p>
+  <div class="mb-4" style="display:flex;gap:1.5rem;flex-wrap:wrap">
+    <span class="is-capitalized">capitalized text</span>
+    <span class="is-lowercase">LOWERCASE TEXT</span>
+    <span class="is-uppercase">uppercase text</span>
+    <span class="is-italic">italic text</span>
+    <span class="is-underlined">underlined text</span>
+    <span class="has-text-mono">has-text-mono (code)</span>
+    <span class="has-text-tabular">1,234,567.89 tabular</span>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     HELPERS — SPACING
+────────────────────────────────────────────────────────────────────────── -->
+<section id="spacing-helpers" class="showcase-section section-anchor">
+  <p class="component-title">Spacing Helpers</p>
+  <p class="component-subtitle">Margin (<code>m*</code>) and padding (<code>p*</code>) helpers from 0–6. Auto margin and negative margin supported.</p>
+
+  <div class="is-flex" style="gap:0.25rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem">
+    <span class="tag is-light px-0">px-0</span>
+    <span class="tag is-light px-1">px-1</span>
+    <span class="tag is-light px-2">px-2</span>
+    <span class="tag is-light px-3">px-3</span>
+    <span class="tag is-light px-4">px-4</span>
+    <span class="tag is-light px-5">px-5</span>
+    <span class="tag is-light px-6">px-6</span>
+  </div>
+
+  <div class="box mt-0" style="max-width:480px">
+    <p class="mb-0 pb-0">mb-0 pb-0</p>
+    <p class="mb-2">mb-2</p>
+    <p class="mb-4">mb-4</p>
+    <p class="mt-6 pt-6 has-background-primary-light">mt-6 pt-6</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     HELPERS — DISPLAY & VISIBILITY
+────────────────────────────────────────────────────────────────────────── -->
+<section id="display-helpers" class="showcase-section section-anchor">
+  <p class="component-title">Display &amp; Visibility Helpers</p>
+  <p class="component-subtitle">Flexbox, block, inline-block, hidden, and responsive visibility modifiers.</p>
+
+  <p class="has-text-weight-semibold mb-2">Flex helpers</p>
+  <div class="is-flex is-align-items-center is-justify-content-space-between mb-3 p-3" style="border:1px solid var(--bulma-border-weak);border-radius:var(--bulma-radius)">
+    <span class="tag is-primary">is-flex</span>
+    <span class="tag is-info">is-align-items-center</span>
+    <span class="tag is-success">is-justify-content-space-between</span>
+  </div>
+
+  <div class="is-flex is-flex-direction-column is-gap-2 mb-4" style="max-width:200px;gap:0.5rem">
+    <span class="box p-2 mb-0">is-flex-direction-column</span>
+    <span class="box p-2 mb-0">item 2</span>
+    <span class="box p-2 mb-0">item 3</span>
+  </div>
+
+  <p class="has-text-weight-semibold mb-2">Responsive visibility</p>
+  <div class="notification is-primary is-light is-hidden-mobile mb-2">Visible on tablet and above (<code>is-hidden-mobile</code>)</div>
+  <div class="notification is-info is-light is-hidden-tablet mb-2">Visible on mobile only (<code>is-hidden-tablet</code>)</div>
+  <div class="notification is-success is-light is-hidden-desktop mb-2">Visible on touch/tablet only (<code>is-hidden-desktop</code>)</div>
+  <div class="notification is-warning is-light is-hidden-widescreen">Visible below widescreen (<code>is-hidden-widescreen</code>)</div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     FOOTER
+────────────────────────────────────────────────────────────────────────── -->
+      </div><!-- /padding wrapper -->
+    </main>
+  </div><!-- /columns -->
+</div><!-- /container -->
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>Enterprise Theme</strong> — Built on <a href="https://bulma.io" target="_blank" rel="noopener">Bulma 1.0.4</a>.
+      Switch themes with <code>data-theme="dark"</code> on <code>&lt;html&gt;</code>.
+    </p>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     MINIMAL JAVASCRIPT
+════════════════════════════════════════════════════════════════════════════ -->
+<script>
+  // ── Theme switcher ────────────────────────────────────────────────────────
+  function switchTheme(name) {
+    document.getElementById('theme-css').href = 'css/' + name + '.css';
+    localStorage.setItem('selectedTheme', name);
+  }
+
+  // Restore last selected theme on page load
+  (function () {
+    const saved = localStorage.getItem('selectedTheme');
+    if (saved) {
+      document.getElementById('theme-css').href = 'css/' + saved + '.css';
+      const sel = document.getElementById('theme-switcher');
+      if (sel) sel.value = saved;
+    }
+  })();
+
+  // ── Theme toggle ──────────────────────────────────────────────────────────
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-icon').textContent = isDark ? 'dark_mode' : 'light_mode';
+  }
+
+  // ── Navbar burger ─────────────────────────────────────────────────────────
+  document.querySelectorAll('.navbar-burger').forEach(burger => {
+    burger.addEventListener('click', () => {
+      const target = document.getElementById(burger.dataset.target);
+      burger.classList.toggle('is-active');
+      target.classList.toggle('is-active');
+    });
+  });
+
+  // ── Modal helpers ─────────────────────────────────────────────────────────
+  function openModal(id) {
+    document.getElementById(id).classList.add('is-active');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('is-active');
+  }
+  // Close modals on Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal.is-active').forEach(m => m.classList.remove('is-active'));
+    }
+  });
+
+  // ── Notification dismiss ──────────────────────────────────────────────────
+  document.querySelectorAll('.notification .delete').forEach(btn => {
+    btn.addEventListener('click', () => btn.closest('.notification').remove());
+  });
+
+  // ── Dropdown toggles ──────────────────────────────────────────────────────
+  // The dropdowns in the demo section are kept open via is-active for display.
+  // This handler prevents the page from closing them on click for demo purposes.
+  document.querySelectorAll('#dropdown .dropdown').forEach(dd => {
+    dd.addEventListener('click', e => e.stopPropagation());
+  });
+
+  // ── Sidebar active link highlight ────────────────────────────────────────
+  const sections = document.querySelectorAll('.section-anchor');
+  const navLinks = document.querySelectorAll('#sidebar a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('is-active'));
+        const active = document.querySelector(`#sidebar a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

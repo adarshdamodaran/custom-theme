@@ -1,0 +1,51 @@
+// =============================================================================
+// ENTERPRISE THEME — VARIABLE OVERRIDES
+// =============================================================================
+// This file is loaded by theme.scss via @use "bulma/sass" with (...).
+// All values here override Bulma's !default variables.
+//
+// Palette rationale:
+//   Scheme grays  — Cool Slate (hue 220°, low sat) for clean data backgrounds
+//   Primary       — Deep Indigo: sophisticated, modern, never flashy
+//   Semantic colors — desaturated slightly vs Bulma defaults for less noise
+// =============================================================================
+
+// ─── Scheme (base gray scale) ─────────────────────────────────────────────────
+// Changing the hue + saturation shifts the entire neutral palette.
+// 220° / 13% gives a cool Slate feel (think Tailwind slate-*).
+$scheme-h: 220;
+$scheme-s: 13%;
+
+// ─── Brand / Semantic Colors ──────────────────────────────────────────────────
+$primary:  hsl(244, 57%, 52%);   // Deep Indigo  — primary actions, focus rings
+$link:     hsl(244, 57%, 52%);   // Same as primary for visual consistency
+$info:     hsl(199, 78%, 44%);   // Sky Blue     — informational states
+$success:  hsl(158, 55%, 38%);   // Emerald      — success / positive states
+$warning:  hsl(38,  88%, 48%);   // Amber        — warnings (toned down)
+$danger:   hsl(0,   65%, 52%);   // Red          — errors / destructive actions
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+// Inter is already first in Bulma's default stack; listed explicitly for clarity.
+// Falls back gracefully to system UI fonts if Inter is not loaded.
+$family-sans-serif: "Inter", "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+$family-monospace:  "JetBrains Mono", "Fira Code", "Cascadia Code",
+                    "SF Mono", "Consolas", monospace;
+
+// Base font size stays at 1 rem (16 px) — readable for data-heavy UIs.
+// Data-dense layouts benefit from tighter line heights on tables/lists.
+
+// ─── Border Radius ────────────────────────────────────────────────────────────
+// Slightly reduced for a sharper, more enterprise feel.
+$radius-small:  0.2rem;   // 3.2 px
+$radius:        0.3rem;   // 4.8 px  (buttons, inputs, cards)
+$radius-medium: 0.4rem;   // 6.4 px  (modals, panels)
+$radius-large:  0.6rem;   // 9.6 px  (large containers)
+
+// ─── Spacing ──────────────────────────────────────────────────────────────────
+// Tighten block spacing slightly for data-dense layouts.
+$block-spacing: 1.25rem;
+
+// ─── Animation ────────────────────────────────────────────────────────────────
+// Slightly snappier transitions for a crisp, professional feel.
+$duration: 200ms;
+$speed:    60ms;

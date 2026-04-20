@@ -1,0 +1,22 @@
+{
+  "name": "enterprise-bulma-theme",
+  "version": "1.0.0",
+  "description": "Customized Bulma theme for enterprise internal tooling — light + dark mode, data-dense layouts.",
+  "private": true,
+  "scripts": {
+    "build": "sass scss/theme.scss css/theme.css --style=expanded --load-path=node_modules --no-source-map",
+    "build:min": "sass scss/theme.scss css/theme.min.css --style=compressed --load-path=node_modules --no-source-map",
+    "build:all": "npm run build && npm run build:min && npm run build:themes",
+    "build:themes": "sass scss/indigo-slate.scss:css/indigo-slate.css scss/ocean-teal-sand.scss:css/ocean-teal-sand.css scss/microsoft-fluent.scss:css/microsoft-fluent.css scss/github-primer.scss:css/github-primer.css scss/material-3.scss:css/material-3.css scss/notion-minimal.scss:css/notion-minimal.css scss/salesforce-lightning.scss:css/salesforce-lightning.css scss/windows11-winui.scss:css/windows11-winui.css --style=expanded --load-path=node_modules --no-source-map",
+    "build:themes:min": "sass scss/indigo-slate.scss:css/indigo-slate.min.css scss/ocean-teal-sand.scss:css/ocean-teal-sand.min.css scss/microsoft-fluent.scss:css/microsoft-fluent.min.css scss/github-primer.scss:css/github-primer.min.css scss/material-3.scss:css/material-3.min.css scss/notion-minimal.scss:css/notion-minimal.min.css scss/salesforce-lightning.scss:css/salesforce-lightning.min.css scss/windows11-winui.scss:css/windows11-winui.min.css --style=compressed --load-path=node_modules --no-source-map",
+    "watch": "sass scss/theme.scss css/theme.css --style=expanded --load-path=node_modules --watch",
+    "serve": "browser-sync start --server --files \"css/*.css, scss/**/*.scss, *.html\" --startPath showcase.html --watch",
+    "dev": "npm-run-all --parallel watch serve"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.4",
+    "bulma": "^1.0.4",
+    "npm-run-all2": "^8.0.4",
+    "sass": "^1.99.0"
+  }
+}

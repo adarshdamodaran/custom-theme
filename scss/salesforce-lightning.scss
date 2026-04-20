@@ -1,0 +1,73 @@
+// =============================================================================
+// SALESFORCE LIGHTNING DESIGN SYSTEM (SLDS) — MAIN ENTRY POINT
+// =============================================================================
+// Inspired by Salesforce's Lightning Design System — the standard UI language
+// for Sales Cloud, Service Cloud, and AppExchange apps.
+//
+// Palette rationale:
+//   Scheme   — Cool white (hue 214°, very low sat) — SLDS neutral color ramp
+//   Primary  — Salesforce Blue #0176D3 = hsl(210, 97%, 41%) — brand action color
+//   Link     — Same blue — SLDS links match the primary action color
+//   Success  — SLDS green  #2E844A = hsl(139, 48%, 35%)
+//   Warning  — SLDS orange #DD7A01 = hsl(35,  97%, 44%)
+//   Danger   — SLDS red    #EA001E = hsl(353, 100%, 46%)
+//   Info     — SLDS blue   (same as primary)
+//
+// Typography:
+//   "Salesforce Sans" is Salesforce's proprietary font — not freely available.
+//   We fall back to Inter → system-ui which is visually very close.
+//   SLDS uses a 13–14px compact base size for high information density.
+//
+// Design philosophy:
+//   — Clean white surfaces with very subtle shadows (SLDS "elevation")
+//   — 4px border radius on most components
+//   — Strong blue brand bar at the top of the page
+//   — Status "lozenges" (pill badges) for record states
+//   — Compact, data-dense table rows
+//   — Accessible contrast ratios throughout (WCAG AA)
+//
+// Build:
+//   npm run build          — expanded CSS  → css/theme.css
+//   npm run build:min      — compressed    → css/theme.min.css
+//   npm run watch          — watch mode
+// =============================================================================
+
+@use "bulma/sass" with (
+
+  // ── Scheme (gray scale base) ──────────────────────────────────────────────
+  // SLDS neutral palette is a cool blue-white (hue 214°, very low saturation).
+  // This gives the characteristic crisp-white Salesforce surface feel.
+  $scheme-h: 214,
+  $scheme-s:  6%,
+
+  // ── Brand & Semantic Colors ───────────────────────────────────────────────
+  $primary:  hsl(210,  97%, 41%),  // #0176D3 — Salesforce brand blue
+  $link:     hsl(210,  97%, 41%),  // same — SLDS links = brand blue
+  $info:     hsl(210,  97%, 41%),  // same — info states use blue
+  $success:  hsl(139,  48%, 35%),  // #2E844A — SLDS success green
+  $warning:  hsl(35,   97%, 44%),  // #DD7A01 — SLDS warning orange
+  $danger:   hsl(353, 100%, 46%),  // #EA001E — SLDS destructive red
+
+  // ── Typography ────────────────────────────────────────────────────────────
+  // "Salesforce Sans" is proprietary; Inter is the closest freely available match.
+  $family-sans-serif: ("Inter", "Salesforce Sans", system-ui, -apple-system, "Segoe UI", sans-serif),
+  $family-monospace:  ("JetBrains Mono", "Cascadia Code", ui-monospace, monospace),
+  $size-normal: 0.875rem,   // 14px — SLDS standard UI size
+
+  // ── Border Radius ─────────────────────────────────────────────────────────
+  // SLDS uses a consistent 4px radius across all components.
+  $radius-small:  0.125rem,  // 2px  — very small: badges, indicators
+  $radius:        0.25rem,   // 4px  — SLDS standard for cards, inputs, buttons
+  $radius-medium: 0.25rem,   // 4px  — kept consistent
+  $radius-large:  0.5rem,    // 8px  — modals and large overlays only
+
+  // ── Spacing & Motion ──────────────────────────────────────────────────────
+  $block-spacing: 1.25rem,
+  $duration:      150ms,
+  $speed:         75ms
+
+);
+
+// Component-level overrides and extensions
+@use "overrides-salesforce-lightning";
+

@@ -1,0 +1,74 @@
+// =============================================================================
+// WINDOWS 11 WINUI 3 — MAIN ENTRY POINT
+// =============================================================================
+// Inspired by Microsoft's WinUI 3 / Fluent Design System 2 — the visual
+// language of Windows 11, Microsoft 365, and modern Microsoft apps.
+//
+// Palette rationale:
+//   Scheme   — Warm near-white (hue 220°, 9% sat) — WinUI Mica/Acrylic base
+//   Primary  — Windows 11 Blue  #0067C0 = hsl(210, 100%, 38%) — system accent
+//   Link     — Same blue — consistent with system hyperlink color
+//   Success  — WinUI green  #107C10 = hsl(120,  75%, 27%)
+//   Warning  — WinUI amber  #9D5D00 = hsl(36,  100%, 31%) — WinUI "caution"
+//   Danger   — WinUI red    #C42B1C = hsl(  5,  74%, 44%)
+//   Info     — Accent blue  (same as primary)
+//
+// Typography:
+//   Segoe UI Variable is the Windows 11 system font — not available on web.
+//   We fall back to Inter which is very similar (same underlying design).
+//   Base size: 14px / line-height 1.4285 — matches WinUI TextBlock defaults.
+//
+// Design philosophy:
+//   — Mica/Acrylic: subtle translucent layering via layered backgrounds + blur
+//   — "Smoke" neutral palette: extremely low-saturation warm-grey surfaces
+//   — 5px radius on controls, 8px on cards/panels (WinUI CornerRadius)
+//   — System accent blue used sparingly — fills, borders, active states
+//   — NavigationView sidebar: semi-transparent acrylic, compact icon+label
+//   — Subtle 1px border on all interactive controls (WinUI stroke token)
+//   — Dark mode: true dark (#1C1C1C base) with acrylic overlay
+//
+// Build:
+//   npm run build          — expanded CSS  → css/theme.css
+//   npm run build:min      — compressed    → css/theme.min.css
+//   npm run watch          — watch mode
+// =============================================================================
+
+@use "bulma/sass" with (
+
+  // ── Scheme (gray scale base) ──────────────────────────────────────────────
+  // WinUI Mica material has a very subtle warm tint pulled from the wallpaper.
+  // We simulate this with hue 220° at 9% saturation — cool, almost-neutral.
+  $scheme-h: 220,
+  $scheme-s:  9%,
+
+  // ── Brand & Semantic Colors ───────────────────────────────────────────────
+  $primary:  hsl(210, 100%, 38%),  // #0067C0 — Windows 11 system accent blue
+  $link:     hsl(210, 100%, 38%),  // same — WinUI hyperlink color
+  $info:     hsl(210, 100%, 38%),  // same
+  $success:  hsl(120,  75%, 27%),  // #107C10 — WinUI success green
+  $warning:  hsl( 36, 100%, 31%),  // #9D5D00 — WinUI caution amber
+  $danger:   hsl(  5,  74%, 44%),  // #C42B1C — WinUI critical red
+
+  // ── Typography ────────────────────────────────────────────────────────────
+  // Segoe UI Variable is Windows 11's system font — we use Inter as the
+  // closest web equivalent (same proportions, similar optical rendering).
+  $family-sans-serif: ("Inter", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif),
+  $family-monospace:  ("Cascadia Code", "JetBrains Mono", ui-monospace, "Consolas", monospace),
+  $size-normal: 0.875rem,   // 14px — WinUI Body text style
+
+  // ── Border Radius ─────────────────────────────────────────────────────────
+  // WinUI 3 uses 4px on controls, 7px on cards/dialogs.
+  $radius-small:  0.125rem,  // 2px  — very tight: indicators, badges
+  $radius:        0.25rem,   // 4px  — WinUI ControlCornerRadius
+  $radius-medium: 0.4375rem, // 7px  — WinUI OverlayCornerRadius
+  $radius-large:  0.5rem,    // 8px  — dialogs, large panels
+
+  // ── Spacing & Motion ──────────────────────────────────────────────────────
+  $block-spacing: 1rem,
+  $duration:      167ms,     // WinUI animation duration (Fast)
+  $speed:         83ms
+
+);
+
+// Component-level overrides and extensions
+@use "overrides-windows11-winui";

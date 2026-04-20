@@ -1,0 +1,538 @@
+// =============================================================================
+// GITHUB PRIMER — COMPONENT OVERRIDES & EXTENSIONS
+// =============================================================================
+// Applied AFTER Bulma is imported. These rules layer on top of Bulma's
+// generated CSS using the same CSS custom property system where possible.
+//
+// Primer-specific design decisions:
+//   — Borders everywhere (Primer uses 1px #d0d7de borders, not shadows)
+//   — No card shadows by default — depth via border only
+//   — Buttons: Primer's gradient-to-flat bordered style
+//   — Table: GitHub PR/Issues table aesthetic
+//   — Inputs: thin border, green focus glow
+//   — Labels/Tags: GitHub label pill style (bold, coloured border)
+//   — Menu: left-rail active indicator (green bar)
+//   — Sticky header rows in tablesrder)
+//   — Menu: left-rail active indicator (green bar)
+//   — Sticky header rows in tables
+// =============================================================================
+
+// ─── Focus Ring ───────────────────────────────────────────────────────────────
+// Consistent, accessible focus ring across all interactive elements.
+:focus-visible {
+  outline: 2px solid var(--bulma-primary);
+  outline-offset: 2px;
+}
+
+// ─── Scrollbars (Webkit) ──────────────────────────────────────────────────────
+// Slim scrollbars that match the theme's neutral palette.
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bulma-scheme-main-bis);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bulma-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bulma-text-weak);
+}
+
+// ─── Tables ───────────────────────────────────────────────────────────────────
+// Data-heavy apps need denser, cleaner tables.
+.table {
+  font-size: 0.875rem;   // 14 px — tighter for data grids
+
+  thead th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--bulma-text-weak);
+    background-color: var(--bulma-scheme-main-bis);
+    border-bottom-width: 1px;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    transition: background-color var(--bulma-duration) var(--bulma-easing);
+
+    &:hover td {
+      background-color: var(--bulma-scheme-main-bis);
+    }
+  }
+
+  td,
+  th {
+    vertical-align: middle;
+    padding: 0.55rem 0.75rem;
+  }
+
+  &.is-narrow td,
+  &.is-narrow th {
+    padding: 0.35rem 0.6rem;
+  }
+}
+
+// ─── Navbar ───────────────────────────────────────────────────────────────────
+.navbar {
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+// ─── Sidebar / Menu ───────────────────────────────────────────────────────────
+.menu-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.menu-list a {
+  border-radius: var(--bulma-radius);
+  transition: background-color var(--bulma-duration) var(--bulma-easing),
+              color var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Cards ────────────────────────────────────────────────────────────────────
+.card {
+  border: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: box-shadow var(--bulma-duration) var(--bulma-easing);
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.card-header {
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: none;
+  padding: 0.75rem 1rem;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+// ─── Buttons ──────────────────────────────────────────────────────────────────
+.button {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: background-color var(--bulma-duration) var(--bulma-easing),
+              border-color var(--bulma-duration) var(--bulma-easing),
+              box-shadow var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Form Inputs ──────────────────────────────────────────────────────────────
+.input,
+.textarea,
+.select select {
+  transition: border-color var(--bulma-duration) var(--bulma-easing),
+              box-shadow var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Notification / Tag ───────────────────────────────────────────────────────
+.tag {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+// ─── Code & Pre ───────────────────────────────────────────────────────────────
+// Better monospace styling for logs, API responses, etc.
+code,
+pre {
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+// ─── Typography Utilities ─────────────────────────────────────────────────────
+// Extra weight helpers useful for data labels and headings.
+.has-text-tabular {
+  font-variant-numeric: tabular-nums;   // aligns numbers in tables/lists
+}
+
+.has-text-mono {
+  font-family: var(--bulma-family-code);
+}
+
+// ─── Skeleton / Loading ───────────────────────────────────────────────────────
+// Subtle pulse animation used for skeleton loading states.
+@keyframes skeleton-pulse {
+  0%,
+  100% { opacity: 1; }
+  50%  { opacity: 0.5; }
+}
+
+.is-skeleton-pulsing {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+// ─── Responsive Density Helpers ───────────────────────────────────────────────
+// Quick helpers to toggle layout density (useful for data grids).
+.is-density-compact {
+  .table td,
+  .table th {
+    padding: 0.3rem 0.5rem;
+  }
+}
+
+.is-density-comfortable {
+  .table td,
+  .table th {
+    padding: 0.75rem 1rem;
+  }
+}
+
+// =============================================================================
+// GITHUB PRIMER — THEME-SPECIFIC ADDITIONS
+// =============================================================================
+
+// ─── Body & base canvas ───────────────────────────────────────────────────────
+// Primer "canvas.default" is pure white; "canvas.subtle" is #f6f8fa.
+body {
+  background-color: var(--bulma-scheme-main);
+  font-size: 0.875rem;       // GitHub UI uses 14px base
+  line-height: 1.5;
+}
+
+// ─── Navbar — GitHub top bar style ───────────────────────────────────────────
+// Dark navbar with white text (GitHub.com header).
+.navbar {
+  background-color: hsl(215, 28%, 13%);  // #0d1117 — GitHub dark canvas
+  border-bottom: 1px solid hsl(215, 18%, 20%);
+  box-shadow: none;
+
+  .navbar-item,
+  .navbar-link,
+  .navbar-item a {
+    color: hsl(215, 14%, 80%);
+    font-size: 0.875rem;
+
+    &:hover,
+    &:focus {
+      color: #fff;
+      background-color: hsla(215, 14%, 80%, 0.08);
+    }
+  }
+
+  .navbar-item.is-active {
+    color: #fff;
+    background-color: transparent;
+  }
+
+  // Brand stays white
+  .navbar-brand .navbar-item {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  // Buttons inside navbar
+  .button.is-primary {
+    background-color: hsl(134, 65%, 30%);
+    border-color: hsla(0, 0%, 100%, 0.15);
+    color: #fff;
+  }
+}
+
+// ─── Hero — GitHub-style banner with dark overlay ────────────────────────────
+.hero.is-primary {
+  background-color: hsl(215, 28%, 13%);
+  background-image: none;
+}
+
+// ─── Cards — Primer "Box" style: bordered, no shadow ─────────────────────────
+// GitHub uses 1px solid #d0d7de borders. No shadow. Flat depth.
+.card {
+  border: 1px solid hsl(215, 14%, 83%);
+  border-radius: var(--bulma-radius);
+  box-shadow: none;
+  transition: border-color var(--bulma-duration) var(--bulma-easing);
+
+  &:hover {
+    border-color: hsl(215, 14%, 65%);
+    box-shadow: none;
+  }
+}
+
+.card-header {
+  background-color: var(--bulma-scheme-main-bis);
+  border-bottom: 1px solid hsl(215, 14%, 83%);
+  box-shadow: none;
+  border-radius: var(--bulma-radius) var(--bulma-radius) 0 0;
+}
+
+// ─── Buttons — Primer button style ───────────────────────────────────────────
+// Default: white with gray border. Primary: green. Danger: red.
+.button {
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid hsl(215, 14%, 77%);
+  box-shadow: 0 1px 0 rgba(31, 35, 40, 0.04);
+  transition:
+    background-color var(--bulma-duration),
+    border-color var(--bulma-duration),
+    box-shadow var(--bulma-duration);
+
+  &:hover {
+    background-color: var(--bulma-scheme-main-bis);
+    border-color: hsl(215, 14%, 68%);
+  }
+}
+
+.button.is-primary {
+  background-color: hsl(134, 65%, 30%);
+  border-color: hsla(134, 65%, 15%, 0.3);
+  box-shadow: 0 1px 0 rgba(31, 35, 40, 0.1), inset 0 1px 0 hsla(0, 0%, 100%, 0.08);
+
+  &:hover {
+    background-color: hsl(134, 65%, 26%);
+    border-color: hsla(134, 65%, 15%, 0.4);
+  }
+}
+
+// ─── Tabs — Primer "UnderlineNav" ────────────────────────────────────────────
+.tabs {
+  border-bottom: 1px solid hsl(215, 14%, 83%);
+
+  a {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--bulma-text-weak);
+    border-bottom: 2px solid transparent;
+    padding-bottom: calc(0.5em - 1px);
+
+    &:hover {
+      color: var(--bulma-text);
+      border-bottom-color: hsl(215, 14%, 70%);
+      background: transparent;
+    }
+  }
+
+  li.is-active a {
+    color: var(--bulma-text-strong);
+    font-weight: 600;
+    border-bottom: 2px solid hsl(9, 100%, 55%);   // Primer uses orange-red active tab
+  }
+}
+
+// ─── Table — GitHub issues/PR list aesthetic ─────────────────────────────────
+.table {
+  font-size: 0.875rem;
+  border: 1px solid hsl(215, 14%, 83%);
+  border-radius: var(--bulma-radius);
+  overflow: hidden;
+
+  thead th {
+    background-color: var(--bulma-scheme-main-bis);
+    border-bottom: 1px solid hsl(215, 14%, 83%);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: none;
+    color: var(--bulma-text-weak);
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid hsl(215, 14%, 89%);
+    transition: background-color 60ms;
+
+    &:last-child td { border-bottom: none; }
+
+    &:hover td {
+      background-color: hsl(215, 100%, 98%);
+    }
+  }
+
+  td, th { padding: 0.5rem 0.75rem; }
+}
+
+// ─── Inputs — Primer TextField ───────────────────────────────────────────────
+.input,
+.textarea,
+.select select {
+  border: 1px solid hsl(215, 14%, 77%);
+  border-radius: var(--bulma-radius);
+  box-shadow: inset 0 1px 0 rgba(208, 215, 222, 0.2);
+  font-size: 0.875rem;
+
+  &:focus,
+  &.is-focused {
+    border-color: hsl(212, 92%, 45%);
+    box-shadow: 0 0 0 3px hsla(212, 92%, 45%, 0.2);
+    outline: none;
+  }
+}
+
+// ─── Tags — Primer label pill style ─────────────────────────────────────────
+// GitHub labels: coloured border + light bg + bold text.
+.tag {
+  font-size: 0.72rem;
+  font-weight: 500;
+  border-radius: 2em;           // Pill shape — GitHub labels are fully rounded
+  border: 1px solid transparent;
+  padding: 0.1em 0.6em;
+}
+
+.tag.is-primary {
+  background-color: hsl(134, 65%, 93%);
+  color: hsl(134, 65%, 22%);
+  border-color: hsl(134, 65%, 75%);
+}
+.tag.is-info {
+  background-color: hsl(212, 92%, 93%);
+  color: hsl(212, 92%, 28%);
+  border-color: hsl(212, 92%, 75%);
+}
+.tag.is-danger {
+  background-color: hsl(357, 69%, 93%);
+  color: hsl(357, 69%, 35%);
+  border-color: hsl(357, 69%, 75%);
+}
+.tag.is-warning {
+  background-color: hsl(40, 93%, 93%);
+  color: hsl(40, 93%, 25%);
+  border-color: hsl(40, 93%, 68%);
+}
+.tag.is-success {
+  background-color: hsl(134, 65%, 93%);
+  color: hsl(134, 65%, 22%);
+  border-color: hsl(134, 65%, 75%);
+}
+
+// ─── Message — Primer "Flash" alert style ────────────────────────────────────
+.message {
+  border: 1px solid hsl(215, 14%, 83%);
+  border-radius: var(--bulma-radius);
+
+  &.is-info    { border-color: hsl(212, 92%, 75%); background-color: hsl(212, 92%, 97%); }
+  &.is-success { border-color: hsl(134, 65%, 75%); background-color: hsl(134, 65%, 97%); }
+  &.is-warning { border-color: hsl(40,  93%, 68%); background-color: hsl(40,  93%, 97%); }
+  &.is-danger  { border-color: hsl(357, 69%, 75%); background-color: hsl(357, 69%, 97%); }
+}
+
+.message-header {
+  background-color: transparent;
+  border-bottom: 1px solid inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--bulma-text-strong);
+}
+
+// ─── Panel — Primer "SelectMenu" list pane ───────────────────────────────────
+.panel {
+  border: 1px solid hsl(215, 14%, 83%);
+  border-radius: var(--bulma-radius);
+  box-shadow: 0 1px 3px rgba(31, 35, 40, 0.12), 0 8px 24px rgba(66, 74, 83, 0.12);
+}
+
+.panel-heading {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  background-color: var(--bulma-scheme-main-bis);
+  border-bottom: 1px solid hsl(215, 14%, 83%);
+}
+
+.panel-block.is-active {
+  background-color: hsl(215, 100%, 97%);
+  font-weight: 600;
+  color: hsl(212, 92%, 45%);
+}
+
+// ─── Menu (sidebar nav) — Primer ActionList style ─────────────────────────────
+.menu-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--bulma-text-weak);
+}
+
+.menu-list a {
+  font-size: 0.875rem;
+  border-radius: var(--bulma-radius);
+  color: var(--bulma-text);
+
+  &:hover {
+    background-color: hsl(215, 14%, 93%);
+    color: var(--bulma-text-strong);
+  }
+
+  &.is-active {
+    background-color: hsl(215, 100%, 95%);
+    color: hsl(212, 92%, 35%);
+    font-weight: 600;
+
+    // Green left rail — Primer's selected ActionList item
+    box-shadow: inset 2px 0 0 hsl(134, 65%, 30%);
+    padding-left: calc(0.75em - 2px);
+  }
+}
+
+// ─── Breadcrumb — Primer breadcrumb style ─────────────────────────────────────
+.breadcrumb {
+  font-size: 0.875rem;
+
+  a {
+    color: hsl(212, 92%, 45%);
+    &:hover { text-decoration: underline; }
+  }
+
+  li.is-active a {
+    color: var(--bulma-text);
+    font-weight: 400;
+  }
+
+  li + li::before { color: var(--bulma-text-weak); }
+}
+
+// ─── Notification — Primer Flash style ───────────────────────────────────────
+.notification {
+  border-radius: var(--bulma-radius);
+  font-size: 0.875rem;
+  border: 1px solid transparent;
+
+  &.is-info    { border-color: hsl(212, 92%, 75%); }
+  &.is-success { border-color: hsl(134, 65%, 75%); }
+  &.is-warning { border-color: hsl(40,  93%, 68%); }
+  &.is-danger  { border-color: hsl(357, 69%, 75%); }
+}
+
+// ─── Dark mode — GitHub dark theme (#0d1117 surface) ─────────────────────────
+[data-theme="dark"] {
+  .card {
+    border-color: hsl(215, 14%, 23%);
+    background-color: hsl(215, 28%, 10%);
+  }
+
+  .card-header {
+    background-color: hsl(215, 28%, 8%);
+    border-bottom-color: hsl(215, 14%, 23%);
+  }
+
+  .table {
+    border-color: hsl(215, 14%, 23%);
+
+    thead th { background-color: hsl(215, 28%, 8%); border-bottom-color: hsl(215, 14%, 23%); }
+    tbody tr { border-bottom-color: hsl(215, 14%, 18%); }
+    tbody tr:hover td { background-color: hsl(215, 28%, 14%); }
+  }
+
+  .input, .textarea, .select select {
+    border-color: hsl(215, 14%, 30%);
+    background-color: hsl(215, 28%, 8%);
+    color: hsl(215, 14%, 80%);
+  }
+
+  .panel { border-color: hsl(215, 14%, 23%); }
+  .panel-heading { background-color: hsl(215, 28%, 8%); border-bottom-color: hsl(215, 14%, 23%); }
+  .panel-block.is-active { background-color: hsl(215, 28%, 14%); }
+  .menu-list a:hover { background-color: hsl(215, 28%, 14%); }
+  .menu-list a.is-active { background-color: hsl(215, 28%, 14%); color: hsl(134, 65%, 60%); }
+}
+

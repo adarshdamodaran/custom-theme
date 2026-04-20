@@ -1,0 +1,72 @@
+// =============================================================================
+// NOTION MINIMAL — MAIN ENTRY POINT
+// =============================================================================
+// Inspired by Notion's design language — a content-first, near-zero-chrome UI.
+// Works exceptionally well for knowledge bases, wikis, and internal portals
+// where the content should speak for itself.
+//
+// Palette rationale:
+//   Scheme   — Warm off-white (hue 40°, very low sat) — Notion's #FFFEFC canvas
+//   Primary  — Notion action blue #2383E2 = hsl(212, 76%, 51%) — links & CTAs
+//   Link     — Same blue — consistent with Notion's anchor style
+//   Success  — Muted green  hsl(145, 38%, 37%)
+//   Warning  — Muted yellow hsl(40, 70%, 45%)
+//   Danger   — Notion red   hsl(3,  72%, 51%)
+//   Info     — Notion blue  hsl(212, 76%, 51%)
+//
+// Typography:
+//   Inter is Notion's display font. Falls back cleanly to system-ui.
+//   Notion uses a slightly larger base size (16px) with generous line-height.
+//
+// Design philosophy:
+//   — Nearly invisible UI chrome: no shadows, hairline borders only
+//   — Square-ish corners (3px) — Notion is notably non-rounded
+//   — Whitespace does the visual work
+//   — Color used sparingly — mostly for semantic states
+//
+// Build:
+//   npm run build          — expanded CSS  → css/theme.css
+//   npm run build:min      — compressed    → css/theme.min.css
+//   npm run watch          — watch mode
+// =============================================================================
+
+@use "bulma/sass" with (
+
+  // ── Scheme (gray scale base) ──────────────────────────────────────────────
+  // Notion's canvas is a very warm near-white — hue 40° (slightly yellow-beige),
+  // extremely low saturation. This avoids the clinical feel of pure #ffffff.
+  $scheme-h: 40,
+  $scheme-s:  8%,
+
+  // ── Brand & Semantic Colors ───────────────────────────────────────────────
+  $primary:  hsl(212, 76%, 51%),  // #2383E2 — Notion action blue
+  $link:     hsl(212, 76%, 51%),  // same — anchors match action color
+  $info:     hsl(212, 76%, 51%),  // same — Notion uses blue for info
+  $success:  hsl(145, 38%, 37%),  // muted green — Notion success
+  $warning:  hsl(40,  70%, 45%),  // muted amber
+  $danger:   hsl(3,   72%, 51%),  // Notion red — used in danger/error states
+
+  // ── Typography ────────────────────────────────────────────────────────────
+  // Inter is loaded via Google Fonts in showcase.html.
+  // Notion uses a 16px base with 1.6 line-height — more generous than typical apps.
+  $family-sans-serif: ("Inter", system-ui, -apple-system, "Segoe UI", sans-serif),
+  $family-monospace:  ("JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace),
+  $size-normal: 1rem,   // 16px — Notion reads at full size
+
+  // ── Border Radius ─────────────────────────────────────────────────────────
+  // Notion uses very tight corners — almost square but not harsh.
+  $radius-small:  0.1875rem,  // 3px — inline elements, badges
+  $radius:        0.1875rem,  // 3px — standard: inputs, buttons, cards
+  $radius-medium: 0.25rem,    // 4px — slightly larger containers
+  $radius-large:  0.375rem,   // 6px — modals (Notion modals are barely rounded)
+
+  // ── Spacing & Motion ──────────────────────────────────────────────────────
+  // Notion motion is subtle and fast — content transitions, not decorative.
+  $block-spacing: 1.75rem,    // generous vertical rhythm
+  $duration:      120ms,
+  $speed:         60ms
+
+);
+
+// Component-level overrides and extensions
+@use "overrides-notion-minimal";

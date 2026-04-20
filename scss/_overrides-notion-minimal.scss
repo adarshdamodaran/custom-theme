@@ -1,0 +1,633 @@
+// =============================================================================
+// GITHUB PRIMER — COMPONENT OVERRIDES & EXTENSIONS
+// =============================================================================
+// Applied AFTER Bulma is imported. These rules layer on top of Bulma's
+// generated CSS using the same CSS custom property system where possible.
+//
+// Primer-specific design decisions:
+//   — Borders everywhere (Primer uses 1px #d0d7de borders, not shadows)
+//   — No card shadows by default — depth via border only
+//   — Buttons: Primer's gradient-to-flat bordered style
+//   — Table: GitHub PR/Issues table aesthetic
+//   — Inputs: thin border, green focus glow
+//   — Labels/Tags: GitHub label pill style (bold, coloured border)
+//   — Menu: left-rail active indicator (green bar)
+//   — Sticky header rows in tablesrder)
+//   — Menu: left-rail active indicator (green bar)
+//   — Sticky header rows in tables
+// =============================================================================
+
+// ─── Focus Ring ───────────────────────────────────────────────────────────────
+// Consistent, accessible focus ring across all interactive elements.
+:focus-visible {
+  outline: 2px solid var(--bulma-primary);
+  outline-offset: 2px;
+}
+
+// ─── Scrollbars (Webkit) ──────────────────────────────────────────────────────
+// Slim scrollbars that match the theme's neutral palette.
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bulma-scheme-main-bis);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bulma-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bulma-text-weak);
+}
+
+// ─── Tables ───────────────────────────────────────────────────────────────────
+// Data-heavy apps need denser, cleaner tables.
+.table {
+  font-size: 0.875rem;   // 14 px — tighter for data grids
+
+  thead th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--bulma-text-weak);
+    background-color: var(--bulma-scheme-main-bis);
+    border-bottom-width: 1px;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    transition: background-color var(--bulma-duration) var(--bulma-easing);
+
+    &:hover td {
+      background-color: var(--bulma-scheme-main-bis);
+    }
+  }
+
+  td,
+  th {
+    vertical-align: middle;
+    padding: 0.55rem 0.75rem;
+  }
+
+  &.is-narrow td,
+  &.is-narrow th {
+    padding: 0.35rem 0.6rem;
+  }
+}
+
+// ─── Navbar ───────────────────────────────────────────────────────────────────
+.navbar {
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+// ─── Sidebar / Menu ───────────────────────────────────────────────────────────
+.menu-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.menu-list a {
+  border-radius: var(--bulma-radius);
+  transition: background-color var(--bulma-duration) var(--bulma-easing),
+              color var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Cards ────────────────────────────────────────────────────────────────────
+.card {
+  border: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: box-shadow var(--bulma-duration) var(--bulma-easing);
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.card-header {
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: none;
+  padding: 0.75rem 1rem;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+// ─── Buttons ──────────────────────────────────────────────────────────────────
+.button {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: background-color var(--bulma-duration) var(--bulma-easing),
+              border-color var(--bulma-duration) var(--bulma-easing),
+              box-shadow var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Form Inputs ──────────────────────────────────────────────────────────────
+.input,
+.textarea,
+.select select {
+  transition: border-color var(--bulma-duration) var(--bulma-easing),
+              box-shadow var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Notification / Tag ───────────────────────────────────────────────────────
+.tag {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+// ─── Code & Pre ───────────────────────────────────────────────────────────────
+// Better monospace styling for logs, API responses, etc.
+code,
+pre {
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+// ─── Typography Utilities ─────────────────────────────────────────────────────
+// Extra weight helpers useful for data labels and headings.
+.has-text-tabular {
+  font-variant-numeric: tabular-nums;   // aligns numbers in tables/lists
+}
+
+.has-text-mono {
+  font-family: var(--bulma-family-code);
+}
+
+// ─── Skeleton / Loading ───────────────────────────────────────────────────────
+// Subtle pulse animation used for skeleton loading states.
+@keyframes skeleton-pulse {
+  0%,
+  100% { opacity: 1; }
+  50%  { opacity: 0.5; }
+}
+
+.is-skeleton-pulsing {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+// ─── Responsive Density Helpers ───────────────────────────────────────────────
+// Quick helpers to toggle layout density (useful for data grids).
+.is-density-compact {
+  .table td,
+  .table th {
+    padding: 0.3rem 0.5rem;
+  }
+}
+
+.is-density-comfortable {
+  .table td,
+  .table th {
+    padding: 0.75rem 1rem;
+  }
+}
+
+// =============================================================================
+// NOTION MINIMAL — COMPONENT OVERRIDES & EXTENSIONS
+// =============================================================================
+// Applied AFTER Bulma is imported. These rules embody Notion's philosophy:
+// the UI should disappear and let the content dominate.
+//
+// Key design decisions:
+//   — Near-zero visible chrome: no card shadows, hairline borders (#e3e2e0)
+//   — Everything square-ish: 3px radius consistently
+//   — Hover states use Notion's warm gray (#f7f6f3) fill, no color shift
+//   — Color reserved for semantic states and links only
+//   — Typography-driven hierarchy: size + weight, not color or decoration
+//   — Notion dark mode: #191919 canvas, slightly warm (not pure black)
+// =============================================================================
+
+// ─── Notion color tokens ───────────────────────────────────────────────────────
+:root {
+  --notion-canvas:        hsl(40, 25%, 99%);    // #FFFEFC — Notion light canvas
+  --notion-bg-hover:      hsl(40, 15%, 96%);    // #F7F6F3 — hover fill
+  --notion-bg-selected:   hsl(40, 15%, 93%);    // selected/active fill
+  --notion-border:        hsl(36, 10%, 87%);    // #E3E2E0 — Notion's hairline
+  --notion-text:          hsl(30, 6%,  20%);    // #37352F — Notion off-black
+  --notion-text-secondary: hsl(30, 5%, 48%);    // #787672 — muted text
+  --notion-blue:          hsl(212, 76%, 51%);   // #2383E2 — action blue
+  --notion-blue-bg:       hsl(212, 76%, 96%);   // blue selection background
+}
+
+// ─── Body ─────────────────────────────────────────────────────────────────────
+// Notion's near-white warm canvas. Slightly off-white to reduce eye strain.
+body {
+  background-color: var(--notion-canvas);
+  color: var(--notion-text);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+// ─── Typography — Notion type scale ───────────────────────────────────────────
+// Notion uses weight + size for hierarchy, not color or uppercase.
+.title {
+  color: var(--notion-text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.subtitle {
+  color: var(--notion-text-secondary);
+  font-weight: 400;
+}
+
+h1, h2, h3 { letter-spacing: -0.015em; }
+
+// ─── Navbar — Notion top bar ───────────────────────────────────────────────────
+// Notion's header is barely visible: white, no shadow, just a 1px bottom line.
+.navbar {
+  background-color: var(--notion-canvas);
+  border-bottom: 1px solid var(--notion-border);
+  box-shadow: none;
+  min-height: 3rem;
+
+  .navbar-item,
+  .navbar-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--notion-text);
+    border-radius: var(--bulma-radius);
+    transition: background-color var(--bulma-duration);
+
+    &:hover {
+      background-color: var(--notion-bg-hover);
+      color: var(--notion-text);
+    }
+  }
+
+  .navbar-item.is-active {
+    background-color: var(--notion-bg-selected);
+    font-weight: 600;
+  }
+
+  .navbar-brand .navbar-item {
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+}
+
+// ─── Hero — Notion page header style (title-only, no background color) ─────────
+.hero.is-primary {
+  background-color: var(--notion-canvas);
+  background-image: none;
+  color: var(--notion-text);
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+
+  .title   { color: var(--notion-text); font-size: 2.5rem; font-weight: 700; }
+  .subtitle { color: var(--notion-text-secondary); }
+
+  // Button inside hero uses Notion's action blue
+  .button.is-primary {
+    background-color: var(--notion-blue);
+    color: #fff;
+    border: none;
+  }
+}
+
+// ─── Cards — Notion "page block" style ────────────────────────────────────────
+// No shadow at all. Just a hairline border on hover. Flat by default.
+.card {
+  background-color: #fff;
+  border: 1px solid var(--notion-border);
+  border-radius: var(--bulma-radius);
+  box-shadow: none;
+  transition: border-color var(--bulma-duration);
+
+  &:hover {
+    border-color: hsl(36, 10%, 72%);
+    box-shadow: none;
+  }
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: 1px solid var(--notion-border);
+  box-shadow: none;
+  padding: 0.875rem 1rem;
+}
+
+.card-header-title {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--notion-text);
+  letter-spacing: -0.01em;
+}
+
+.card-content { padding: 1rem; }
+
+// ─── Buttons — Notion action buttons ──────────────────────────────────────────
+// Default: ghost-like — just a thin border, no fill.
+// Primary: filled blue (the only saturated color in the UI).
+.button {
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--notion-border);
+  background-color: #fff;
+  color: var(--notion-text);
+  box-shadow: none;
+  transition: background-color var(--bulma-duration), border-color var(--bulma-duration);
+
+  &:hover {
+    background-color: var(--notion-bg-hover);
+    border-color: hsl(36, 10%, 72%);
+    color: var(--notion-text);
+  }
+}
+
+.button.is-primary {
+  background-color: var(--notion-blue);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: none;
+
+  &:hover {
+    background-color: hsl(212, 76%, 44%);
+    border-color: transparent;
+  }
+}
+
+.button.is-light {
+  background-color: var(--notion-bg-hover);
+  border-color: transparent;
+  color: var(--notion-text);
+
+  &:hover { background-color: var(--notion-bg-selected); }
+}
+
+// ─── Tabs — Notion "inline" underline tabs ────────────────────────────────────
+.tabs {
+  border-bottom: 1px solid var(--notion-border);
+
+  a {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--notion-text-secondary);
+    border-bottom: 2px solid transparent;
+    padding-bottom: calc(0.5em - 1px);
+    transition: color var(--bulma-duration), border-color var(--bulma-duration);
+
+    &:hover {
+      color: var(--notion-text);
+      background: transparent;
+      border-bottom-color: var(--notion-border);
+    }
+  }
+
+  li.is-active a {
+    color: var(--notion-text);
+    font-weight: 600;
+    border-bottom: 2px solid var(--notion-text);  // Notion active tab = black underline
+  }
+}
+
+// ─── Table — Notion database table style ──────────────────────────────────────
+// Notion tables: full-width, hairline cell borders, no header background fill.
+.table {
+  font-size: 0.9375rem;   // Notion's slightly larger base
+  border-collapse: collapse;
+  width: 100%;
+
+  thead th {
+    background-color: transparent;
+    border-bottom: 1px solid var(--notion-border);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--notion-text-secondary);
+    text-transform: none;
+    letter-spacing: 0;
+    padding: 0.5rem 0.75rem;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--notion-border);
+    transition: background-color 80ms;
+
+    &:last-child { border-bottom: none; }
+
+    &:hover td {
+      background-color: var(--notion-bg-hover);
+    }
+  }
+
+  td { padding: 0.5rem 0.75rem; color: var(--notion-text); }
+}
+
+// ─── Inputs — Notion text field ───────────────────────────────────────────────
+// Notion inputs are borderless by default, showing border only on focus/hover.
+.input,
+.textarea,
+.select select {
+  background-color: #fff;
+  border: 1px solid var(--notion-border);
+  border-radius: var(--bulma-radius);
+  color: var(--notion-text);
+  font-size: 0.9375rem;
+  box-shadow: none;
+  transition: border-color var(--bulma-duration);
+
+  &::placeholder { color: var(--notion-text-secondary); }
+
+  &:hover { border-color: hsl(36, 10%, 72%); }
+
+  &:focus,
+  &.is-focused {
+    border-color: var(--notion-blue);
+    box-shadow: 0 0 0 2px hsla(212, 76%, 51%, 0.18);
+    outline: none;
+  }
+}
+
+// ─── Tags — Notion "property" label style ─────────────────────────────────────
+// Notion properties/tags: no border, pastel fill, small text.
+.tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: var(--bulma-radius-small);
+  border: none;
+  padding: 0.15em 0.5em;
+  letter-spacing: 0.01em;
+}
+
+// Notion's colored property labels — warm pastel backgrounds
+.tag.is-primary { background-color: hsl(212, 76%, 93%); color: hsl(212, 76%, 32%); }
+.tag.is-info    { background-color: hsl(212, 76%, 93%); color: hsl(212, 76%, 32%); }
+.tag.is-success { background-color: hsl(145, 38%, 90%); color: hsl(145, 38%, 25%); }
+.tag.is-warning { background-color: hsl(40,  70%, 90%); color: hsl(40,  70%, 28%); }
+.tag.is-danger  { background-color: hsl(3,   72%, 93%); color: hsl(3,   72%, 35%); }
+.tag.is-light   { background-color: var(--notion-bg-hover); color: var(--notion-text-secondary); }
+
+// ─── Messages — Notion callout block ──────────────────────────────────────────
+// Notion callouts: light pastel background, emoji icon, no border.
+.message {
+  border: none;
+  border-radius: var(--bulma-radius);
+
+  &.is-primary { background-color: hsl(212, 76%, 95%); }
+  &.is-info    { background-color: hsl(212, 76%, 95%); }
+  &.is-success { background-color: hsl(145, 38%, 94%); }
+  &.is-warning { background-color: hsl(40,  70%, 94%); }
+  &.is-danger  { background-color: hsl(3,   72%, 95%); }
+}
+
+.message-header {
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--notion-text);
+}
+
+// ─── Panel — Notion sidebar list panel ────────────────────────────────────────
+.panel {
+  border: 1px solid var(--notion-border);
+  border-radius: var(--bulma-radius);
+  box-shadow: none;
+}
+
+.panel-heading {
+  background-color: var(--notion-bg-hover);
+  border-bottom: 1px solid var(--notion-border);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--notion-text-secondary);
+}
+
+.panel-block.is-active {
+  background-color: var(--notion-bg-selected);
+  font-weight: 600;
+  color: var(--notion-text);
+}
+
+.panel-block:hover {
+  background-color: var(--notion-bg-hover);
+}
+
+// ─── Menu — Notion sidebar navigation ─────────────────────────────────────────
+// Notion's sidebar: no visual noise, hover = warm gray fill.
+.menu-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--notion-text-secondary);
+}
+
+.menu-list a {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--notion-text);
+  border-radius: var(--bulma-radius);
+  transition: background-color 80ms;
+
+  &:hover {
+    background-color: var(--notion-bg-hover);
+    color: var(--notion-text);
+  }
+
+  &.is-active {
+    background-color: var(--notion-bg-selected);
+    font-weight: 600;
+    color: var(--notion-text);
+  }
+}
+
+// ─── Breadcrumb ───────────────────────────────────────────────────────────────
+.breadcrumb {
+  font-size: 0.875rem;
+
+  a {
+    color: var(--notion-text-secondary);
+    &:hover { color: var(--notion-text); text-decoration: none; }
+  }
+
+  li.is-active a { color: var(--notion-text); font-weight: 500; }
+  li + li::before { color: var(--notion-text-secondary); }
+}
+
+// ─── Notification ─────────────────────────────────────────────────────────────
+.notification {
+  border-radius: var(--bulma-radius);
+  font-size: 0.9375rem;
+  border: none;
+  box-shadow: none;
+}
+
+// ─── Progress ─────────────────────────────────────────────────────────────────
+progress.progress {
+  border-radius: var(--bulma-radius-small);
+  height: 0.375rem;  // slim — Notion progress indicators are subtle
+}
+
+// ─── Dark mode — Notion dark: #191919 canvas, warm dark, not pure black ────────
+[data-theme="dark"] {
+  --notion-canvas:         hsl(0, 0%, 10%);      // #191919 — Notion dark canvas
+  --notion-bg-hover:       hsl(0, 0%, 14%);      // hover fill
+  --notion-bg-selected:    hsl(0, 0%, 18%);      // selected fill
+  --notion-border:         hsl(0, 0%, 22%);      // dark hairline
+  --notion-text:           hsl(36, 8%, 88%);     // warm near-white
+  --notion-text-secondary: hsl(36, 5%, 55%);     // muted
+  --notion-blue:           hsl(212, 76%, 63%);   // lightened for dark bg
+  --notion-blue-bg:        hsl(212, 76%, 16%);   // dark blue selection bg
+
+  body { background-color: var(--notion-canvas); color: var(--notion-text); }
+
+  .card {
+    background-color: hsl(0, 0%, 12%);
+    border-color: var(--notion-border);
+  }
+
+  .card-header { border-bottom-color: var(--notion-border); }
+
+  .navbar {
+    background-color: var(--notion-canvas);
+    border-bottom-color: var(--notion-border);
+  }
+
+  .table {
+    thead th { border-bottom-color: var(--notion-border); color: var(--notion-text-secondary); }
+    tbody tr { border-bottom-color: var(--notion-border); }
+    tbody tr:hover td { background-color: var(--notion-bg-hover); }
+    td { color: var(--notion-text); }
+  }
+
+  .input, .textarea, .select select {
+    background-color: hsl(0, 0%, 14%);
+    border-color: var(--notion-border);
+    color: var(--notion-text);
+  }
+
+  .button {
+    background-color: hsl(0, 0%, 14%);
+    border-color: var(--notion-border);
+    color: var(--notion-text);
+    &:hover { background-color: var(--notion-bg-selected); }
+  }
+
+  .button.is-primary {
+    background-color: var(--notion-blue);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  .panel { border-color: var(--notion-border); }
+  .panel-heading { background-color: var(--notion-bg-hover); border-bottom-color: var(--notion-border); }
+  .panel-block.is-active { background-color: var(--notion-bg-selected); }
+  .panel-block:hover { background-color: var(--notion-bg-hover); }
+
+  .tabs { border-bottom-color: var(--notion-border); }
+  .tabs a { color: var(--notion-text-secondary); }
+  .tabs a:hover { color: var(--notion-text); border-bottom-color: var(--notion-border); }
+  .tabs li.is-active a { color: var(--notion-text); border-bottom-color: var(--notion-text); }
+}
+

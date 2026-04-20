@@ -1,0 +1,60 @@
+// =============================================================================
+// ENTERPRISE THEME — MAIN ENTRY POINT
+// =============================================================================
+// This file is the single compilation entry point.
+//
+// How it works:
+//   1. Bulma is imported with all variable overrides applied via `with (...)`.
+//      This is Bulma 1.x's official configuration API.
+//   2. Bulma's built-in theme engine generates:
+//        :root { ... }                   — light theme (CSS vars, default)
+//        @media (prefers-color-scheme)   — auto OS-level switching
+//        [data-theme="light"]            — explicit light override
+//        [data-theme="dark"]             — explicit dark override
+//      Your app can switch themes by setting data-theme on <html> or <body>.
+//   3. _overrides.scss adds component-level tweaks on top.
+//
+// Build:
+//   npm run build          — expanded CSS  → css/theme.css
+//   npm run build:min      — compressed    → css/theme.min.css
+//   npm run watch          — watch mode
+// =============================================================================
+
+// Pull variable values from the dedicated partials file.
+// Note: In Bulma 1.x, configuring a @use module must be done directly on the
+// first @use of the module — we declare everything inline below so Sass sees
+// it as a single configuration point.
+
+@use "bulma/sass" with (
+
+  // ── Scheme (gray scale base) ──────────────────────────────────────────────
+  $scheme-h: 220,
+  $scheme-s: 13%,
+
+  // ── Brand & Semantic Colors ───────────────────────────────────────────────
+  $primary:  hsl(244, 57%, 52%),
+  $link:     hsl(244, 57%, 52%),
+  $info:     hsl(199, 78%, 44%),
+  $success:  hsl(158, 55%, 38%),
+  $warning:  hsl(38,  88%, 48%),
+  $danger:   hsl(0,   65%, 52%),
+
+  // ── Typography ────────────────────────────────────────────────────────────
+  $family-sans-serif: ("Inter", "SF Pro Display", "Segoe UI", system-ui, sans-serif),
+  $family-monospace:  ("JetBrains Mono", "Fira Code", "Cascadia Code", "SF Mono", "Consolas", monospace),
+
+  // ── Border Radius ─────────────────────────────────────────────────────────
+  $radius-small:  0.2rem,
+  $radius:        0.3rem,
+  $radius-medium: 0.4rem,
+  $radius-large:  0.6rem,
+
+  // ── Spacing & Motion ──────────────────────────────────────────────────────
+  $block-spacing: 1.25rem,
+  $duration:      200ms,
+  $speed:         60ms
+
+);
+
+// Component-level overrides and extensions
+@use "overrides-indigo-slate";

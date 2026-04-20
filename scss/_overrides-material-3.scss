@@ -1,0 +1,675 @@
+// =============================================================================
+// GITHUB PRIMER — COMPONENT OVERRIDES & EXTENSIONS
+// =============================================================================
+// Applied AFTER Bulma is imported. These rules layer on top of Bulma's
+// generated CSS using the same CSS custom property system where possible.
+//
+// Primer-specific design decisions:
+//   — Borders everywhere (Primer uses 1px #d0d7de borders, not shadows)
+//   — No card shadows by default — depth via border only
+//   — Buttons: Primer's gradient-to-flat bordered style
+//   — Table: GitHub PR/Issues table aesthetic
+//   — Inputs: thin border, green focus glow
+//   — Labels/Tags: GitHub label pill style (bold, coloured border)
+//   — Menu: left-rail active indicator (green bar)
+//   — Sticky header rows in tablesrder)
+//   — Menu: left-rail active indicator (green bar)
+//   — Sticky header rows in tables
+// =============================================================================
+
+// ─── Focus Ring ───────────────────────────────────────────────────────────────
+// Consistent, accessible focus ring across all interactive elements.
+:focus-visible {
+  outline: 2px solid var(--bulma-primary);
+  outline-offset: 2px;
+}
+
+// ─── Scrollbars (Webkit) ──────────────────────────────────────────────────────
+// Slim scrollbars that match the theme's neutral palette.
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bulma-scheme-main-bis);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bulma-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bulma-text-weak);
+}
+
+// ─── Tables ───────────────────────────────────────────────────────────────────
+// Data-heavy apps need denser, cleaner tables.
+.table {
+  font-size: 0.875rem;   // 14 px — tighter for data grids
+
+  thead th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--bulma-text-weak);
+    background-color: var(--bulma-scheme-main-bis);
+    border-bottom-width: 1px;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    transition: background-color var(--bulma-duration) var(--bulma-easing);
+
+    &:hover td {
+      background-color: var(--bulma-scheme-main-bis);
+    }
+  }
+
+  td,
+  th {
+    vertical-align: middle;
+    padding: 0.55rem 0.75rem;
+  }
+
+  &.is-narrow td,
+  &.is-narrow th {
+    padding: 0.35rem 0.6rem;
+  }
+}
+
+// ─── Navbar ───────────────────────────────────────────────────────────────────
+.navbar {
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+// ─── Sidebar / Menu ───────────────────────────────────────────────────────────
+.menu-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.menu-list a {
+  border-radius: var(--bulma-radius);
+  transition: background-color var(--bulma-duration) var(--bulma-easing),
+              color var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Cards ────────────────────────────────────────────────────────────────────
+.card {
+  border: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: box-shadow var(--bulma-duration) var(--bulma-easing);
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.card-header {
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: none;
+  padding: 0.75rem 1rem;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+// ─── Buttons ──────────────────────────────────────────────────────────────────
+.button {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: background-color var(--bulma-duration) var(--bulma-easing),
+              border-color var(--bulma-duration) var(--bulma-easing),
+              box-shadow var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Form Inputs ──────────────────────────────────────────────────────────────
+.input,
+.textarea,
+.select select {
+  transition: border-color var(--bulma-duration) var(--bulma-easing),
+              box-shadow var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Notification / Tag ───────────────────────────────────────────────────────
+.tag {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+// ─── Code & Pre ───────────────────────────────────────────────────────────────
+// Better monospace styling for logs, API responses, etc.
+code,
+pre {
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+// ─── Typography Utilities ─────────────────────────────────────────────────────
+// Extra weight helpers useful for data labels and headings.
+.has-text-tabular {
+  font-variant-numeric: tabular-nums;   // aligns numbers in tables/lists
+}
+
+.has-text-mono {
+  font-family: var(--bulma-family-code);
+}
+
+// ─── Skeleton / Loading ───────────────────────────────────────────────────────
+// Subtle pulse animation used for skeleton loading states.
+@keyframes skeleton-pulse {
+  0%,
+  100% { opacity: 1; }
+  50%  { opacity: 0.5; }
+}
+
+.is-skeleton-pulsing {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+// ─── Responsive Density Helpers ───────────────────────────────────────────────
+// Quick helpers to toggle layout density (useful for data grids).
+.is-density-compact {
+  .table td,
+  .table th {
+    padding: 0.3rem 0.5rem;
+  }
+}
+
+.is-density-comfortable {
+  .table td,
+  .table th {
+    padding: 0.75rem 1rem;
+  }
+}
+
+// =============================================================================
+// GOOGLE MATERIAL 3 (MATERIAL YOU) — COMPONENT OVERRIDES & EXTENSIONS
+// =============================================================================
+// Applied AFTER Bulma is imported. These rules layer on top of Bulma's
+// generated CSS using the same CSS custom property system where possible.
+//
+// Material 3 design decisions:
+//   — Tonal surfaces: primary color mixed into background layers (tonal elevation)
+//   — No borders by default on most surfaces — depth via tonal overlay + shadow
+//   — Shape: generous radius (12px medium, 16px large, 28px extra-large)
+//   — Buttons: Filled / Tonal / Outlined / Text — represented here via Bulma modifiers
+//   — State layer: hover/pressed = white/black overlay at 8–12% opacity
+//   — Motion: emphasized easing (cubic-bezier), 200ms standard, 500ms for large enters
+//   — Typography: Display / Headline / Title / Body / Label scale
+// =============================================================================
+
+// ─── Google Fonts import ──────────────────────────────────────────────────────
+// Google Sans is loaded by showcase.html via <link>. No @import needed here.
+
+// ─── M3 Motion: emphasized easing ─────────────────────────────────────────────
+// M3 uses a custom cubic-bezier for emphasized motion (enter/exit transitions).
+:root {
+  --m3-easing-standard:  cubic-bezier(0.2, 0, 0, 1);
+  --m3-easing-decelerate: cubic-bezier(0, 0, 0, 1);     // enter from off-screen
+  --m3-easing-accelerate: cubic-bezier(0.3, 0, 1, 1);   // exit to off-screen
+  --m3-duration-short:    200ms;
+  --m3-duration-medium:   300ms;
+  --m3-duration-long:     500ms;
+
+  // M3 tonal surface overlays — primary hue mixed into neutral surfaces
+  --m3-primary-hsl: 231, 49%, 44%;
+  --m3-surface-tint-1: hsla(var(--m3-primary-hsl), 0.05);   // elevation 1
+  --m3-surface-tint-2: hsla(var(--m3-primary-hsl), 0.08);   // elevation 2
+  --m3-surface-tint-3: hsla(var(--m3-primary-hsl), 0.11);   // elevation 3
+}
+
+// ─── Body ─────────────────────────────────────────────────────────────────────
+// M3 "surface" — slightly off-white canvas with subtle warm-purple tint.
+body {
+  background-color: var(--bulma-scheme-main);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+// ─── Navbar — M3 Top App Bar ───────────────────────────────────────────────────
+// M3 Top App Bar: surface color + subtle bottom shadow (no border).
+// Uses tonal elevation: background = surface + elevation overlay.
+.navbar {
+  background-color: var(--bulma-scheme-main);
+  background-image: linear-gradient(var(--m3-surface-tint-2), var(--m3-surface-tint-2));
+  border-bottom: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
+
+  .navbar-item,
+  .navbar-link {
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-radius: var(--bulma-radius);
+    transition: background-color var(--m3-duration-short) var(--m3-easing-standard);
+
+    &:hover {
+      background-color: hsla(var(--m3-primary-hsl), 0.08);   // M3 state layer hover 8%
+    }
+    &:focus {
+      background-color: hsla(var(--m3-primary-hsl), 0.12);
+    }
+  }
+
+  .navbar-item.is-active {
+    color: var(--bulma-primary);
+    background-color: transparent;
+  }
+
+  .navbar-brand .navbar-item {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+}
+
+// ─── Hero — M3 "Featured" banner with primary container fill ──────────────────
+.hero.is-primary {
+  // Primary container = primary hue at high lightness (~90%)
+  background-color: hsl(231, 49%, 91%);
+  background-image: none;
+  color: hsl(231, 49%, 20%);  // on-primary-container
+
+  .title, .subtitle { color: hsl(231, 49%, 20%); }
+
+  .button {
+    background-color: hsl(231, 49%, 44%);
+    color: #fff;
+    border: none;
+  }
+}
+
+// ─── Cards — M3 "Elevated Card" (tonal elevation level 1) ────────────────────
+// M3 Elevated: white bg + 1dp shadow + primary tint overlay.
+// No border — depth is via tonal overlay and shadow only.
+.card {
+  border: none;
+  background-color: var(--bulma-scheme-main);
+  background-image: linear-gradient(var(--m3-surface-tint-1), var(--m3-surface-tint-1));
+  border-radius: var(--bulma-radius);   // 12px M3 medium shape
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 1px 3px 1px rgba(0, 0, 0, 0.15);
+  transition:
+    box-shadow var(--m3-duration-short) var(--m3-easing-standard),
+    background-image var(--m3-duration-short) var(--m3-easing-standard);
+
+  &:hover {
+    background-image: linear-gradient(var(--m3-surface-tint-2), var(--m3-surface-tint-2));
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 4px 8px 3px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: none;
+  border-radius: var(--bulma-radius) var(--bulma-radius) 0 0;
+  padding: 0.875rem 1rem;
+}
+
+.card-header-title {
+  font-size: 0.875rem;
+  font-weight: 500;   // M3 title-medium
+  letter-spacing: 0.01em;
+}
+
+// ─── Buttons — M3 Button Variants ─────────────────────────────────────────────
+// M3 has 5 button variants. Mapped to Bulma modifiers:
+//   .button              → Elevated Button (white surface + shadow, primary text)
+//   .button.is-primary   → Filled Button (primary bg, on-primary text)
+//   .button.is-light     → Tonal Button (primary container bg)
+//   .button.is-outlined  → Outlined Button (border, primary text)
+//   .button.is-ghost     → Text Button (no bg, no border)
+
+.button {
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.006em;
+  border-radius: 0.375rem;     // Restrained — matches card/input radius
+  border: none;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 1px 3px 1px rgba(0, 0, 0, 0.15);
+  transition:
+    background-color var(--m3-duration-short) var(--m3-easing-standard),
+    box-shadow var(--m3-duration-short) var(--m3-easing-standard);
+  position: relative;
+  overflow: hidden;
+
+  // State layer ripple base
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: 0;
+    border-radius: inherit;
+    transition: opacity var(--m3-duration-short) var(--m3-easing-standard);
+  }
+
+  &:hover::after { opacity: 0.08; }
+  &:focus::after { opacity: 0.12; }
+  &:active::after { opacity: 0.12; }
+}
+
+// Filled button
+.button.is-primary {
+  background-color: var(--bulma-primary);
+  color: #fff;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 1px 3px 1px rgba(0, 0, 0, 0.15);
+
+  &:hover {
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.3),
+      0 2px 6px 2px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Tonal button (secondary container)
+.button.is-light {
+  background-color: hsl(231, 49%, 91%);  // primary container
+  color: hsl(231, 49%, 25%);             // on-primary-container
+  border: none;
+  box-shadow: none;
+}
+
+// Outlined button
+.button.is-outlined {
+  background-color: transparent;
+  border: 1px solid var(--bulma-border);
+  color: var(--bulma-primary);
+  box-shadow: none;
+
+  &:hover {
+    background-color: hsla(var(--m3-primary-hsl), 0.08);
+  }
+}
+
+// ─── Tabs — M3 "Primary Tabs" ─────────────────────────────────────────────────
+// M3 Primary Tabs: active tab has a 3px indicator on the bottom, label + icon.
+.tabs {
+  border-bottom: 1px solid var(--bulma-border-weak);
+
+  a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.006em;
+    color: var(--bulma-text-weak);
+    border-bottom: 3px solid transparent;
+    padding-bottom: calc(0.5em - 2px);
+    transition: color var(--m3-duration-short), border-color var(--m3-duration-short);
+
+    &:hover {
+      color: var(--bulma-primary);
+      background-color: hsla(var(--m3-primary-hsl), 0.08);
+    }
+  }
+
+  li.is-active a {
+    color: var(--bulma-primary);
+    font-weight: 600;
+    border-bottom: 3px solid var(--bulma-primary);
+  }
+}
+
+// ─── Table — M3 Data Table ────────────────────────────────────────────────────
+// M3 Data Table: clean rows, primary-tinted header, hover state layer.
+.table {
+  font-size: 0.875rem;
+  border-radius: var(--bulma-radius);
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2), 0 2px 6px 2px rgba(0,0,0,0.1);
+
+  thead th {
+    background-color: hsl(231, 49%, 96%);   // primary-container subtle
+    color: hsl(231, 49%, 30%);              // on-primary-container
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: none;
+    border-bottom: 1px solid hsl(231, 20%, 85%);
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    transition: background-color var(--m3-duration-short) var(--m3-easing-standard);
+
+    &:hover td {
+      background-color: hsla(var(--m3-primary-hsl), 0.06);  // M3 state layer 8%
+    }
+  }
+
+  td, th { padding: 0.625rem 1rem; }
+}
+
+// ─── Inputs — M3 Outlined TextField ─────────────────────────────────────────
+// M3 Outlined TextField: rounded border, primary focus ring.
+.input,
+.textarea,
+.select select {
+  border: 1px solid var(--bulma-border);
+  border-radius: var(--bulma-radius);
+  background-color: var(--bulma-scheme-main);
+  font-size: 0.875rem;
+  transition:
+    border-color var(--m3-duration-short) var(--m3-easing-standard),
+    box-shadow var(--m3-duration-short) var(--m3-easing-standard);
+
+  &:hover {
+    border-color: var(--bulma-text-weak);
+  }
+
+  &:focus,
+  &.is-focused {
+    border-color: var(--bulma-primary);
+    border-width: 2px;
+    box-shadow: none;
+    outline: none;
+    padding-left: calc(0.75em - 1px);  // compensate for border width increase
+  }
+}
+
+// ─── Tags / Chips — M3 "Assist Chip" / "Filter Chip" ─────────────────────────
+// M3 Chips are pill-shaped, subtle background, with optional leading icon.
+.tag {
+  font-size: 0.8125rem;    // M3 label-small
+  font-weight: 500;
+  letter-spacing: 0.006em;
+  border-radius: 0.25rem;  // Restrained chip shape
+  border: 1px solid var(--bulma-border);
+  background-color: var(--bulma-scheme-main);
+  color: var(--bulma-text);
+  transition: background-color var(--m3-duration-short);
+}
+
+.tag.is-primary {
+  background-color: hsl(231, 49%, 91%);   // primary container
+  color: hsl(231, 49%, 25%);
+  border-color: transparent;
+}
+.tag.is-info {
+  background-color: hsl(197, 35%, 88%);
+  color: hsl(197, 35%, 25%);
+  border-color: transparent;
+}
+.tag.is-success {
+  background-color: hsl(125, 34%, 88%);
+  color: hsl(125, 34%, 22%);
+  border-color: transparent;
+}
+.tag.is-warning {
+  background-color: hsl(30, 82%, 90%);
+  color: hsl(30, 82%, 28%);
+  border-color: transparent;
+}
+.tag.is-danger {
+  background-color: hsl(2, 74%, 90%);
+  color: hsl(2, 74%, 28%);
+  border-color: transparent;
+}
+
+// ─── Messages — M3 "Banner" component ────────────────────────────────────────
+// M3 Banner: full-width, bottom border only, no side borders.
+.message {
+  border: none;
+  border-radius: var(--bulma-radius);
+  background-color: var(--bulma-scheme-main-bis);
+  background-image: linear-gradient(var(--m3-surface-tint-1), var(--m3-surface-tint-1));
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+
+  &.is-primary { background-color: hsl(231, 49%, 96%); }
+  &.is-info    { background-color: hsl(197, 35%, 93%); }
+  &.is-success { background-color: hsl(125, 34%, 93%); }
+  &.is-warning { background-color: hsl(30,  82%, 95%); }
+  &.is-danger  { background-color: hsl(2,   74%, 95%); }
+}
+
+.message-header {
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.006em;
+  color: var(--bulma-text-strong);
+}
+
+// ─── Panel — M3 "Navigation Drawer" list ─────────────────────────────────────
+.panel {
+  border: none;
+  border-radius: var(--bulma-radius-medium);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3), 0 2px 6px 2px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+.panel-heading {
+  background-color: hsl(231, 49%, 96%);
+  color: hsl(231, 49%, 30%);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid hsl(231, 20%, 88%);
+}
+
+.panel-block.is-active {
+  background-color: hsl(231, 49%, 91%);  // secondary container (selected state)
+  color: hsl(231, 49%, 25%);
+  font-weight: 600;
+}
+
+// ─── Menu — M3 Navigation Rail / Drawer items ────────────────────────────────
+// M3 nav items: pill-shaped active indicator behind the entire row.
+.menu-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bulma-text-weak);
+}
+
+.menu-list a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.375rem;  // Restrained nav item indicator
+  transition:
+    background-color var(--m3-duration-short) var(--m3-easing-standard),
+    color var(--m3-duration-short);
+
+  &:hover {
+    background-color: hsla(var(--m3-primary-hsl), 0.08);
+    color: var(--bulma-text-strong);
+  }
+
+  &.is-active {
+    background-color: hsl(231, 49%, 91%);  // primary container
+    color: hsl(231, 49%, 25%);
+    font-weight: 600;
+  }
+}
+
+// ─── Breadcrumb ───────────────────────────────────────────────────────────────
+.breadcrumb {
+  font-size: 0.875rem;
+
+  a {
+    color: var(--bulma-primary);
+    &:hover { text-decoration: underline; }
+  }
+
+  li.is-active a { color: var(--bulma-text); }
+  li + li::before { color: var(--bulma-text-weak); }
+}
+
+// ─── Notification — M3 "Snackbar" style ───────────────────────────────────────
+.notification {
+  border-radius: var(--bulma-radius);
+  font-size: 0.875rem;
+  font-weight: 400;
+  border: none;
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px rgba(0,0,0,0.14);
+}
+
+// ─── Progress — M3 Linear Progress ────────────────────────────────────────────
+progress.progress {
+  border-radius: 0.25rem;
+  height: 0.25rem;
+}
+
+// ─── Dark mode — M3 dark theme: #1c1b1f surface, elevated tonal surfaces ──────
+[data-theme="dark"] {
+  --m3-primary-hsl: 231, 90%, 80%;          // M3 dark primary = primary-80
+  --m3-surface-tint-1:  hsla(var(--m3-primary-hsl), 0.05);
+  --m3-surface-tint-2:  hsla(var(--m3-primary-hsl), 0.08);
+  --m3-surface-tint-3:  hsla(var(--m3-primary-hsl), 0.11);
+
+  .card {
+    background-color: hsl(231, 6%, 14%);
+    background-image: linear-gradient(var(--m3-surface-tint-1), var(--m3-surface-tint-1));
+  }
+
+  .card-header { border-bottom-color: hsl(231, 6%, 22%); }
+
+  .table {
+    thead th {
+      background-color: hsl(231, 49%, 15%);
+      color: hsl(231, 90%, 80%);
+      border-bottom-color: hsl(231, 20%, 25%);
+    }
+    tbody tr:hover td {
+      background-color: hsla(var(--m3-primary-hsl), 0.08);
+    }
+  }
+
+  .input, .textarea, .select select {
+    background-color: hsl(231, 6%, 10%);
+    border-color: hsl(231, 6%, 35%);
+    color: hsl(231, 6%, 90%);
+  }
+
+  .panel { box-shadow: none; border: 1px solid hsl(231, 6%, 22%); }
+  .panel-heading { background-color: hsl(231, 49%, 15%); border-bottom-color: hsl(231, 6%, 22%); }
+  .panel-block.is-active { background-color: hsl(231, 49%, 20%); color: hsl(231, 90%, 80%); }
+  .menu-list a.is-active { background-color: hsl(231, 49%, 20%); color: hsl(231, 90%, 80%); }
+  .menu-list a:hover { background-color: hsla(var(--m3-primary-hsl), 0.08); }
+
+  .button.is-primary { background-color: hsl(231, 90%, 80%); color: hsl(231, 49%, 20%); }
+  .button.is-light {
+    background-color: hsl(231, 49%, 25%);
+    color: hsl(231, 90%, 80%);
+  }
+  .hero.is-primary {
+    background-color: hsl(231, 49%, 18%);
+    .title, .subtitle { color: hsl(231, 90%, 85%); }
+  }
+}
+

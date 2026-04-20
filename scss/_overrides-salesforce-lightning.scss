@@ -1,0 +1,751 @@
+// =============================================================================
+// GITHUB PRIMER — COMPONENT OVERRIDES & EXTENSIONS
+// =============================================================================
+// Applied AFTER Bulma is imported. These rules layer on top of Bulma's
+// generated CSS using the same CSS custom property system where possible.
+//
+// Primer-specific design decisions:
+//   — Borders everywhere (Primer uses 1px #d0d7de borders, not shadows)
+//   — No card shadows by default — depth via border only
+//   — Buttons: Primer's gradient-to-flat bordered style
+//   — Table: GitHub PR/Issues table aesthetic
+//   — Inputs: thin border, green focus glow
+//   — Labels/Tags: GitHub label pill style (bold, coloured border)
+//   — Menu: left-rail active indicator (green bar)
+//   — Sticky header rows in tablesrder)
+//   — Menu: left-rail active indicator (green bar)
+//   — Sticky header rows in tables
+// =============================================================================
+
+// ─── Focus Ring ───────────────────────────────────────────────────────────────
+// Consistent, accessible focus ring across all interactive elements.
+:focus-visible {
+  outline: 2px solid var(--bulma-primary);
+  outline-offset: 2px;
+}
+
+// ─── Scrollbars (Webkit) ──────────────────────────────────────────────────────
+// Slim scrollbars that match the theme's neutral palette.
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bulma-scheme-main-bis);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bulma-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bulma-text-weak);
+}
+
+// ─── Tables ───────────────────────────────────────────────────────────────────
+// Data-heavy apps need denser, cleaner tables.
+.table {
+  font-size: 0.875rem;   // 14 px — tighter for data grids
+
+  thead th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--bulma-text-weak);
+    background-color: var(--bulma-scheme-main-bis);
+    border-bottom-width: 1px;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    transition: background-color var(--bulma-duration) var(--bulma-easing);
+
+    &:hover td {
+      background-color: var(--bulma-scheme-main-bis);
+    }
+  }
+
+  td,
+  th {
+    vertical-align: middle;
+    padding: 0.55rem 0.75rem;
+  }
+
+  &.is-narrow td,
+  &.is-narrow th {
+    padding: 0.35rem 0.6rem;
+  }
+}
+
+// ─── Navbar ───────────────────────────────────────────────────────────────────
+.navbar {
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+// ─── Sidebar / Menu ───────────────────────────────────────────────────────────
+.menu-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.menu-list a {
+  border-radius: var(--bulma-radius);
+  transition: background-color var(--bulma-duration) var(--bulma-easing),
+              color var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Cards ────────────────────────────────────────────────────────────────────
+.card {
+  border: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: box-shadow var(--bulma-duration) var(--bulma-easing);
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.card-header {
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: none;
+  padding: 0.75rem 1rem;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+// ─── Buttons ──────────────────────────────────────────────────────────────────
+.button {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: background-color var(--bulma-duration) var(--bulma-easing),
+              border-color var(--bulma-duration) var(--bulma-easing),
+              box-shadow var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Form Inputs ──────────────────────────────────────────────────────────────
+.input,
+.textarea,
+.select select {
+  transition: border-color var(--bulma-duration) var(--bulma-easing),
+              box-shadow var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Notification / Tag ───────────────────────────────────────────────────────
+.tag {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+// ─── Code & Pre ───────────────────────────────────────────────────────────────
+// Better monospace styling for logs, API responses, etc.
+code,
+pre {
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+// ─── Typography Utilities ─────────────────────────────────────────────────────
+// Extra weight helpers useful for data labels and headings.
+.has-text-tabular {
+  font-variant-numeric: tabular-nums;   // aligns numbers in tables/lists
+}
+
+.has-text-mono {
+  font-family: var(--bulma-family-code);
+}
+
+// ─── Skeleton / Loading ───────────────────────────────────────────────────────
+// Subtle pulse animation used for skeleton loading states.
+@keyframes skeleton-pulse {
+  0%,
+  100% { opacity: 1; }
+  50%  { opacity: 0.5; }
+}
+
+.is-skeleton-pulsing {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+// ─── Responsive Density Helpers ───────────────────────────────────────────────
+// Quick helpers to toggle layout density (useful for data grids).
+.is-density-compact {
+  .table td,
+  .table th {
+    padding: 0.3rem 0.5rem;
+  }
+}
+
+.is-density-comfortable {
+  .table td,
+  .table th {
+    padding: 0.75rem 1rem;
+  }
+}
+
+// =============================================================================
+// SALESFORCE LIGHTNING DESIGN SYSTEM — COMPONENT OVERRIDES & EXTENSIONS
+// =============================================================================
+// Applied AFTER Bulma is imported. These rules bring SLDS patterns to Bulma:
+//
+// Key design decisions:
+//   — Brand bar: thick blue top stripe on the navbar (SLDS global header)
+//   — Cards: white surface, 1px border + subtle box-shadow ("elevation")
+//   — Buttons: SLDS button styles — brand (filled blue), neutral (outlined), destructive
+//   — Lozenges: SLDS status badges — pill-shaped, semantic color coding
+//   — Tables: compact rows, alternating zebra, sortable header style
+//   — Inputs: SLDS text fields — bottom-border focus line on blue
+//   — Modals: SLDS modal with branded header bar
+//   — Dark mode: SLDS dark theme — deep navy surfaces
+// =============================================================================
+
+// ─── SLDS color tokens ─────────────────────────────────────────────────────────
+:root {
+  --slds-brand:           hsl(210, 97%, 41%);   // #0176D3 — Salesforce brand blue
+  --slds-brand-dark:      hsl(210, 97%, 32%);   // darker blue for hover
+  --slds-brand-light:     hsl(210, 97%, 95%);   // light blue tint for bg fills
+  --slds-neutral-bg:      hsl(214, 14%, 97%);   // #F3F3F3 — SLDS page background
+  --slds-card-bg:         #ffffff;
+  --slds-border:          hsl(214, 10%, 82%);   // #DDDBDA — SLDS border color
+  --slds-border-strong:   hsl(214, 10%, 65%);   // stronger border for focus
+  --slds-text:            hsl(214, 16%, 16%);   // #181818 — SLDS body text
+  --slds-text-weak:       hsl(214, 10%, 45%);   // #706E6B — SLDS label text
+  --slds-row-hover:       hsl(210, 97%, 97%);   // blue-tinted row hover
+  --slds-row-selected:    hsl(210, 97%, 93%);   // blue-tinted selected row
+  --slds-shadow:          0 2px 2px rgba(0, 0, 0, 0.10), 0 0 0 1px hsl(214, 10%, 82%);
+  --slds-shadow-raised:   0 4px 8px rgba(0, 0, 0, 0.15), 0 0 0 1px hsl(214, 10%, 82%);
+}
+
+// ─── Body ─────────────────────────────────────────────────────────────────────
+// SLDS page background is a very light cool gray — not pure white.
+body {
+  background-color: var(--slds-neutral-bg);
+  color: var(--slds-text);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+// ─── Navbar — SLDS Global Header ─────────────────────────────────────────────
+// SLDS header: white surface, 4px brand-blue top bar, subtle shadow.
+.navbar {
+  background-color: var(--slds-card-bg);
+  border-top: 4px solid var(--slds-brand);   // SLDS brand bar
+  border-bottom: 1px solid var(--slds-border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  min-height: 3.25rem;
+
+  .navbar-item,
+  .navbar-link {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--slds-text);
+    border-radius: var(--bulma-radius);
+    transition: background-color var(--bulma-duration);
+
+    &:hover {
+      background-color: var(--slds-brand-light);
+      color: var(--slds-brand-dark);
+    }
+  }
+
+  .navbar-item.is-active {
+    color: var(--slds-brand);
+    font-weight: 600;
+    background-color: var(--slds-brand-light);
+  }
+
+  .navbar-brand .navbar-item {
+    font-weight: 700;
+    color: var(--slds-brand);
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+  }
+}
+
+// ─── Hero — SLDS branded page header ──────────────────────────────────────────
+.hero.is-primary {
+  background-color: var(--slds-brand);
+  background-image: none;
+  color: #fff;
+
+  .title, .subtitle { color: #fff; }
+  .subtitle { opacity: 0.85; }
+}
+
+// ─── Cards — SLDS "Card" component ────────────────────────────────────────────
+// SLDS cards: white, 1px border, subtle shadow, 4px radius.
+.card {
+  background-color: var(--slds-card-bg);
+  border: none;
+  border-radius: var(--bulma-radius);
+  box-shadow: var(--slds-shadow);
+  transition: box-shadow var(--bulma-duration);
+
+  &:hover {
+    box-shadow: var(--slds-shadow-raised);
+  }
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: 1px solid var(--slds-border);
+  box-shadow: none;
+  padding: 0.75rem 1rem;
+}
+
+.card-header-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--slds-text);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.card-content { padding: 0.75rem 1rem; }
+
+// ─── Buttons — SLDS button variants ───────────────────────────────────────────
+// Brand: filled blue. Neutral: white + border. Destructive: red.
+.button {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--slds-border);
+  background-color: var(--slds-card-bg);
+  color: var(--slds-text);
+  box-shadow: none;
+  transition: background-color var(--bulma-duration), border-color var(--bulma-duration);
+  text-transform: none;
+
+  &:hover {
+    background-color: var(--slds-neutral-bg);
+    border-color: var(--slds-border-strong);
+    color: var(--slds-text);
+  }
+}
+
+.button.is-primary {
+  background-color: var(--slds-brand);
+  border-color: var(--slds-brand);
+  color: #fff;
+
+  &:hover {
+    background-color: var(--slds-brand-dark);
+    border-color: var(--slds-brand-dark);
+    color: #fff;
+  }
+}
+
+.button.is-light {
+  background-color: var(--slds-brand-light);
+  border-color: var(--slds-brand-light);
+  color: var(--slds-brand-dark);
+
+  &:hover {
+    background-color: hsl(210, 97%, 90%);
+  }
+}
+
+// is-link = same as primary (SLDS uses brand blue for links)
+.button.is-link {
+  background-color: var(--slds-brand);
+  border-color: var(--slds-brand);
+  color: #fff;
+
+  &:hover {
+    background-color: var(--slds-brand-dark);
+    border-color: var(--slds-brand-dark);
+    color: #fff;
+  }
+}
+
+// is-info — SLDS uses a teal/slate blue
+.button.is-info {
+  background-color: hsl(205, 65%, 40%);
+  border-color: hsl(205, 65%, 40%);
+  color: #fff;
+
+  &:hover {
+    background-color: hsl(205, 65%, 32%);
+    border-color: hsl(205, 65%, 32%);
+    color: #fff;
+  }
+}
+
+// is-success — SLDS green
+.button.is-success {
+  background-color: hsl(139, 48%, 35%);
+  border-color: hsl(139, 48%, 35%);
+  color: #fff;
+
+  &:hover {
+    background-color: hsl(139, 48%, 27%);
+    border-color: hsl(139, 48%, 27%);
+    color: #fff;
+  }
+}
+
+// is-warning — SLDS amber
+.button.is-warning {
+  background-color: hsl(35, 97%, 44%);
+  border-color: hsl(35, 97%, 44%);
+  color: #fff;
+
+  &:hover {
+    background-color: hsl(35, 97%, 36%);
+    border-color: hsl(35, 97%, 36%);
+    color: #fff;
+  }
+}
+
+// is-danger — SLDS red
+.button.is-danger {
+  background-color: hsl(353, 100%, 40%);
+  border-color: hsl(353, 100%, 40%);
+  color: #fff;
+
+  &:hover {
+    background-color: hsl(353, 100%, 32%);
+    border-color: hsl(353, 100%, 32%);
+    color: #fff;
+  }
+}
+
+// is-dark / is-black — deep navy
+.button.is-dark,
+.button.is-black {
+  background-color: hsl(214, 16%, 16%);
+  border-color: hsl(214, 16%, 16%);
+  color: #fff;
+
+  &:hover {
+    background-color: hsl(214, 16%, 8%);
+    border-color: hsl(214, 16%, 8%);
+    color: #fff;
+  }
+}
+
+// is-white — white with border
+.button.is-white {
+  background-color: #fff;
+  border-color: var(--slds-border);
+  color: var(--slds-text);
+
+  &:hover {
+    background-color: var(--slds-neutral-bg);
+  }
+}
+
+// is-ghost — text-only, no bg or border
+.button.is-ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--slds-brand);
+  box-shadow: none;
+
+  &:hover {
+    background-color: var(--slds-brand-light);
+    border-color: transparent;
+    color: var(--slds-brand-dark);
+    text-decoration: none;
+  }
+}
+
+// ─── Tabs — SLDS "Tabs" (underline variant) ────────────────────────────────────
+.tabs {
+  border-bottom: 1px solid var(--slds-border);
+
+  a {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--slds-text-weak);
+    border-bottom: 2px solid transparent;
+    padding-bottom: calc(0.5em - 1px);
+    transition: color var(--bulma-duration), border-color var(--bulma-duration);
+
+    &:hover {
+      color: var(--slds-text);
+      border-bottom-color: var(--slds-border);
+      background: transparent;
+    }
+  }
+
+  li.is-active a {
+    color: var(--slds-brand);
+    font-weight: 700;
+    border-bottom: 2px solid var(--slds-brand);
+  }
+}
+
+// ─── Table — SLDS data table ───────────────────────────────────────────────────
+// Compact rows, strong header, zebra stripe, blue hover.
+.table {
+  font-size: 0.8125rem;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: var(--slds-card-bg);
+  box-shadow: var(--slds-shadow);
+  border-radius: var(--bulma-radius);
+  overflow: hidden;
+
+  thead th {
+    background-color: var(--slds-neutral-bg);
+    border-bottom: 2px solid var(--slds-border);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--slds-text-weak);
+    padding: 0.5rem 0.75rem;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--slds-border);
+    transition: background-color 80ms;
+
+    &:last-child td { border-bottom: none; }
+
+    &:hover td {
+      background-color: var(--slds-row-hover);
+    }
+  }
+
+  td { padding: 0.5rem 0.75rem; color: var(--slds-text); }
+
+  &.is-striped tbody tr:nth-child(even) td {
+    background-color: var(--slds-neutral-bg);
+  }
+}
+
+// ─── Inputs — SLDS Text Input ──────────────────────────────────────────────────
+.input,
+.textarea,
+.select select {
+  background-color: var(--slds-card-bg);
+  border: 1px solid var(--slds-border);
+  border-radius: var(--bulma-radius);
+  color: var(--slds-text);
+  font-size: 0.875rem;
+  box-shadow: none;
+  transition: border-color var(--bulma-duration), box-shadow var(--bulma-duration);
+
+  &::placeholder { color: var(--slds-text-weak); }
+
+  &:hover { border-color: var(--slds-border-strong); }
+
+  &:focus,
+  &.is-focused {
+    border-color: var(--slds-brand);
+    box-shadow: 0 0 0 1px var(--slds-brand);
+    outline: none;
+  }
+}
+
+// ─── Tags — SLDS "Badge" / "Lozenge" style ────────────────────────────────────
+// SLDS badges: pill-shaped, semantic colors, small caps text.
+.tag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 0.75rem;   // pill
+  border: none;
+  padding: 0.15em 0.6em;
+}
+
+.tag.is-primary { background-color: var(--slds-brand-light); color: var(--slds-brand-dark); }
+.tag.is-info    { background-color: var(--slds-brand-light); color: var(--slds-brand-dark); }
+.tag.is-success { background-color: hsl(139, 48%, 92%); color: hsl(139, 48%, 24%); }
+.tag.is-warning { background-color: hsl(35, 97%, 92%); color: hsl(35, 97%, 28%); }
+.tag.is-danger  { background-color: hsl(353, 100%, 95%); color: hsl(353, 100%, 33%); }
+.tag.is-light   { background-color: var(--slds-neutral-bg); color: var(--slds-text-weak); border: 1px solid var(--slds-border); }
+
+// ─── Messages — SLDS "Alert / Toast" style ────────────────────────────────────
+.message {
+  border: none;
+  border-left: 4px solid var(--slds-brand);
+  border-radius: var(--bulma-radius);
+  box-shadow: var(--slds-shadow);
+
+  &.is-primary { border-left-color: var(--slds-brand);              background-color: var(--slds-brand-light); }
+  &.is-info    { border-left-color: var(--slds-brand);              background-color: var(--slds-brand-light); }
+  &.is-success { border-left-color: hsl(139, 48%, 35%); background-color: hsl(139, 48%, 95%); }
+  &.is-warning { border-left-color: hsl(35, 97%, 44%);  background-color: hsl(35, 97%, 95%); }
+  &.is-danger  { border-left-color: hsl(353, 100%, 46%); background-color: hsl(353, 100%, 97%); }
+}
+
+.message-header {
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--slds-text);
+}
+
+// ─── Panel — SLDS "List View" panel ───────────────────────────────────────────
+.panel {
+  border: none;
+  border-radius: var(--bulma-radius);
+  box-shadow: var(--slds-shadow);
+  overflow: hidden;
+}
+
+.panel-heading {
+  background-color: var(--slds-neutral-bg);
+  border-bottom: 1px solid var(--slds-border);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--slds-text-weak);
+}
+
+.panel-block.is-active {
+  background-color: var(--slds-row-selected);
+  color: var(--slds-brand-dark);
+  font-weight: 700;
+  border-left: 2px solid var(--slds-brand);
+  padding-left: calc(0.75em - 2px);
+}
+
+.panel-block:hover {
+  background-color: var(--slds-row-hover);
+}
+
+// ─── Menu — SLDS app nav / sidebar ────────────────────────────────────────────
+.menu-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--slds-text-weak);
+}
+
+.menu-list a {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--slds-text);
+  border-radius: var(--bulma-radius);
+  transition: background-color 80ms;
+
+  &:hover {
+    background-color: var(--slds-row-hover);
+    color: var(--slds-brand-dark);
+  }
+
+  &.is-active {
+    background-color: var(--slds-row-selected);
+    color: var(--slds-brand-dark);
+    font-weight: 700;
+    border-left: 2px solid var(--slds-brand);
+    padding-left: calc(0.75em - 2px);
+  }
+}
+
+// ─── Breadcrumb ───────────────────────────────────────────────────────────────
+.breadcrumb {
+  font-size: 0.8125rem;
+
+  a {
+    color: var(--slds-brand);
+    &:hover { text-decoration: underline; color: var(--slds-brand-dark); }
+  }
+
+  li.is-active a { color: var(--slds-text-weak); font-weight: 400; }
+  li + li::before { color: var(--slds-text-weak); }
+}
+
+// ─── Notification ─────────────────────────────────────────────────────────────
+.notification {
+  border-radius: var(--bulma-radius);
+  font-size: 0.875rem;
+  border: none;
+  box-shadow: var(--slds-shadow);
+}
+
+// ─── Progress ─────────────────────────────────────────────────────────────────
+progress.progress {
+  border-radius: var(--bulma-radius-small);
+  height: 0.375rem;
+}
+
+// ─── Dark mode — SLDS dark theme: deep navy surfaces ──────────────────────────
+[data-theme="dark"] {
+  --slds-brand:          hsl(210, 97%, 60%);
+  --slds-brand-dark:     hsl(210, 97%, 75%);
+  --slds-brand-light:    hsl(210, 97%, 14%);
+  --slds-neutral-bg:     hsl(214, 20%, 11%);
+  --slds-card-bg:        hsl(214, 18%, 15%);
+  --slds-border:         hsl(214, 12%, 25%);
+  --slds-border-strong:  hsl(214, 12%, 40%);
+  --slds-text:           hsl(214, 10%, 88%);
+  --slds-text-weak:      hsl(214, 8%,  55%);
+  --slds-row-hover:      hsl(210, 97%, 14%);
+  --slds-row-selected:   hsl(210, 97%, 18%);
+  --slds-shadow:         0 2px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px hsl(214, 12%, 25%);
+  --slds-shadow-raised:  0 4px 8px rgba(0, 0, 0, 0.5), 0 0 0 1px hsl(214, 12%, 25%);
+
+  body { background-color: var(--slds-neutral-bg); color: var(--slds-text); }
+
+  .navbar {
+    background-color: var(--slds-card-bg);
+    border-top-color: var(--slds-brand);
+    border-bottom-color: var(--slds-border);
+  }
+
+  .card   { background-color: var(--slds-card-bg); }
+  .card-header { border-bottom-color: var(--slds-border); }
+
+  .table {
+    background-color: var(--slds-card-bg);
+    thead th { background-color: var(--slds-neutral-bg); border-bottom-color: var(--slds-border); }
+    tbody tr { border-bottom-color: var(--slds-border); }
+    td { color: var(--slds-text); }
+  }
+
+  .input, .textarea, .select select {
+    background-color: hsl(214, 18%, 12%);
+    border-color: var(--slds-border);
+    color: var(--slds-text);
+  }
+
+  .button {
+    background-color: var(--slds-card-bg);
+    border-color: var(--slds-border);
+    color: var(--slds-text);
+    &:hover { background-color: var(--slds-neutral-bg); }
+  }
+
+  .button.is-primary {
+    background-color: var(--slds-brand);
+    border-color: var(--slds-brand);
+    color: hsl(214, 18%, 10%);
+  }
+
+  .panel { box-shadow: none; }
+  .panel-heading { background-color: var(--slds-neutral-bg); border-bottom-color: var(--slds-border); }
+  .panel-block.is-active { background-color: var(--slds-row-selected); color: var(--slds-brand-dark); border-left-color: var(--slds-brand); }
+  .panel-block:hover { background-color: var(--slds-row-hover); }
+
+  .message {
+    &.is-primary, &.is-info { background-color: var(--slds-brand-light); }
+    &.is-success { background-color: hsl(139, 48%, 12%); }
+    &.is-warning { background-color: hsl(35, 97%, 12%); }
+    &.is-danger  { background-color: hsl(353, 100%, 12%); }
+  }
+}
+
+//   — Near-zero visible chrome: no card shadows, hairline borders (#e3e2e0)
+//   — Everything square-ish: 3px radius consistently
+//   — Hover states use Notion's warm gray (#f7f6f3) fill, no color shift
+//   — Color reserved for semantic states and links only
+//   — Typography-driven hierarchy: size + weight, not color or decoration
+//   — Notion dark mode: #191919 canvas, slightly warm (not pure black)
+// =============================================================================
+

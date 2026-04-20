@@ -1,0 +1,12 @@
+node_modules/
+
+# Compiled output — copy these to your web app, don't commit them
+css/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+*.swp

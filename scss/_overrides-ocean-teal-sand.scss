@@ -1,0 +1,275 @@
+// =============================================================================
+// OCEAN TEAL + SAND — COMPONENT OVERRIDES & EXTENSIONS
+// =============================================================================
+// Applied AFTER Bulma is imported. These rules layer on top of Bulma's
+// generated CSS using the same CSS custom property system where possible.
+//
+// Sand-specific additions vs Indigo Slate:
+//   — Hero gets a subtle warm texture gradient
+//   — Navbar gets a warm white top border accent line
+//   — Cards have slightly rounder, warmer shadows
+//   — Panel/Menu accents use teal underlines instead of fills
+// =============================================================================
+// =============================================================================
+
+// ─── Focus Ring ───────────────────────────────────────────────────────────────
+// Consistent, accessible focus ring across all interactive elements.
+:focus-visible {
+  outline: 2px solid var(--bulma-primary);
+  outline-offset: 2px;
+}
+
+// ─── Scrollbars (Webkit) ──────────────────────────────────────────────────────
+// Slim scrollbars that match the theme's neutral palette.
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bulma-scheme-main-bis);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bulma-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bulma-text-weak);
+}
+
+// ─── Tables ───────────────────────────────────────────────────────────────────
+// Data-heavy apps need denser, cleaner tables.
+.table {
+  font-size: 0.875rem;   // 14 px — tighter for data grids
+
+  thead th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--bulma-text-weak);
+    background-color: var(--bulma-scheme-main-bis);
+    border-bottom-width: 1px;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    transition: background-color var(--bulma-duration) var(--bulma-easing);
+
+    &:hover td {
+      background-color: var(--bulma-scheme-main-bis);
+    }
+  }
+
+  td,
+  th {
+    vertical-align: middle;
+    padding: 0.55rem 0.75rem;
+  }
+
+  &.is-narrow td,
+  &.is-narrow th {
+    padding: 0.35rem 0.6rem;
+  }
+}
+
+// ─── Navbar ───────────────────────────────────────────────────────────────────
+.navbar {
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+// ─── Sidebar / Menu ───────────────────────────────────────────────────────────
+.menu-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.menu-list a {
+  border-radius: var(--bulma-radius);
+  transition: background-color var(--bulma-duration) var(--bulma-easing),
+              color var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Cards ────────────────────────────────────────────────────────────────────
+.card {
+  border: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: box-shadow var(--bulma-duration) var(--bulma-easing);
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.card-header {
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: none;
+  padding: 0.75rem 1rem;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+// ─── Buttons ──────────────────────────────────────────────────────────────────
+.button {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: background-color var(--bulma-duration) var(--bulma-easing),
+              border-color var(--bulma-duration) var(--bulma-easing),
+              box-shadow var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Form Inputs ──────────────────────────────────────────────────────────────
+.input,
+.textarea,
+.select select {
+  transition: border-color var(--bulma-duration) var(--bulma-easing),
+              box-shadow var(--bulma-duration) var(--bulma-easing);
+}
+
+// ─── Notification / Tag ───────────────────────────────────────────────────────
+.tag {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+// ─── Code & Pre ───────────────────────────────────────────────────────────────
+// Better monospace styling for logs, API responses, etc.
+code,
+pre {
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+// ─── Typography Utilities ─────────────────────────────────────────────────────
+// Extra weight helpers useful for data labels and headings.
+.has-text-tabular {
+  font-variant-numeric: tabular-nums;   // aligns numbers in tables/lists
+}
+
+.has-text-mono {
+  font-family: var(--bulma-family-code);
+}
+
+// ─── Skeleton / Loading ───────────────────────────────────────────────────────
+// Subtle pulse animation used for skeleton loading states.
+@keyframes skeleton-pulse {
+  0%,
+  100% { opacity: 1; }
+  50%  { opacity: 0.5; }
+}
+
+.is-skeleton-pulsing {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+// ─── Responsive Density Helpers ───────────────────────────────────────────────
+// Quick helpers to toggle layout density (useful for data grids).
+.is-density-compact {
+  .table td,
+  .table th {
+    padding: 0.3rem 0.5rem;
+  }
+}
+
+.is-density-comfortable {
+  .table td,
+  .table th {
+    padding: 0.75rem 1rem;
+  }
+}
+
+// =============================================================================
+// OCEAN TEAL + SAND — THEME-SPECIFIC ADDITIONS
+// =============================================================================
+
+// ─── Warm body background ─────────────────────────────────────────────────────
+// The sand scheme-main is off-white. Reinforce it on body for consistency.
+body {
+  background-color: var(--bulma-scheme-main);
+}
+
+// ─── Navbar — teal accent top border ─────────────────────────────────────────
+.navbar {
+  border-top: 3px solid var(--bulma-primary);
+  border-bottom: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+// ─── Hero — subtle warm-to-teal gradient on primary hero ─────────────────────
+.hero.is-primary {
+  background: linear-gradient(
+    135deg,
+    var(--bulma-primary-dark) 0%,
+    var(--bulma-primary) 60%,
+    hsl(178, 58%, 44%) 100%
+  );
+}
+
+// ─── Cards — warmer shadow, slightly more radius ──────────────────────────────
+.card {
+  border: 1px solid var(--bulma-border-weak);
+  box-shadow: 0 2px 8px rgba(60, 40, 20, 0.07);
+  transition: box-shadow var(--bulma-duration) var(--bulma-easing);
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba(60, 40, 20, 0.12);
+  }
+}
+
+// ─── Panel — teal left-border on active item ─────────────────────────────────
+.panel-block.is-active {
+  border-left: 3px solid var(--bulma-primary);
+  padding-left: calc(0.75em - 3px);
+}
+
+// ─── Tabs — teal bottom border, warmer inactive text ─────────────────────────
+.tabs {
+  a {
+    color: var(--bulma-text-weak);
+
+    &:hover {
+      color: var(--bulma-primary);
+      border-bottom-color: var(--bulma-primary-light);
+    }
+  }
+
+  li.is-active a {
+    color: var(--bulma-primary);
+    border-bottom-color: var(--bulma-primary);
+  }
+}
+
+// ─── Buttons — teal primary with warmer hover ────────────────────────────────
+.button.is-primary {
+  letter-spacing: 0.015em;
+}
+
+// ─── Notification — sand-tinted info notification ────────────────────────────
+// Info notifications get a warm tint rather than pure blue.
+.notification.is-info.is-light {
+  background-color: hsl(202, 72%, 95%);
+}
+
+// ─── Input focus — teal glow ──────────────────────────────────────────────────
+.input:focus,
+.input.is-focused,
+.textarea:focus,
+.textarea.is-focused,
+.select select:focus {
+  border-color: var(--bulma-primary);
+  box-shadow: 0 0 0 3px hsla(178, 58%, 34%, 0.15);
+}
+
+// ─── Section background — alternating warm tone ───────────────────────────────
+// Optional: give alternating sections a very subtle warm tint.
+.section.is-sand {
+  background-color: hsl(35, 20%, 97%);
+}
+
+[data-theme="dark"] .section.is-sand {
+  background-color: hsl(35, 8%, 14%);
+}

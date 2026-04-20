@@ -1,0 +1,63 @@
+// =============================================================================
+// MICROSOFT FLUENT — MAIN ENTRY POINT
+// =============================================================================
+// Inspired by Microsoft's Fluent UI design language as seen in SharePoint,
+// Teams, and Microsoft 365 apps.
+//
+// Palette rationale:
+//   Scheme   — Cool neutral grays (hue 210°) — matches Fluent's neutral ramp
+//   Primary  — Microsoft Blue  #0078d4 — the iconic Fluent primary action colour
+//   Link     — Fluent communication blue, slightly lighter for legibility
+//   Success  — Microsoft green #107c10
+//   Warning  — Fluent gold/yellow #ffb900
+//   Danger   — Fluent red #d13438
+//   Info     — Fluent sky #00b7c3 (teal-cyan used in Teams/SharePoint)
+//
+// Typography:
+//   Segoe UI is first — the native Windows / Microsoft font.
+//   Falls back to system-ui and common web-safe fonts.
+//
+// Build:
+//   npm run build          — expanded CSS  → css/theme.css
+//   npm run build:min      — compressed    → css/theme.min.css
+//   npm run watch          — watch mode
+// =============================================================================
+
+@use "bulma/sass" with (
+
+  // ── Scheme (gray scale base) ──────────────────────────────────────────────
+  // Fluent neutrals are a cool blue-gray (hue ~210°, low saturation).
+  // This matches the surfaces in SharePoint Online and Teams.
+  $scheme-h: 210,
+  $scheme-s: 10%,
+
+  // ── Brand & Semantic Colors ───────────────────────────────────────────────
+  $primary:  hsl(207, 100%, 41%),   // #0078d4  — Fluent primary blue
+  $link:     hsl(207, 100%, 46%),   // #0086f0  — communication link blue
+  $info:     hsl(183, 100%, 38%),   // #00b7c3  — Teams / SharePoint teal-cyan
+  $success:  hsl(120,  78%, 27%),   // #107c10  — Fluent success green
+  $warning:  hsl(45,  100%, 50%),   // #ffb900  — Fluent warning gold
+  $danger:   hsl(359,   62%, 51%),  // #d13438  — Fluent error red
+
+  // ── Typography ────────────────────────────────────────────────────────────
+  // Segoe UI is the Fluent / Windows system font — always listed first.
+  $family-sans-serif: ("Segoe UI", "Segoe UI Variable", system-ui, "Helvetica Neue", Arial, sans-serif),
+  $family-monospace:  ("Cascadia Code", "Cascadia Mono", "Consolas", "Courier New", monospace),
+
+  // ── Border Radius ─────────────────────────────────────────────────────────
+  // Fluent 2 uses slightly rounded corners (2–4 px range). Sharp but not harsh.
+  $radius-small:  0.125rem,   // 2px
+  $radius:        0.25rem,    // 4px  (buttons, inputs, cards)
+  $radius-medium: 0.375rem,   // 6px
+  $radius-large:  0.5rem,     // 8px
+
+  // ── Spacing & Motion ──────────────────────────────────────────────────────
+  // Fluent motion is fast and functional — no decorative slowness.
+  $block-spacing: 1.25rem,
+  $duration:      150ms,
+  $speed:         50ms
+
+);
+
+// Component-level overrides and extensions
+@use "overrides-microsoft-fluent";

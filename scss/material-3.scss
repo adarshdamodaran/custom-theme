@@ -1,0 +1,70 @@
+// =============================================================================
+// GOOGLE MATERIAL 3 (Material You) — MAIN ENTRY POINT
+// =============================================================================
+// Inspired by Material Design 3 — Google's design system used in Google Workspace,
+// Android 12+, Google Drive, Calendar, and Gmail.
+//
+// Palette rationale (M3 Deep Indigo seed → generated tonal palette):
+//   Scheme   — Neutral-Variant warm gray (hue 260°, very low sat) — M3 neutral-variant
+//   Primary  — M3 Deep Indigo #6750A4 = hsl(231, 49%, 44%) — primary key color
+//   Link     — Same purple, lighter — M3 links use primary color
+//   Info     — M3 Secondary (blue-teal) hsl(197, 35%, 40%)
+//   Success  — M3 Tertiary (green) hsl(125, 34%, 36%)
+//   Warning  — M3 has no standard warning; use orange hsl(30, 82%, 45%)
+//   Danger   — M3 Error #B3261E = hsl(2, 74%, 41%)
+//   Success  — Primer green #1a7f37
+//   Warning  — M3 orange hsl(30, 82%, 45%)
+//   Danger   — M3 Error red #B3261E
+//
+// Typography:
+//   "Google Sans" / Roboto — Google's product font stack.
+//   Falls back to system-ui for environments without the Google font.
+//
+// Build:
+//   npm run build          — expanded CSS  → css/theme.css
+//   npm run build:min      — compressed    → css/theme.min.css
+//   npm run watch          — watch mode
+// =============================================================================
+
+@use "bulma/sass" with (
+
+  // ── Scheme (gray scale base) ──────────────────────────────────────────────
+  // M3 neutral-variant tonal palette is seeded from the primary purple hue.
+  // At hue ~260° with very low saturation it produces M3's characteristic
+  // warm-cool gray ramp (surface, surfaceVariant, outline, etc.).
+  $scheme-h: 231,
+  $scheme-s:  6%,
+
+  // ── Brand & Semantic Colors ───────────────────────────────────────────────
+  $primary:  hsl(231, 49%, 44%),  // #6750A4 — M3 Deep Indigo primary
+  $link:     hsl(231, 49%, 44%),  // same — M3 links use primary color
+  $info:     hsl(197, 35%, 40%),  // M3 secondary — blue-teal
+  $success:  hsl(125, 34%, 36%),  // M3 tertiary — green
+  $warning:  hsl(30,  82%, 45%),  // custom — M3 has no warning; amber
+  $danger:   hsl(2,   74%, 41%),  // #B3261E — M3 error key color
+
+  // ── Typography ────────────────────────────────────────────────────────────
+  // Google Sans is served via Google Fonts in the showcase HTML.
+  // Falls back cleanly to system-ui / Roboto.
+  $family-sans-serif: ("Google Sans", "Roboto", system-ui, "Helvetica Neue", Arial, sans-serif),
+  $family-monospace:  ("Google Sans Mono", "Roboto Mono", "Consolas", monospace),
+
+  // ── Border Radius — M3 Shape Scale ───────────────────────────────────────
+  // M3 uses a named shape scale: None(0) Extra-Small(4) Small(8) Medium(12)
+  // Large(16) Extra-Large(28) Full(∞).
+  // Mapped to Bulma's 4 radius variables:
+  $radius-small:  0.125rem,  //  2px — subtle rounding on badges/chips
+  $radius:        0.375rem,  //  6px — cards, inputs, dialogs
+  $radius-medium: 0.5rem,    //  8px — larger cards, panels
+  $radius-large:  0.75rem,   // 12px — modals, bottom sheets
+
+  // ── Spacing & Motion ──────────────────────────────────────────────────────
+  // M3 motion: emphasized easing, slightly longer duration for a polished feel.
+  $block-spacing: 1.5rem,
+  $duration:      200ms,
+  $speed:         100ms
+
+);
+
+// Component-level overrides and extensions
+@use "overrides-material-3";
