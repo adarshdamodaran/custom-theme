@@ -230,6 +230,28 @@ body {
     background-color: #fff;
   }
 
+  // Buttons inside the navbar — white CTA on blue bar (Fluent header pattern)
+  .button.is-primary {
+    background-color: #fff;
+    color: hsl(207, 100%, 35%);
+    border-color: transparent;
+    &:hover { background-color: hsl(207, 100%, 94%); }
+  }
+  .button.is-ghost {
+    color: rgba(255, 255, 255, 0.9);
+    &:hover { background-color: rgba(255, 255, 255, 0.12); color: #fff; }
+  }
+
+  // Select dropdown on blue bar
+  .select select {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    option { background-color: hsl(207, 100%, 41%); color: #fff; }
+    &:hover { border-color: rgba(255, 255, 255, 0.6); }
+  }
+  .select::after { border-color: rgba(255, 255, 255, 0.8); }
+
   // Dropdown menus hang off the blue bar — use white surface
   .navbar-dropdown {
     background-color: #fff;
@@ -471,7 +493,51 @@ body {
   }
 
   .navbar {
-    border-bottom-color: var(--bulma-border);
+    background-color: hsl(207, 40%, 14%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    border-bottom-color: hsl(207, 30%, 22%);
+
+    .navbar-item,
+    .navbar-link {
+      color: rgba(255, 255, 255, 0.85);
+      &:hover, &:focus { background-color: rgba(255, 255, 255, 0.08); color: #fff; }
+    }
+
+    .navbar-item.is-active {
+      background-color: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    .navbar-brand .navbar-item { color: #fff; }
+
+    .button.is-primary {
+      background-color: hsl(207, 100%, 65%);
+      color: hsl(207, 100%, 10%);
+      border-color: transparent;
+      &:hover { background-color: hsl(207, 100%, 72%); }
+    }
+
+    .button.is-ghost {
+      color: rgba(255, 255, 255, 0.85);
+      &:hover { background-color: rgba(255, 255, 255, 0.08); color: #fff; }
+    }
+
+    .select select {
+      background-color: rgba(255, 255, 255, 0.10);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: rgba(255, 255, 255, 0.9);
+      option { background-color: hsl(207, 40%, 14%); color: #fff; }
+    }
+    .select::after { border-color: rgba(255, 255, 255, 0.7); }
+
+    .navbar-dropdown {
+      background-color: hsl(207, 20%, 18%);
+      border-top-color: hsl(207, 100%, 50%);
+      .navbar-item {
+        color: rgba(255, 255, 255, 0.85);
+        &:hover { background-color: rgba(255, 255, 255, 0.08); color: #fff; }
+      }
+    }
   }
 
   .table tbody tr:hover td {

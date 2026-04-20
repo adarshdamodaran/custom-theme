@@ -217,7 +217,7 @@ pre {
   --m3-duration-long:     500ms;
 
   // M3 tonal surface overlays — primary hue mixed into neutral surfaces
-  --m3-primary-hsl: 231, 49%, 44%;
+  --m3-primary-hsl: 217, 89%, 52%;
   --m3-surface-tint-1: hsla(var(--m3-primary-hsl), 0.05);   // elevation 1
   --m3-surface-tint-2: hsla(var(--m3-primary-hsl), 0.08);   // elevation 2
   --m3-surface-tint-3: hsla(var(--m3-primary-hsl), 0.11);   // elevation 3
@@ -236,8 +236,8 @@ body {
 // M3 Top App Bar: surface color + subtle bottom shadow (no border).
 // Uses tonal elevation: background = surface + elevation overlay.
 .navbar {
-  background-color: var(--bulma-scheme-main);
-  background-image: linear-gradient(var(--m3-surface-tint-2), var(--m3-surface-tint-2));
+  background-color: hsl(215, 45%, 91%);
+  background-image: none;
   border-bottom: none;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
 
@@ -596,8 +596,8 @@ body {
   }
 
   &.is-active {
-    background-color: hsl(231, 49%, 91%);  // primary container
-    color: hsl(231, 49%, 25%);
+    background-color: hsl(217, 60%, 90%);  // primary container — blue
+    color: hsl(217, 89%, 25%);
     font-weight: 600;
   }
 }
@@ -632,23 +632,39 @@ progress.progress {
 
 // ─── Dark mode — M3 dark theme: #1c1b1f surface, elevated tonal surfaces ──────
 [data-theme="dark"] {
-  --m3-primary-hsl: 231, 90%, 80%;          // M3 dark primary = primary-80
+  --m3-primary-hsl: 217, 100%, 75%;          // M3 dark primary = primary-80
   --m3-surface-tint-1:  hsla(var(--m3-primary-hsl), 0.05);
   --m3-surface-tint-2:  hsla(var(--m3-primary-hsl), 0.08);
   --m3-surface-tint-3:  hsla(var(--m3-primary-hsl), 0.11);
 
   .card {
-    background-color: hsl(231, 6%, 14%);
+    background-color: hsl(215, 6%, 14%);
     background-image: linear-gradient(var(--m3-surface-tint-1), var(--m3-surface-tint-1));
   }
 
-  .card-header { border-bottom-color: hsl(231, 6%, 22%); }
+  .navbar {
+    background-color: hsl(215, 25%, 14%);
+    background-image: none;
+
+    .navbar-item,
+    .navbar-link {
+      color: hsl(215, 60%, 85%);
+      &:hover { background-color: hsla(var(--m3-primary-hsl), 0.10); }
+    }
+
+    .navbar-item.is-active {
+      color: hsl(217, 100%, 75%);
+      background-color: transparent;
+    }
+  }
+
+  .card-header { border-bottom-color: hsl(215, 6%, 22%); }
 
   .table {
     thead th {
-      background-color: hsl(231, 49%, 15%);
-      color: hsl(231, 90%, 80%);
-      border-bottom-color: hsl(231, 20%, 25%);
+      background-color: hsl(217, 50%, 15%);
+      color: hsl(217, 100%, 80%);
+      border-bottom-color: hsl(217, 20%, 25%);
     }
     tbody tr:hover td {
       background-color: hsla(var(--m3-primary-hsl), 0.08);
@@ -656,25 +672,25 @@ progress.progress {
   }
 
   .input, .textarea, .select select {
-    background-color: hsl(231, 6%, 10%);
-    border-color: hsl(231, 6%, 35%);
-    color: hsl(231, 6%, 90%);
+    background-color: hsl(215, 6%, 10%);
+    border-color: hsl(215, 6%, 35%);
+    color: hsl(215, 6%, 90%);
   }
 
-  .panel { box-shadow: none; border: 1px solid hsl(231, 6%, 22%); }
-  .panel-heading { background-color: hsl(231, 49%, 15%); border-bottom-color: hsl(231, 6%, 22%); }
-  .panel-block.is-active { background-color: hsl(231, 49%, 20%); color: hsl(231, 90%, 80%); }
-  .menu-list a.is-active { background-color: hsl(231, 49%, 20%); color: hsl(231, 90%, 80%); }
+  .panel { box-shadow: none; border: 1px solid hsl(215, 6%, 22%); }
+  .panel-heading { background-color: hsl(217, 50%, 15%); border-bottom-color: hsl(215, 6%, 22%); }
+  .panel-block.is-active { background-color: hsl(217, 89%, 20%); color: hsl(217, 100%, 80%); }
+  .menu-list a.is-active { background-color: hsl(217, 89%, 20%); color: hsl(217, 100%, 80%); }
   .menu-list a:hover { background-color: hsla(var(--m3-primary-hsl), 0.08); }
 
-  .button.is-primary { background-color: hsl(231, 90%, 80%); color: hsl(231, 49%, 20%); }
+  .button.is-primary { background-color: hsl(217, 100%, 75%); color: hsl(217, 89%, 15%); }
   .button.is-light {
-    background-color: hsl(231, 49%, 25%);
-    color: hsl(231, 90%, 80%);
+    background-color: hsl(217, 50%, 22%);
+    color: hsl(217, 100%, 80%);
   }
   .hero.is-primary {
-    background-color: hsl(231, 49%, 18%);
-    .title, .subtitle { color: hsl(231, 90%, 85%); }
+    background-color: hsl(217, 50%, 18%);
+    .title, .subtitle { color: hsl(217, 100%, 85%); }
   }
 }
 
