@@ -1,0 +1,132 @@
+@use "sass:color";
+
+// Shared Material 3 component overrides, retuned for a midnight cyan palette.
+
+:root {
+  --m3-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --m3-easing-decelerate: cubic-bezier(0, 0, 0, 1);
+  --m3-easing-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --m3-duration-short: 200ms;
+  --m3-duration-medium: 300ms;
+  --m3-duration-long: 500ms;
+
+  --m3c-primary-hsl: 191, 78%, 34%;
+  --m3c-container-hsl: 192, 56%, 86%;
+  --m3c-on-container-hsl: 196, 74%, 14%;
+  --m3c-glass-alpha: 0.93;
+
+  --m3-primary-hsl: var(--m3c-primary-hsl);
+  --m3-surface-tint-1: hsla(var(--m3-primary-hsl), 0.05);
+  --m3-surface-tint-2: hsla(var(--m3-primary-hsl), 0.08);
+  --m3-surface-tint-3: hsla(var(--m3-primary-hsl), 0.11);
+}
+
+body {
+  background-color: var(--bulma-scheme-main);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+.navbar {
+  background-color: hsla(var(--m3c-container-hsl), var(--m3c-glass-alpha));
+  backdrop-filter: blur(8px) saturate(1.05);
+  background-image: none;
+  border-bottom: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
+  color: hsl(var(--m3c-on-container-hsl));
+
+  .navbar-item,
+  .navbar-link {
+    color: hsl(var(--m3c-on-container-hsl));
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-radius: var(--bulma-radius);
+    transition: background-color var(--m3-duration-short) var(--m3-easing-standard);
+
+    &:hover {
+      background-color: hsla(var(--m3-primary-hsl), 0.08);
+    }
+
+    &:focus {
+      background-color: hsla(var(--m3-primary-hsl), 0.12);
+    }
+  }
+
+  .navbar-item.is-active {
+    color: hsl(var(--m3c-on-container-hsl));
+    background-color: hsla(var(--m3-primary-hsl), 0.14);
+  }
+
+  .navbar-brand .navbar-item {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+}
+
+.hero.is-primary {
+  background-color: hsl(var(--m3c-container-hsl));
+  background-image: none;
+  color: hsl(var(--m3c-on-container-hsl));
+
+  .title,
+  .subtitle {
+    color: hsl(var(--m3c-on-container-hsl));
+  }
+
+  .button {
+    background-color: hsl(var(--m3c-primary-hsl));
+    color: #fff;
+    border: none;
+  }
+}
+
+.card {
+  border: none;
+  background-color: var(--bulma-scheme-main);
+  background-image: linear-gradient(var(--m3-surface-tint-1), var(--m3-surface-tint-1));
+  border-radius: var(--bulma-radius);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+  transition: box-shadow var(--m3-duration-short) var(--m3-easing-standard), background-image var(--m3-duration-short) var(--m3-easing-standard);
+
+  &:hover {
+    background-image: linear-gradient(var(--m3-surface-tint-2), var(--m3-surface-tint-2));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: 1px solid var(--bulma-border-weak);
+}
+
+.button.is-primary {
+  background-color: hsl(var(--m3c-primary-hsl));
+  border-color: transparent;
+
+  &:hover,
+  &:focus {
+    background-color: color.scale(hsl(191, 78%, 34%), $lightness: -8%);
+    border-color: transparent;
+  }
+}
+
+.menu-list a {
+  border-radius: var(--bulma-radius);
+
+  &:hover {
+    background-color: hsla(var(--m3-primary-hsl), 0.08);
+  }
+
+  &.is-active {
+    background-color: hsla(var(--m3-primary-hsl), 0.14);
+    color: hsl(var(--m3c-on-container-hsl));
+  }
+}
+
+.tag.is-primary,
+.notification.is-primary,
+.message.is-primary .message-header {
+  background-color: hsl(var(--m3c-primary-hsl));
+  color: #fff;
+}

@@ -1,0 +1,54 @@
+// =============================================================================
+// GOOGLE MATERIAL 3 (Material You) — BLUE CUSTOM VARIANT
+// =============================================================================
+// Customized fork of material-3-blue with stronger personalization hooks.
+// Change the core hue values in this file and in _overrides-material-3-blue-custom
+// to quickly create brand-specific variants.
+//
+// Palette rationale (M3 Blue seed → generated tonal palette):
+//   Scheme   — Neutral-Variant cool gray (hue 215°, very low sat)
+//   Primary  — M3 Blue hsl(217, 89%, 52%) — #1B6EF3
+//   Link     — Same blue
+//   Info     — M3 secondary teal hsl(197, 35%, 40%)
+//   Success  — M3 tertiary green hsl(125, 34%, 36%)
+//   Warning  — Amber hsl(30, 82%, 45%)
+//   Danger   — M3 Error #B3261E = hsl(2, 74%, 41%)
+//
+// Build:
+//   npm run build:themes   → css/material-3-blue-custom.css
+// =============================================================================
+
+@use "bulma/sass" with (
+
+  // ── Scheme (gray scale base) ──────────────────────────────────────────────
+  // Blue seed produces a cooler neutral-variant — hue 215°.
+  $scheme-h: 210,
+  $scheme-s:  9%,
+
+  // ── Brand & Semantic Colors ───────────────────────────────────────────────
+  $primary:  hsl(212, 91%, 40%),  // editable base brand blue
+  $link:     hsl(212, 91%, 40%),  // keep links aligned with brand
+  $info:     hsl(196, 50%, 40%),  // cooler cyan-teal accent
+  $success:  hsl(138, 42%, 36%),  // refreshed success tone
+  $warning:  hsl(32,  90%, 46%),  // vivid amber/orange
+  $danger:   hsl(4,   74%, 44%),  // warm red for alerts
+
+  // ── Typography ────────────────────────────────────────────────────────────
+  $family-sans-serif: ("Google Sans", "Roboto", system-ui, "Helvetica Neue", Arial, sans-serif),
+  $family-monospace:  ("Google Sans Mono", "Roboto Mono", "Consolas", monospace),
+
+  // ── Border Radius — M3 Shape Scale ───────────────────────────────────────
+  $radius-small:  0.125rem,
+  $radius:        0.375rem,
+  $radius-medium: 0.5rem,
+  $radius-large:  0.75rem,
+
+  // ── Spacing & Motion ──────────────────────────────────────────────────────
+  $block-spacing: 1.5rem,
+  $duration:      200ms,
+  $speed:         100ms
+
+);
+
+// Component-level overrides and extensions
+@use "overrides-material-3-blue-custom";

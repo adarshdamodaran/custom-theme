@@ -28,12 +28,7 @@
     /* Nav header height guard */
     .navbar { position: sticky; top: 0; z-index: 100; }
 
-    /* Material icon sizing */
-    .material-symbols-outlined {
-      font-size: 1.25em;
-      vertical-align: middle;
-      line-height: 1;
-    }
+    /* Material icon sizing — handled by themes */
 
     /* Theme toggle button in nav */
     #theme-toggle { cursor: pointer; }
@@ -78,8 +73,7 @@
       font-weight: 600;
     }
 
-    /* Hero section overlap */
-    .hero-body .title, .hero-body .subtitle { color: inherit; }
+    /* Hero section overlap — handled by themes */
 
     /* Spacing between showcase sections */
     .showcase-section { padding: 3rem 0; border-bottom: 1px solid var(--bulma-border-weak); }
@@ -109,7 +103,7 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="#">
-      <strong class="has-text-primary" style="font-size:1.1rem;letter-spacing:-0.02em;">⬡ Enterprise</strong>
+      <strong>⬡ Enterprise</strong>
     </a>
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMain">
       <span aria-hidden="true"></span>
@@ -143,6 +137,10 @@
             <option value="github-primer">GitHub Primer</option>
             <option value="material-3">Material 3 (Indigo)</option>
             <option value="material-3-blue">Material 3 (Blue)</option>
+            <option value="material-3-blue-custom">Material 3 (Blue Custom)</option>
+            <option value="material-3-deep-navy">Material 3 (Deep Navy)</option>
+            <option value="material-3-midnight-cyan">Material 3 (Midnight Cyan)</option>
+            <option value="material-3-enterprise-standard">Material 3 (Enterprise Standard)</option>
             <option value="notion-minimal">Notion Minimal</option>
             <option value="salesforce-lightning">Salesforce Lightning</option>
             <option value="windows11-winui" selected>Windows 11 WinUI</option>
@@ -171,8 +169,8 @@
   <div class="columns" style="margin-top:0">
 
     <!-- SIDEBAR -->
-    <aside class="column is-2 is-hidden-touch" style="padding:0 0 2rem 0;">
-      <nav id="sidebar" class="menu" style="padding:1rem 0.75rem;">
+    <aside class="column is-2 is-hidden-touch" style="padding:0 0 2rem 0; flex-basis: 13.33% !important; flex-grow: 0;">
+      <nav id="sidebar" class="menu has-tint">
         <p class="menu-label">Layout</p>
         <ul class="menu-list">
           <li><a href="#hero">Hero</a></li>

@@ -1,0 +1,42 @@
+// =============================================================================
+// GOOGLE MATERIAL 3 (Material You) — ENTERPRISE STANDARD VARIANT
+// =============================================================================
+// Refined enterprise palette: deeper steel-blue actions, cooler elevated surfaces,
+// and a more deliberate blue-gray identity for dense internal tools.
+//
+// Build:
+//   npm run build:themes   → css/material-3-enterprise-standard.css
+// =============================================================================
+
+@use "bulma/sass" with (
+
+  // ── Scheme (gray scale base) ──────────────────────────────────────────────
+  $scheme-h: 216,
+  $scheme-s: 10%,
+
+  // ── Brand & Semantic Colors ───────────────────────────────────────────────
+  $primary:  hsl(214, 68%, 34%),
+  $link:     hsl(214, 78%, 40%),
+  $info:     hsl(201, 58%, 40%),
+  $success:  hsl(148, 40%, 34%),
+  $warning:  hsl(35, 88%, 46%),
+  $danger:   hsl(4, 72%, 44%),
+
+  // ── Typography ────────────────────────────────────────────────────────────
+  $family-sans-serif: ("Google Sans", "Roboto", system-ui, "Helvetica Neue", Arial, sans-serif),
+  $family-monospace:  ("Google Sans Mono", "Roboto Mono", "Consolas", monospace),
+
+  // ── Border Radius — M3 Shape Scale ───────────────────────────────────────
+  $radius-small:  0.125rem,
+  $radius:        0.375rem,
+  $radius-medium: 0.5rem,
+  $radius-large:  0.75rem,
+
+  // ── Spacing & Motion ──────────────────────────────────────────────────────
+  $block-spacing: 1.5rem,
+  $duration:      200ms,
+  $speed:         100ms
+
+);
+
+@use "overrides-material-3-enterprise-standard";
