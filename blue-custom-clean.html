@@ -6,16 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enterprise Workspace</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Google+Sans+Mono&display=swap"
-        rel="stylesheet" />
     <link rel="stylesheet" href="css/material-3-blue-custom.css" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <style>
+        /* ── Local font faces (no internet required for text fonts) ── */
+        @font-face { font-family: "Inter"; src: url("fonts/inter-latin-300-normal.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
+        @font-face { font-family: "Inter"; src: url("fonts/inter-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+        @font-face { font-family: "Inter"; src: url("fonts/inter-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+        @font-face { font-family: "Inter"; src: url("fonts/inter-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+        @font-face { font-family: "Inter"; src: url("fonts/inter-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+        @font-face { font-family: "Inter"; src: url("fonts/inter-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
+        @font-face { font-family: "JetBrains Mono"; src: url("fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+        @font-face { font-family: "JetBrains Mono"; src: url("fonts/jetbrains-mono-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+        /* ── Inter font override ── */
+        body,
+        .navbar,
+        .menu,
+        .button,
+        .input,
+        .textarea,
+        .select select,
+        .table,
+        .card,
+        .tag,
+        .notification,
+        .message,
+        .panel,
+        .tabs,
+        .breadcrumb,
+        h1, h2, h3, h4, h5, h6,
+        .title, .subtitle {
+            font-family: "Inter", system-ui, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        code, pre, .has-text-mono {
+            font-family: "JetBrains Mono", "Consolas", monospace;
+        }
+
         body {
             min-height: 100vh;
         }
@@ -64,6 +94,7 @@
                 </svg>
                 <strong>Operations Hub</strong>
             </a>
+
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="mainNavbarMenu">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
