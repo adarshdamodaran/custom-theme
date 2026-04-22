@@ -57,19 +57,66 @@
 
         .app-sidebar {
             padding: 0 0 2rem 0;
+            width: 13.33%;
+            max-width: 13.33%;
+            min-width: 3rem;
             flex-basis: 13.33% !important;
             flex-grow: 0;
+            overflow: hidden;
+            transition: flex-basis 900ms ease, max-width 900ms ease, width 900ms ease, padding 220ms ease;
         }
 
         #sidebar {
             position: sticky;
-            top: 3.5rem;
-            max-height: calc(100vh - 4rem);
+            top: 3.25rem;
+            max-height: calc(100vh - 3.25rem);
             overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .app-shell.is-sidebar-collapsed .app-sidebar {
+            flex-basis: 3rem !important;
+            width: 3rem;
+            max-width: 3rem;
+            padding: 0 0 2rem 0;
+            overflow: hidden;
+        }
+
+        .menu-label,
+        .menu-list,
+        .menu-divider {
+            opacity: 1;
+            transition: opacity 180ms ease;
+        }
+
+        .app-shell.is-sidebar-collapsed .sidebar-header {
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-shell.is-sidebar-collapsed .menu-label,
+        .app-shell.is-sidebar-collapsed .menu-list,
+        .app-shell.is-sidebar-collapsed .menu-divider {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .app-main {
             padding: 1.25rem;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-toggle-icon {
+            min-width: 2rem;
+            width: 2rem;
+            height: 2rem;
+            padding: 0;
         }
 
         .metric-card .title {
@@ -79,9 +126,6 @@
         .metric-card .subtitle {
             margin-bottom: 0;
         }
-
-
-
     </style>
 </head>
 
@@ -116,8 +160,16 @@
 
     <div class="container is-fluid">
         <div class="columns app-shell">
-            <aside class="column is-2 is-hidden-touch app-sidebar">
+            <aside id="appSidebar" class="column is-2 is-hidden-touch app-sidebar">
                 <nav id="sidebar" class="menu has-tint">
+                    <div class="sidebar-header">
+                        <button id="sidebarToggle" class="button is-light is-small sidebar-toggle-icon" type="button"
+                            aria-pressed="false" aria-controls="appSidebar" aria-label="Minimize sidebar"
+                            title="Minimize sidebar">
+                            <span class="icon"><span id="sidebarToggleIcon" class="material-symbols-outlined">left_panel_close</span></span>
+                        </button>
+                    </div>
+
                     <p class="menu-label">
                         <button type="button" class="menu-label-toggle with-caret" aria-expanded="true" aria-controls="core-menu">Core</button>
                     </p>
@@ -140,48 +192,48 @@
             </aside>
 
             <main class="column app-main">
-            <section class="mb-5">
-                <h1 class="title is-4">Welcome Back</h1>
-                <p class="subtitle is-6">Enterprise internal workspace overview.</p>
-            </section>
+                <section class="mb-5">
+                    <h1 class="title is-4">Welcome Back</h1>
+                    <p class="subtitle is-6">Enterprise internal workspace overview.</p>
+                </section>
 
-            <section class="columns">
-                <div class="column">
-                    <article class="card metric-card">
-                        <div class="card-content">
-                            <p class="title is-5">128</p>
-                            <p class="subtitle is-7 has-text-grey">Open Cases</p>
-                        </div>
-                    </article>
-                </div>
-                <div class="column">
-                    <article class="card metric-card">
-                        <div class="card-content">
-                            <p class="title is-5">14</p>
-                            <p class="subtitle is-7 has-text-grey">Pending Approvals</p>
-                        </div>
-                    </article>
-                </div>
-                <div class="column">
-                    <article class="card metric-card">
-                        <div class="card-content">
-                            <p class="title is-5">99.7%</p>
-                            <p class="subtitle is-7 has-text-grey">SLA Compliance</p>
-                        </div>
-                    </article>
-                </div>
-            </section>
+                <section class="columns">
+                    <div class="column">
+                        <article class="card metric-card">
+                            <div class="card-content">
+                                <p class="title is-5">128</p>
+                                <p class="subtitle is-7 has-text-grey">Open Cases</p>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="column">
+                        <article class="card metric-card">
+                            <div class="card-content">
+                                <p class="title is-5">14</p>
+                                <p class="subtitle is-7 has-text-grey">Pending Approvals</p>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="column">
+                        <article class="card metric-card">
+                            <div class="card-content">
+                                <p class="title is-5">99.7%</p>
+                                <p class="subtitle is-7 has-text-grey">SLA Compliance</p>
+                            </div>
+                        </article>
+                    </div>
+                </section>
 
-            <section class="box mt-5">
-                <h2 class="title is-6">Recent Activity</h2>
-                <div class="content mb-0">
-                    <ul>
-                        <li>Case INC-4921 reassigned to Risk Operations</li>
-                        <li>Policy update approved by Security Team</li>
-                        <li>Nightly reconciliation completed successfully</li>
-                    </ul>
-                </div>
-            </section>
+                <section class="box mt-5">
+                    <h2 class="title is-6">Recent Activity</h2>
+                    <div class="content mb-0">
+                        <ul>
+                            <li>Case INC-4921 reassigned to Risk Operations</li>
+                            <li>Policy update approved by Security Team</li>
+                            <li>Nightly reconciliation completed successfully</li>
+                        </ul>
+                    </div>
+                </section>
             </main>
         </div>
     </div>
@@ -213,6 +265,27 @@
                 target.classList.toggle('is-collapsed', expanded);
             });
         });
+
+        const appShell = document.querySelector('.app-shell');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarToggleIcon = document.getElementById('sidebarToggleIcon');
+
+        if (appShell && sidebarToggle && sidebarToggleIcon) {
+            const setSidebarState = (isCollapsed) => {
+                appShell.classList.toggle('is-sidebar-collapsed', isCollapsed);
+                sidebarToggle.setAttribute('aria-pressed', isCollapsed ? 'true' : 'false');
+                sidebarToggle.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Minimize sidebar');
+                sidebarToggle.setAttribute('title', isCollapsed ? 'Expand sidebar' : 'Minimize sidebar');
+                sidebarToggleIcon.textContent = isCollapsed ? 'left_panel_open' : 'left_panel_close';
+            };
+
+            sidebarToggle.addEventListener('click', () => {
+                const nextState = !appShell.classList.contains('is-sidebar-collapsed');
+                setSidebarState(nextState);
+            });
+
+            setSidebarState(false);
+        }
     </script>
 </body>
 
