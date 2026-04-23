@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enterprise Workspace — GitHub Primer</title>
+
+    <link rel="stylesheet" href="css/github-primer.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <style>
+        /* ── GitHub Primer system font applied consistently across all components ── */
+        body,
+        .navbar,
+        .menu,
+        .button,
+        .input,
+        .textarea,
+        .select select,
+        .table,
+        .card,
+        .tag,
+        .notification,
+        .message,
+        .panel,
+        .tabs,
+        .breadcrumb,
+        h1, h2, h3, h4, h5, h6,
+        .title, .subtitle {
+            font-family: var(--bulma-family-primary);
+        }
+
+        code, pre, .has-text-mono {
+            font-family: var(--bulma-family-code);
+        }
+
+        body {
+            min-height: 100vh;
+        }
+
+        .app-shell {
+            min-height: calc(100vh - 3.25rem);
+            margin-top: 0;
+        }
+
+        .app-sidebar {
+            padding: 0 0 2rem 0;
+            width: 13.33%;
+            max-width: 13.33%;
+            min-width: 3rem;
+            flex-basis: 13.33% !important;
+            flex-grow: 0;
+            overflow: hidden;
+            transition: flex-basis 900ms ease, max-width 900ms ease, width 900ms ease, padding 220ms ease;
+        }
+
+        #sidebar {
+            position: sticky;
+            top: 3.25rem;
+            height: calc(100vh - 3.25rem);
+            min-height: calc(100vh - 3.25rem);
+            max-height: calc(100vh - 3.25rem);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .app-shell.is-sidebar-collapsed .app-sidebar {
+            flex-basis: 3rem !important;
+            width: 3rem;
+            max-width: 3rem;
+            padding: 0 0 2rem 0;
+            overflow: hidden;
+        }
+
+        .menu-label,
+        .menu-list,
+        .menu-divider {
+            opacity: 1;
+            transition: opacity 180ms ease;
+        }
+
+        .app-shell.is-sidebar-collapsed .sidebar-header {
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-shell.is-sidebar-collapsed .menu-label,
+        .app-shell.is-sidebar-collapsed .menu-list,
+        .app-shell.is-sidebar-collapsed .menu-divider {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .app-main {
+            padding: 1.25rem;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-toggle-icon {
+            min-width: 2rem;
+            width: 2rem;
+            height: 2rem;
+            padding: 0;
+            color: var(--bulma-primary) !important;
+        }
+
+        .sidebar-toggle-icon .icon {
+            color: inherit;
+        }
+
+        .sidebar-toggle-svg {
+            width: 1.2rem;
+            height: 1.2rem;
+            display: block;
+            fill: currentColor;
+            color: inherit;
+        }
+
+        /* Sidebar tint — equivalent of .menu.has-tint from the blue custom theme */
+        .menu.has-tint {
+            padding: 1rem 0.75rem;
+            background: linear-gradient(
+                180deg,
+                hsla(var(--bulma-primary-h), var(--bulma-primary-s), var(--bulma-primary-l), 0.08) 0%,
+                hsla(var(--bulma-primary-h), var(--bulma-primary-s), var(--bulma-primary-l), 0.04) 100%
+            );
+            border-radius: var(--bulma-radius);
+        }
+
+        /* ── Navbar brand ── */
+        .navbar-brand .brand-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-icon {
+            width: 1.1rem;
+            height: 1.1rem;
+            display: inline-block;
+            color: currentColor;
+        }
+
+        /* ── Material Symbols sizing ── */
+        .material-symbols-outlined {
+            font-size: 1.25em;
+            vertical-align: middle;
+            line-height: 1;
+        }
+
+        /* ── Menu label ── */
+        .menu-label {
+            font-size: 0.75rem;
+            color: var(--bulma-primary);
+        }
+
+        /* ── Collapsible menu-label button reset ── */
+        .menu-label-toggle {
+            border: 0;
+            background: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            color: inherit;
+            font: inherit;
+            text-transform: inherit;
+            letter-spacing: inherit;
+        }
+
+        .menu-label-toggle.with-caret {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .menu-label-toggle.with-caret::before {
+            content: "";
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            border-left: 6px solid currentColor;
+            transform: rotate(90deg);
+            transform-origin: 35% 50%;
+            transition: transform var(--bulma-duration) var(--bulma-easing);
+        }
+
+        .menu-label-toggle[aria-expanded="false"].with-caret::before {
+            transform: rotate(0deg);
+        }
+
+        .menu-list.is-collapsed {
+            display: none;
+        }
+
+        /* ── Menu list item styles ── */
+        .menu-list a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: var(--bulma-radius);
+            transition: background-color var(--bulma-duration) var(--bulma-easing),
+                        color var(--bulma-duration) var(--bulma-easing);
+        }
+
+        .menu-list a:hover {
+            background-color: hsla(var(--bulma-primary-h), var(--bulma-primary-s), var(--bulma-primary-l), 0.08);
+            color: var(--bulma-text-strong);
+        }
+
+        .menu-list a.is-active {
+            background-color: hsla(var(--bulma-primary-h), var(--bulma-primary-s), 88%, 1);
+            color: hsl(var(--bulma-primary-h), var(--bulma-primary-s), 20%);
+            font-weight: 600;
+            border-left: 4px solid var(--bulma-primary);
+            padding-left: calc(0.75em - 4px);
+        }
+
+        /* ── Menu divider ── */
+        .menu-divider {
+            border: 0;
+            border-top: 1px solid hsla(var(--bulma-primary-h), var(--bulma-primary-s), var(--bulma-primary-l), 0.22);
+            margin: 0.75rem 0;
+        }
+
+        /* ── Fix left-edge gap (GitHub Primer theme lacks this container padding override) ── */
+        .container.is-fluid {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        /* ── Subtle primary tint on cards, matching the blue custom surface-tint approach ── */
+        .card {
+            background-color: hsla(var(--bulma-primary-h), var(--bulma-primary-s), 97%, 1);
+        }
+
+        /* ── Metric cards ── */
+        .metric-card .title {
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-card .subtitle {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item brand-link" href="#">
+                <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M12 2L20.66 7V17L12 22L3.34 17V7L12 2ZM12 4.31L5.34 8.16V15.84L12 19.69L18.66 15.84V8.16L12 4.31Z" />
+                </svg>
+                <strong>Operations Hub</strong>
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="mainNavbarMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="mainNavbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <button class="button is-primary is-small">
+                        <span class="icon"><span class="material-symbols-outlined">add</span></span>
+                        <span>New Case</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container is-fluid">
+        <div class="columns app-shell">
+            <aside id="appSidebar" class="column is-2 is-hidden-touch app-sidebar">
+                <nav id="sidebar" class="menu has-tint">
+                    <div class="sidebar-header">
+                        <button id="sidebarToggle" class="button is-light is-small sidebar-toggle-icon" type="button"
+                            aria-pressed="false" aria-controls="appSidebar" aria-label="Minimize sidebar"
+                            title="Minimize sidebar">
+                            <span class="icon" aria-hidden="true">
+                                <svg class="sidebar-toggle-svg" viewBox="0 -960 960 960" focusable="false">
+                                    <path id="sidebarTogglePath" fill="currentColor" d="M689-289v-382L497-480l192 191ZM212-86q-53 0-89.5-36.5T86-212v-536q0-53 36.5-89.5T212-874h536q53 0 89.5 36.5T874-748v536q0 53-36.5 89.5T748-86H212Zm100-126v-536H212v536h100Zm126 0h310v-536H438v536Zm-126 0H212h100Z" />
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+
+                    <p class="menu-label">
+                        <button type="button" class="menu-label-toggle with-caret" aria-expanded="true" aria-controls="core-menu">Core</button>
+                    </p>
+                    <ul id="core-menu" class="menu-list">
+                        <li><a class="is-active" href="#">Overview</a></li>
+                        <li><a href="#">Queue</a></li>
+                        <li><a href="#">Reports</a></li>
+                    </ul>
+
+                    <hr class="menu-divider" />
+
+                    <p class="menu-label">
+                        <button type="button" class="menu-label-toggle with-caret" aria-expanded="true" aria-controls="admin-menu">Admin</button>
+                    </p>
+                    <ul id="admin-menu" class="menu-list">
+                        <li><a href="#">Users</a></li>
+                        <li><a href="#">Audit Log</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="column app-main">
+                <section class="mb-5">
+                    <h1 class="title is-4">Welcome Back</h1>
+                    <p class="subtitle is-6">Enterprise internal workspace overview.</p>
+                </section>
+
+                <section class="columns">
+                    <div class="column">
+                        <article class="card metric-card">
+                            <div class="card-content">
+                                <p class="title is-5">128</p>
+                                <p class="subtitle is-7 has-text-grey">Open Cases</p>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="column">
+                        <article class="card metric-card">
+                            <div class="card-content">
+                                <p class="title is-5">14</p>
+                                <p class="subtitle is-7 has-text-grey">Pending Approvals</p>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="column">
+                        <article class="card metric-card">
+                            <div class="card-content">
+                                <p class="title is-5">99.7%</p>
+                                <p class="subtitle is-7 has-text-grey">SLA Compliance</p>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="box mt-5">
+                    <h2 class="title is-6">Recent Activity</h2>
+                    <div class="content mb-0">
+                        <ul>
+                            <li>Case INC-4921 reassigned to Risk Operations</li>
+                            <li>Policy update approved by Security Team</li>
+                            <li>Nightly reconciliation completed successfully</li>
+                        </ul>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const burger = document.querySelector('.navbar-burger');
+        const menu = document.getElementById('mainNavbarMenu');
+
+        if (burger && menu) {
+            burger.addEventListener('click', () => {
+                burger.classList.toggle('is-active');
+                menu.classList.toggle('is-active');
+            });
+        }
+
+        const menuLabelToggles = document.querySelectorAll('.menu-label-toggle');
+
+        menuLabelToggles.forEach((toggle) => {
+            toggle.addEventListener('click', () => {
+                const targetId = toggle.getAttribute('aria-controls');
+                const target = targetId ? document.getElementById(targetId) : null;
+
+                if (!target) {
+                    return;
+                }
+
+                const expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+                target.classList.toggle('is-collapsed', expanded);
+            });
+        });
+
+        const appShell = document.querySelector('.app-shell');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarTogglePath = document.getElementById('sidebarTogglePath');
+        const sidebarClosePath = 'M689-289v-382L497-480l192 191ZM212-86q-53 0-89.5-36.5T86-212v-536q0-53 36.5-89.5T212-874h536q53 0 89.5 36.5T874-748v536q0 53-36.5 89.5T748-86H212Zm100-126v-536H212v536h100Zm126 0h310v-536H438v536Zm-126 0H212h100Z';
+        const sidebarOpenPath = 'M497-671v382l192-191-192-191ZM212-86q-53 0-89.5-36.5T86-212v-536q0-53 36.5-89.5T212-874h536q53 0 89.5 36.5T874-748v536q0 53-36.5 89.5T748-86H212Zm100-126v-536H212v536h100Zm126 0h310v-536H438v536Zm-126 0H212h100Z';
+
+        if (appShell && sidebarToggle && sidebarTogglePath) {
+            const setSidebarState = (isCollapsed) => {
+                appShell.classList.toggle('is-sidebar-collapsed', isCollapsed);
+                sidebarToggle.setAttribute('aria-pressed', isCollapsed ? 'true' : 'false');
+                sidebarToggle.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Minimize sidebar');
+                sidebarToggle.setAttribute('title', isCollapsed ? 'Expand sidebar' : 'Minimize sidebar');
+                sidebarTogglePath.setAttribute('d', isCollapsed ? sidebarOpenPath : sidebarClosePath);
+            };
+
+            sidebarToggle.addEventListener('click', () => {
+                const nextState = !appShell.classList.contains('is-sidebar-collapsed');
+                setSidebarState(nextState);
+            });
+
+            setSidebarState(false);
+        }
+    </script>
+</body>
+
+</html>
